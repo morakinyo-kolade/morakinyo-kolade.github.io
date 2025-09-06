@@ -44,7 +44,7 @@ body, html {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Push items to top and bottom */
+  justify-content: space-between;
   align-items: center;
   color: white;
   text-align: center;
@@ -93,11 +93,11 @@ body, html {
   padding: 0 20px;
 }
 
-/* #GLASS CONTAINER (Bottom Section) */
+/* #GLASS CONTAINER */
 .glass-container {
   display: flex;
   gap: 30px;
-  margin-bottom: 60px; /* Space from bottom */
+  margin-bottom: 60px;
 }
 
 .glass-item {
@@ -105,7 +105,7 @@ body, html {
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  -webkit-backdrop-filter: blur(12px);
   color: white;
   font-weight: 500;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -121,21 +121,26 @@ body, html {
 
 /* #CUSTOM CURSOR */
 .custom-cursor {
-  width: 20px;
-  height: 20px;
-  border: 2px solid white;
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
   border-radius: 50%;
   position: fixed;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 9999;
+  mix-blend-mode: difference;
+  background: transparent;
 }
 
 .cursor-grow {
-  transform: translate(-50%, -50%) scale(1.8);
-  background: rgba(255, 255, 255, 0.2);
-  border-width: 1px;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  transform: translate(-50%, -50%) scale(1.2);
 }
 
 /* #RESPONSIVE DESIGN */
