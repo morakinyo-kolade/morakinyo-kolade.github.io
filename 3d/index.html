@@ -22,13 +22,25 @@
             overflow: hidden;
         }
         
-        /* TOP NAV - ALL TEXT SAME SIZE */
+        /* VIDEO CANVAS AREA */
+        .video-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #000; /* Black background for video area */
+        }
+        
+        /* TOP NAV */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
             width: 100%;
+            z-index: 2;
         }
         
         .top-nav div {
@@ -36,32 +48,35 @@
             font-weight: 500;
         }
         
-        /* CENTERED MAIN CONTENT */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        /* CENTERED TEXT OVER VIDEO */
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
+            z-index: 2;
+            width: 100%;
         }
         
         .tagline {
             font-size: 24px;
             font-weight: 300;
             letter-spacing: 1px;
-            margin-bottom: 100px;
         }
         
-        /* BOTTOM GLASS BUTTONS - CENTERED */
-        .glass-buttons {
+        /* BOTTOM RIGHT BUTTONS */
+        .bottom-buttons {
+            position: absolute;
+            bottom: 100px;
+            right: 50px;
             display: flex;
-            gap: 25px;
-            margin-bottom: 120px;
+            gap: 20px;
+            z-index: 2;
         }
         
         .glass-btn {
-            padding: 18px 40px;
+            padding: 15px 35px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -75,7 +90,7 @@
             background: rgba(255, 255, 255, 0.15);
         }
         
-        /* BOTTOM ELEMENTS - NO SEPARATE BAR */
+        /* BOTTOM ELEMENTS */
         .bottom-row {
             position: absolute;
             bottom: 30px;
@@ -84,6 +99,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 2;
         }
         
         .copyright {
@@ -117,44 +133,52 @@
             .tagline {
                 font-size: 18px;
                 padding: 0 20px;
-                margin-bottom: 60px;
             }
             
-            .glass-buttons {
+            .bottom-buttons {
+                position: relative;
+                bottom: auto;
+                right: auto;
                 flex-direction: column;
-                gap: 20px;
-                margin-bottom: 80px;
+                gap: 15px;
+                margin: 40px auto;
+                width: fit-content;
             }
             
             .bottom-row {
+                position: relative;
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
+                margin-top: auto;
             }
         }
     </style>
 </head>
 <body>
-    <!-- TOP NAV - ALL TEXT SAME SIZE -->
+    <!-- VIDEO BACKGROUND AREA -->
+    <div class="video-canvas"></div>
+
+    <!-- TOP NAV -->
     <div class="top-nav">
         <div>About</div>
         <div>Morakinyo Kolade</div>
         <div>Contact</div>
     </div>
 
-    <!-- CENTERED MAIN CONTENT -->
-    <div class="main-content">
+    <!-- CENTERED TEXT OVER VIDEO -->
+    <div class="center-text">
         <div class="tagline">3D Animation · Motion Design · Product Visualization</div>
-        
-        <!-- GLASS BUTTONS AT BOTTOM MIDDLE -->
-        <div class="glass-buttons">
-            <div class="glass-btn">Product Animation</div>
-            <div class="glass-btn">Motion Design</div>
-            <div class="glass-btn">Video Editing</div>
-        </div>
     </div>
 
-    <!-- BOTTOM ELEMENTS - NO SEPARATE BAR -->
+    <!-- BOTTOM RIGHT BUTTONS -->
+    <div class="bottom-buttons">
+        <div class="glass-btn">Product Animation</div>
+        <div class="glass-btn">Motion Design</div>
+        <div class="glass-btn">Video Editing</div>
+    </div>
+
+    <!-- BOTTOM ELEMENTS -->
     <div class="bottom-row">
         <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
         <div class="social-icons">
