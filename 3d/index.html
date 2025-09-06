@@ -1,35 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Morakinyo Kolade | 3D Portfolio</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+  <div class="video-container">
+    <video autoplay muted loop playsinline>
+      <source src="assets/video/background.mp4" type="video/mp4">
+    </video>
+  </div>
 
-  <!-- Video background -->
-  <div class="video-bg">
-  <iframe src="https://player.vimeo.com/video/76979871?background=1&autoplay=1&loop=1&muted=1"
-    frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
-  </iframe>
-</div>
-  
-
-  <!-- Overlay -->
   <div class="overlay">
-
-    <!-- Navbar -->
     <div class="navbar">
       <span class="nav-left">About</span>
       <span class="nav-center" onclick="location.reload()">Morakinyo Kolade</span>
       <span class="nav-right">Contact</span>
     </div>
 
-    <!-- Center text -->
     <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
 
-    <!-- Frosted glass categories -->
     <div class="glass-container">
       <div class="glass-item">Product Animation</div>
       <div class="glass-item">Motion Design</div>
@@ -37,11 +29,8 @@
     </div>
   </div>
 
-  <!-- Custom cursor -->
-  <div class="cursor"></div>
-
+  <div class="custom-cursor"></div>
+  
   <script src="assets/js/main.js"></script>
 </body>
 </html>
-
-
