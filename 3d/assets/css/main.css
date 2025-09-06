@@ -13,28 +13,23 @@ body, html {
   overflow: hidden;
 }
 
-/* #VIDEO BACKGROUND */
-.video-container {
+/* #ANIMATED GRADIENT BACKGROUND */
+.animated-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background: linear-gradient(45deg, #000000, #1a1a2e, #16213e, #0f3460);
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
   z-index: -1;
-  overflow: hidden;
-  background: #000; /* Fallback color */
 }
 
-.video-container video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* #CONTENT OVERLAY */
@@ -48,7 +43,6 @@ body, html {
   align-items: center;
   color: white;
   text-align: center;
-  background: rgba(0, 0, 0, 0.3);
   padding: 2rem 0;
 }
 
@@ -68,7 +62,7 @@ body, html {
 .nav-left, .nav-center, .nav-right {
   flex: 1;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .nav-left {
@@ -81,7 +75,7 @@ body, html {
 
 .navbar div:hover {
   opacity: 0.7;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 /* #MAIN TAGLINE */
@@ -91,9 +85,10 @@ body, html {
   margin: 0;
   letter-spacing: 1px;
   padding: 0 20px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-/* #GLASS CONTAINER */
+/* #GLASS CONTAINER - SMOOTH LIQUID EFFECT */
 .glass-container {
   display: flex;
   gap: 30px;
@@ -101,25 +96,30 @@ body, html {
 }
 
 .glass-item {
-  padding: 20px 40px;
+  padding: 22px 45px;
   border-radius: 50px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   color: white;
   font-weight: 500;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 10px 35px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .glass-item:hover {
-  transform: translateY(-8px) scale(1.05);
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px) scale(1.08);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
 }
 
-/* #CUSTOM CURSOR */
+/* #CUSTOM CURSOR - SMOOTH LIQUID MOVEMENT */
 .custom-cursor {
   width: 50px;
   height: 50px;
@@ -128,7 +128,10 @@ body, html {
   position: fixed;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: 
+    width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   z-index: 9999;
   mix-blend-mode: difference;
   background: transparent;
@@ -137,10 +140,10 @@ body, html {
 .cursor-grow {
   width: 100px;
   height: 100px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(5px);
-  transform: translate(-50%, -50%) scale(1.2);
+  backdrop-filter: blur(8px);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 /* #RESPONSIVE DESIGN */
@@ -162,7 +165,7 @@ body, html {
   }
   
   .glass-item {
-    padding: 15px 30px;
+    padding: 18px 35px;
     font-size: 1rem;
   }
 }
