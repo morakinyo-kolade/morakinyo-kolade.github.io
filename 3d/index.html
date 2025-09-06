@@ -1,156 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morakinyo Kolade | Design Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-            color: #000;
-            line-height: 1.6;
-            background: #fff;
-            padding: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        /* Header */
-        header {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-        
-        nav {
-            margin-bottom: 80px;
-        }
-        
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 40px;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        
-        .logo {
-            font-size: 18px;
-            letter-spacing: 2px;
-            margin-bottom: 120px;
-        }
-        
-        /* Main Title */
-        .main-title {
-            font-size: 42px;
-            letter-spacing: 5px;
-            text-align: center;
-            text-transform: uppercase;
-            font-weight: 400;
-            margin-bottom: 100px;
-            line-height: 1.2;
-        }
-        
-        /* Projects List */
-        .projects {
-            list-style: none;
-            text-align: center;
-        }
-        
-        .projects li {
-            font-size: 24px;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-        
-        .projects li:hover {
-            opacity: 0.7;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 120px;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                padding: 20px;
-            }
-            
-            nav ul {
-                gap: 20px;
-                flex-wrap: wrap;
-            }
-            
-            .main-title {
-                font-size: 28px;
-                letter-spacing: 3px;
-            }
-            
-            .projects li {
-                font-size: 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morakinyo Kolade | 3D Portfolio</title>
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">about</a></li>
-                <li class="logo"><a href="#">morakinyo kolade</a></li>
-                <li><a href="#">contact</a></li>
-            </ul>
-        </nav>
-        
-        <h1 class="main-title">A Design Portfolio</h1>
-    </header>
-    
-    <!-- Projects List -->
-    <ul class="projects">
-        <li>Shopify</li>
-        <li>Manifold</li>
-        <li>HealthNXT</li>
-        <li>Dear Cleo</li>
-        <li>Noelle Wolf</li>
-    </ul>
-    
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2023 Morakinyo Kolade. All rights reserved.</p>
-    </footer>
 
-    <script>
-        // Simple hover effect for project items
-        document.querySelectorAll('.projects li').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                item.style.fontStyle = 'italic';
-            });
-            
-            item.addEventListener('mouseleave', () => {
-                item.style.fontStyle = 'normal';
-            });
-        });
-    </script>
+  <!-- Video background -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline id="bgVideo">
+      <source src="https://cdn.coverr.co/videos/coverr-blue-smoke-8717/1080p.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay">
+
+    <!-- Navbar -->
+    <div class="navbar">
+      <span>☰</span>
+      <span>Morakinyo Kolade</span>
+      <span>✉</span>
+    </div>
+
+    <!-- Center text -->
+    <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
+
+    <!-- Frosted glass categories -->
+    <div class="glass-container">
+      <div class="glass-item">Product Animation</div>
+      <div class="glass-item">Motion Design</div>
+      <div class="glass-item">Video Editing</div>
+    </div>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor"></div>
+
+  <script>
+    const cursor = document.querySelector('.cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.top = e.pageY + 'px';
+      cursor.style.left = e.pageX + 'px';
+    });
+    document.querySelectorAll('.glass-item').forEach(item => {
+      item.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
+      item.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
+    });
+  </script>
+
 </body>
 </html>
