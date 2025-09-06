@@ -1,12 +1,29 @@
-// #CURSOR FOLLOW
+// #SMOOTH CURSOR FOLLOW
 const cursor = document.querySelector('.custom-cursor');
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
 
 document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 });
 
-// #HOVER EFFECTS
+function animateCursor() {
+  // Smooth follow with easing
+  cursorX += (mouseX - cursorX) * 0.1;
+  cursorY += (mouseY - cursorY) * 0.1;
+  
+  cursor.style.left = cursorX + 'px';
+  cursor.style.top = cursorY + 'px';
+  
+  requestAnimationFrame(animateCursor);
+}
+
+animateCursor();
+
+// #SMOOTH HOVER EFFECTS
 const hoverItems = document.querySelectorAll('.glass-item, .nav-left, .nav-center, .nav-right');
 
 hoverItems.forEach(item => {
@@ -18,20 +35,3 @@ hoverItems.forEach(item => {
     cursor.classList.remove('cursor-grow');
   });
 });
-
-// #VIDEO PLAYBACK FIX
-function forceVideoPlay() {
-  const video = document.getElementById('bgVideo');
-  if (video) {
-    video.play().catch(error => {
-      console.log('Video playback failed, using fallback background');
-      document.querySelector('.video-container').style.background = 
-        'linear-gradient(45deg, #000000, #1a1a2e)';
-    });
-  }
-}
-
-// Try to play when page loads
-document.addEventListener('DOMContentLoaded', forceVideoPlay);
-// Try again when user interacts
-document.addEventListener('click', forceVideoPlay);
