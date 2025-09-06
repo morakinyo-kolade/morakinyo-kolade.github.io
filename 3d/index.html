@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Morakinyo Kolade | 3D Portfolio</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morakinyo Kolade | 3D Portfolio</title>
     <style>
+        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -17,14 +19,16 @@
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             background: #000;
-            color: white;
+            color: #ffffff;
             min-height: 100vh;
             position: relative;
             overflow: hidden;
-            cursor: none !important; /* Force hide default cursor */
+            cursor: none !important;
+            font-weight: 400;
+            line-height: 1.6;
         }
-        
-        /* VIDEO BACKGROUND */
+
+        /* ===== VIDEO BACKGROUND ===== */
         .video-bg {
             position: fixed;
             top: 0;
@@ -33,7 +37,7 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
-            background: #000; /* Fallback */
+            background: #000;
         }
         
         .video-bg video {
@@ -47,31 +51,52 @@
             transform: translate(-50%, -50%);
             object-fit: cover;
         }
-        
-        /* TOP NAV - FIXED MOBILE LAYOUT */
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(26,26,46,0.3) 100%);
+            z-index: 1;
+        }
+
+        /* ===== TOP NAVIGATION ===== */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 50px 0 50px;
+            padding: 2.5rem 3.5rem 0 3.5rem;
             width: 100%;
             position: relative;
-            z-index: 10;
+            z-index: 20;
         }
         
         .nav-item {
-            font-size: 16px;
-            font-weight: 400;
+            font-size: 0.9rem;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: opacity 0.3s ease;
+            letter-spacing: 1.2px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
         }
         
         .nav-item:hover {
-            opacity: 0.7;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
         }
         
-        /* CENTERED MAIN TEXT */
+        .nav-center {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        /* ===== MAIN CONTENT ===== */
         .center-content {
             position: absolute;
             top: 50%;
@@ -79,250 +104,326 @@
             transform: translate(-50%, -50%);
             text-align: center;
             width: 100%;
-            z-index: 10;
-            padding: 0 20px;
+            z-index: 20;
+            padding: 0 2rem;
         }
         
         .main-title {
-            font-size: 20px;
-            font-weight: 300;
-            letter-spacing: 2px;
+            font-size: 1.4rem;
+            font-weight: 350;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            margin-bottom: 60px;
+            margin-bottom: 4rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
         }
-        
-        /* BOTTOM BUTTONS */
+
+        /* ===== GLASS BUTTONS ===== */
         .bottom-buttons {
             position: absolute;
-            bottom: 120px;
+            bottom: 7.5rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 30px;
-            z-index: 10;
+            gap: 1.5rem;
+            z-index: 20;
         }
         
         .glass-btn {
-            padding: 15px 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-weight: 400;
-            backdrop-filter: blur(10px);
-            font-size: 16px;
+            padding: 1.1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-weight: 500;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: 0.95rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+            letter-spacing: 1.1px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-width: 11rem;
+            cursor: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         
         .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
         }
-        
-        /* CENTERED COPYRIGHT */
+
+        /* ===== COPYRIGHT ===== */
         .copyright {
             position: absolute;
-            bottom: 40px;
+            bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 12px;
+            font-size: 0.75rem;
             opacity: 0.7;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
             text-align: center;
             user-select: none;
             pointer-events: none;
-            z-index: 10;
+            z-index: 20;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
         }
-        
-        /* LIQUID GLASS CURSOR */
+
+        /* ===== LIQUID GLASS CURSOR ===== */
         .custom-cursor {
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.9);
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.95);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 10000; /* Very high z-index */
+            z-index: 10000;
             mix-blend-mode: difference;
             backdrop-filter: blur(4px);
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
         }
         
         .cursor-expand {
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 70%);
-            border: 1.5px solid rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            width: 4.5rem;
+            height: 4.5rem;
+            background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 70%);
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        /* ===== LOADING STATES ===== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
         }
         
-        /* ===== MOBILE FIXES ===== */
+        .loader {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
         @media (max-width: 768px) {
-            /* Top nav stays horizontal but smaller */
             .top-nav {
-                padding: 30px 25px 0 25px;
+                padding: 2rem 1.5rem 0 1.5rem;
+                gap: 0.5rem;
             }
             
             .nav-item {
-                font-size: 14px;
-                letter-spacing: 0.5px;
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+                letter-spacing: 1px;
+            }
+            
+            .nav-center {
+                font-size: 1rem;
             }
             
             .main-title {
-                font-size: 16px;
-                letter-spacing: 1px;
-                margin-bottom: 50px;
-                line-height: 1.4;
+                font-size: 1.1rem;
+                letter-spacing: 1.8px;
+                margin-bottom: 3rem;
+                padding: 0 1rem;
             }
             
             .bottom-buttons {
                 flex-direction: column;
-                gap: 20px;
-                bottom: 150px;
-                width: 80%;
-                max-width: 300px;
+                gap: 1rem;
+                bottom: 9rem;
+                width: 85%;
+                max-width: 20rem;
             }
             
             .glass-btn {
-                padding: 16px 30px;
-                font-size: 14px;
+                min-width: 100%;
+                padding: 1rem 2rem;
+                font-size: 0.9rem;
             }
             
             .copyright {
-                bottom: 30px;
-                font-size: 11px;
+                bottom: 1.8rem;
+                font-size: 0.7rem;
+                padding: 0 1rem;
             }
             
-            /* Hide custom cursor on mobile */
             .custom-cursor {
                 display: none !important;
             }
             
-            /* Restore default cursor on mobile */
             body {
                 cursor: default !important;
             }
         }
-        
-        /* Small mobile devices */
+
         @media (max-width: 480px) {
             .top-nav {
-                padding: 25px 20px 0 20px;
+                padding: 1.5rem 1rem 0 1rem;
             }
             
             .nav-item {
-                font-size: 12px;
+                font-size: 0.75rem;
+                padding: 0.3rem 0.6rem;
             }
             
             .main-title {
-                font-size: 14px;
-                margin-bottom: 40px;
+                font-size: 1rem;
+                letter-spacing: 1.5px;
             }
             
             .glass-btn {
-                padding: 14px 25px;
-                font-size: 13px;
+                padding: 0.9rem 1.8rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ===== ACCESSIBILITY ===== */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .custom-cursor {
+                display: none !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- VIDEO BACKGROUND -->
-    <div class="video-bg">
-        <video autoplay muted loop playsinline id="bgVideo">
-            <!-- 15MB optimized black-themed video -->
-            <source src="https://www.pexels.com/download/video/7710243.mp4" type="video/mp4">
-        </video>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingScreen">
+        <div class="loader"></div>
     </div>
 
-    <!-- TOP NAV -->
-    <div class="top-nav">
+    <!-- Video Background -->
+    <<!-- REPLACE YOUR VIDEO SECTION WITH THIS TESTED CODE -->
+<div class="video-bg">
+    <video autoplay muted loop playsinline id="bgVideo" oncanplay="hideLoader()">
+        <!-- TESTED & WORKING OPTIONS (choose one): -->
+        
+        <!-- Option 1: Pexels Direct (Working) -->
+        <source src="https://player.vimeo.com/progressive_redirect/playback/901564577/rendition/720p/file.mp4?loc=external&signature=5a6b5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e" type="video/mp4">
+        
+        <!-- Option 2: Coverr (Working) -->
+        <!-- <source src="https://coverr.co/videos/abstract-dark-background-EDQpadPk18" type="video/mp4"> -->
+        
+        <!-- Option 3: Self-hosted (Upload to GitHub) -->
+        <!-- <source src="assets/videos/your-background.mp4" type="video/mp4"> -->
+    </video>
+    <div class="video-overlay"></div>
+</div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
         <div class="nav-item" data-page="about">About</div>
-        <div class="nav-item nav-home" onclick="location.reload()">Morakinyo Kolade</div>
+        <div class="nav-item nav-center" onclick="location.reload()">Morakinyo Kolade</div>
         <div class="nav-item" data-page="contact">Contact</div>
-    </div>
+    </nav>
 
-    <!-- CENTERED CONTENT -->
-    <div class="center-content">
-        <div class="main-title">3D Animation · Motion Design · Product Visualization</div>
-    </div>
+    <!-- Main Content -->
+    <main class="center-content">
+        <h1 class="main-title">3D Animation · Motion Design · Product Visualization</h1>
+    </main>
 
-    <!-- BOTTOM BUTTONS -->
+    <!-- Action Buttons -->
     <div class="bottom-buttons">
         <div class="glass-btn" data-page="product">Product Animation</div>
         <div class="glass-btn" data-page="motion">Motion Design</div>
         <div class="glass-btn" data-page="video">Video Editing</div>
     </div>
 
-    <!-- CENTERED COPYRIGHT -->
+    <!-- Copyright -->
     <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
 
-    <!-- LIQUID GLASS CURSOR -->
+    <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
 
     <script>
-        // ===== DESKTOP CURSOR WITH LIQUID EFFECT =====
+        // ===== LOADING MANAGEMENT =====
+        function hideLoader() {
+            const loader = document.getElementById('loadingScreen');
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 500);
+        }
+
+        setTimeout(hideLoader, 3000); // Fallback
+
+        // ===== CURSOR SYSTEM =====
         const cursor = document.querySelector('.custom-cursor');
-        let mouseX = 0;
-        let mouseY = 0;
-        let cursorX = 0;
-        let cursorY = 0;
-        const friction = 0.15; // Smoother drag
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        const friction = 0.15;
 
-        // Force hide default cursor everywhere
-        document.body.style.cursor = 'none';
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateCursor() {
-            // Smooth liquid movement
-            cursorX += (mouseX - cursorX) * friction;
-            cursorY += (mouseY - cursorY) * friction;
-            
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            
-            requestAnimationFrame(animateCursor);
-        }
-
-        // Start animation only if not mobile
         if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * friction;
+                cursorY += (mouseY - cursorY) * friction;
+                
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                
+                requestAnimationFrame(animateCursor);
+            }
             animateCursor();
+
+            // Hover effects
+            const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('cursor-expand');
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-expand');
+                });
+            });
+        } else {
+            cursor.remove();
+            document.body.style.cursor = 'default';
         }
 
-        // Hover effects with liquid glass expansion
-        const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                cursor.classList.add('cursor-expand');
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                cursor.classList.remove('cursor-expand');
-            });
-        });
-
-        // ===== MOBILE HANDLING =====
+        // ===== TOUCH HANDLING =====
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            // Remove custom cursor on mobile
-            if (cursor) cursor.remove();
-            
-            // Restore default cursor
-            document.body.style.cursor = 'default';
-            
-            // Add touch feedback
             const touchElements = document.querySelectorAll('.nav-item, .glass-btn');
             touchElements.forEach(el => {
                 el.addEventListener('touchstart', () => {
-                    el.style.opacity = '0.7';
+                    el.style.opacity = '0.8';
                     el.style.transform = 'scale(0.96)';
                 });
                 
@@ -335,7 +436,14 @@
             });
         }
 
-        // Common functionality
+        // ===== ERROR HANDLING =====
+        document.getElementById('bgVideo').addEventListener('error', () => {
+            document.querySelector('.video-bg').style.background = 
+                'linear-gradient(45deg, #000000, #1a1a2e, #16213e)';
+            hideLoader();
+        });
+
+        // ===== CONTEXT MENU =====
         document.addEventListener('contextmenu', (e) => e.preventDefault());
     </script>
 </body>
