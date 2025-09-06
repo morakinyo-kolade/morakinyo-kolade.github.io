@@ -1,13 +1,16 @@
-// Custom cursor follow
-const cursor = document.querySelector('.cursor');
+const cursor = document.querySelector('.custom-cursor');
 
-document.addEventListener('mousemove', e => {
-  cursor.style.top = e.pageY + 'px';
-  cursor.style.left = e.pageX + 'px';
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
 });
 
-// Cursor expand on hover
-document.querySelectorAll('.glass-item, .navbar span').forEach(item => {
-  item.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
-  item.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
+const hoverElements = document.querySelectorAll('.glass-item, .navbar span');
+hoverElements.forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.classList.add('cursor-grow');
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.classList.remove('cursor-grow');
+  });
 });
