@@ -4,7 +4,7 @@ body, html {
   height: 100%; width: 100%;
   font-family: 'Helvetica Neue', sans-serif;
   overflow: hidden;
-  cursor: none; /* hide default cursor */
+  /* remove cursor: none; */
 }
 
 /* Video background */
@@ -16,6 +16,15 @@ body, html {
   z-index: -1;
   transform: translate(-50%, -50%);
   object-fit: cover;
+}
+
+.video-bg iframe {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+  object-fit: cover;
+  z-index: -1;
 }
 
 /* Overlay */
