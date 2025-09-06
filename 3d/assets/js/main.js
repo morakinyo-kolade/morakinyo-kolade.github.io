@@ -1,20 +1,14 @@
-// Simple cursor follow
-const cursor = document.querySelector('.cursor');
+// Simple hover effect
+const buttons = document.querySelectorAll('.btn');
 
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-
-// Hover effects
-const hoverElements = document.querySelectorAll('.glass-btn, .nav-item');
-
-hoverElements.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.classList.add('grow');
-  });
-  
-  el.addEventListener('mouseleave', () => {
-    cursor.classList.remove('grow');
-  });
+buttons.forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'translateY(-5px)';
+        btn.style.background = 'rgba(255, 255, 255, 0.2)';
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translateY(0)';
+        btn.style.background = 'rgba(255, 255, 255, 0.1)';
+    });
 });
