@@ -1,27 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morakinyo Kolade | 3D Portfolio</title>
-    <link rel="stylesheet" href="assets/css/main.css">
+  <!-- #BASIC SETUP -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morakinyo Kolade | 3D Portfolio</title>
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+  <!-- #VIDEO BACKGROUND -->
+  <div class="video-container">
+    <video autoplay muted loop playsinline>
+      <!-- #VIDEO SOURCE - Change path to your video -->
+      <source src="assets/Videos/video1.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- #CONTENT OVERLAY -->
+  <div class="overlay">
+    <!-- #NAVIGATION BAR -->
     <div class="navbar">
-        <div class="nav-item">About</div>
-        <div class="nav-item">Morakinyo Kolade</div>
-        <div class="nav-item">Contact</div>
+      <span class="nav-left">About</span>
+      <span class="nav-center" onclick="location.reload()">Morakinyo Kolade</span>
+      <span class="nav-right">Contact</span>
     </div>
 
-    <div class="main-content">
-        <h1 class="tagline">3D Animation · Motion Design · Product Visualization</h1>
-        <div class="buttons">
-            <div class="btn">Product Animation</div>
-            <div class="btn">Motion Design</div>
-            <div class="btn">Video Editing</div>
-        </div>
-    </div>
+    <!-- #MAIN TAGLINE -->
+    <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
 
-    <script src="assets/js/main.js"></script>
+    <!-- #GLASS EFFECT BUTTONS -->
+    <div class="glass-container">
+      <div class="glass-item">Product Animation</div>
+      <div class="glass-item">Motion Design</div>
+      <div class="glass-item">Video Editing</div>
+    </div>
+  </div>
+
+  <!-- #CUSTOM CURSOR -->
+  <div class="custom-cursor"></div>
+  
+  <!-- #JAVASCRIPT -->
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
