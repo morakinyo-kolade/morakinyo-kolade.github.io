@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- #BASIC SETUP -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Morakinyo Kolade | 3D Portfolio</title>
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <!-- #VIDEO BACKGROUND -->
+  <!-- Video Background -->
   <div class="video-container">
-    <video autoplay muted loop playsinline>
-      <!-- #VIDEO SOURCE - Change path to your video -->
+    <video autoplay muted loop playsinline id="bgVideo">
       <source src="assets/Videos/video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
     </video>
   </div>
 
-  <!-- #CONTENT OVERLAY -->
+  <!-- Content Overlay -->
   <div class="overlay">
-    <!-- #NAVIGATION BAR -->
-    <div class="navbar">
-      <span class="nav-left">About</span>
-      <span class="nav-center" onclick="location.reload()">Morakinyo Kolade</span>
-      <span class="nav-right">Contact</span>
-    </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-left">About</div>
+      <div class="nav-center" onclick="location.reload()">Morakinyo Kolade</div>
+      <div class="nav-right">Contact</div>
+    </nav>
 
-    <!-- #MAIN TAGLINE -->
+    <!-- Main Tagline -->
     <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
 
-    <!-- #GLASS EFFECT BUTTONS -->
+    <!-- Glass Effect Buttons at Bottom -->
     <div class="glass-container">
       <div class="glass-item">Product Animation</div>
       <div class="glass-item">Motion Design</div>
@@ -36,10 +35,10 @@
     </div>
   </div>
 
-  <!-- #CUSTOM CURSOR -->
+  <!-- Custom Cursor -->
   <div class="custom-cursor"></div>
   
-  <!-- #JAVASCRIPT -->
+  <!-- JavaScript -->
   <script src="assets/js/main.js"></script>
 </body>
 </html>
