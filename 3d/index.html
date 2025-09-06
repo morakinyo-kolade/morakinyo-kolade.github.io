@@ -1,36 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Morakinyo Kolade | 3D Portfolio</title>
-  <link rel="stylesheet" href="assets/css/main.css">
+    <title>Morakinyo Kolade | 3D Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial;
+            background: black;
+            color: white;
+            text-align: center;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        
+        .tagline {
+            margin: 100px 0;
+            font-size: 24px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            background: #333;
+            border-radius: 25px;
+        }
+    </style>
 </head>
 <body>
-  <div class="video-container">
-    <video autoplay muted loop playsinline>
-      <source src="assets/video/background.mp4" type="video/mp4">
-    </video>
-  </div>
-
-  <div class="overlay">
     <div class="navbar">
-      <span class="nav-left">About</span>
-      <span class="nav-center" onclick="location.reload()">Morakinyo Kolade</span>
-      <span class="nav-right">Contact</span>
+        <div>About</div>
+        <div>Morakinyo Kolade</div>
+        <div>Contact</div>
     </div>
 
-    <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
+    <div class="tagline">3D Animation · Motion Design · Product Visualization</div>
 
-    <div class="glass-container">
-      <div class="glass-item">Product Animation</div>
-      <div class="glass-item">Motion Design</div>
-      <div class="glass-item">Video Editing</div>
+    <div class="buttons">
+        <div class="btn">Product Animation</div>
+        <div class="btn">Motion Design</div>
+        <div class="btn">Video Editing</div>
     </div>
-  </div>
-
-  <div class="custom-cursor"></div>
-  
-  <script src="assets/js/main.js"></script>
 </body>
 </html>
