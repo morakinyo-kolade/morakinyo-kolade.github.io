@@ -20,14 +20,7 @@
             color: white;
             min-height: 100vh;
             position: relative;
-            overflow-x: hidden;
-        }
-        
-        /* Show default cursor on mobile */
-        @media (max-width: 768px) {
-            * {
-                cursor: default !important;
-            }
+            overflow: hidden;
         }
         
         /* VIDEO BACKGROUND */
@@ -53,30 +46,35 @@
             object-fit: cover;
         }
         
-        /* TOP NAV - MOBILE FRIENDLY */
+        /* TOP NAV - DESKTOP STAYS PERFECT */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 20px 0 20px;
+            padding: 40px 50px 0 50px;
             width: 100%;
             position: relative;
             z-index: 10;
         }
         
         .nav-item {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: opacity 0.3s ease;
+            cursor: none;
         }
         
         .nav-item:hover {
             opacity: 0.7;
         }
         
-        /* CENTERED MAIN TEXT - MOBILE OPTIMIZED */
+        .nav-home {
+            cursor: none;
+        }
+        
+        /* CENTERED MAIN TEXT - DESKTOP STAYS PERFECT */
         .center-content {
             position: absolute;
             top: 50%;
@@ -85,64 +83,62 @@
             text-align: center;
             width: 100%;
             z-index: 10;
-            padding: 0 20px;
         }
         
         .main-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 300;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 40px;
-            line-height: 1.4;
+            margin-bottom: 60px;
         }
         
-        /* BOTTOM BUTTONS - MOBILE STACKING */
+        /* BOTTOM BUTTONS - DESKTOP STAYS PERFECT */
         .bottom-buttons {
             position: absolute;
-            bottom: 100px;
+            bottom: 120px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 15px;
+            gap: 30px;
             z-index: 10;
-            width: 90%;
-            max-width: 400px;
         }
         
         .glass-btn {
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 25px;
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-weight: 400;
             backdrop-filter: blur(10px);
-            font-size: 14px;
+            font-size: 16px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
-            text-align: center;
-            flex: 1;
+            cursor: none;
         }
         
-        /* CENTERED COPYRIGHT */
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        /* CENTERED COPYRIGHT - DESKTOP STAYS PERFECT */
         .copyright {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 11px;
+            font-size: 12px;
             opacity: 0.7;
             letter-spacing: 0.5px;
             text-align: center;
             user-select: none;
             pointer-events: none;
             z-index: 10;
-            width: 100%;
-            padding: 0 20px;
         }
         
-        /* CUSTOM CURSOR - DESKTOP ONLY */
+        /* CUSTOM CURSOR - DESKTOP STAYS PERFECT */
         .custom-cursor {
             width: 20px;
             height: 20px;
@@ -151,7 +147,10 @@
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: all 0.3s ease;
+            transition: 
+                width 0.3s ease,
+                height 0.3s ease,
+                background 0.3s ease;
             z-index: 1000;
             mix-blend-mode: difference;
         }
@@ -163,76 +162,53 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
         
-        /* ===== MOBILE SPECIFIC STYLES ===== */
+        /* ===== MOBILE FIXES ONLY ===== */
         @media (max-width: 768px) {
-            .top-nav {
-                flex-direction: column;
-                gap: 12px;
-                padding: 20px 15px 0 15px;
-            }
-            
-            .nav-item {
-                font-size: 13px;
-            }
-            
-            .main-title {
-                font-size: 16px;
-                letter-spacing: 1px;
-                margin-bottom: 30px;
-            }
-            
-            .bottom-buttons {
-                flex-direction: column;
-                gap: 12px;
-                bottom: 140px;
-                width: 85%;
-            }
-            
-            .glass-btn {
-                padding: 18px 20px;
-                font-size: 13px;
-                border-radius: 20px;
-            }
-            
-            .copyright {
-                font-size: 10px;
-                bottom: 20px;
-            }
-            
             /* Hide custom cursor on mobile */
             .custom-cursor {
                 display: none !important;
             }
             
-            /* Better touch targets */
-            .nav-item, .glass-btn {
-                min-height: 44px; /* Apple's recommended minimum touch target */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-        
-        /* Large mobile devices */
-        @media (max-width: 768px) and (min-height: 700px) {
-            .bottom-buttons {
-                bottom: 160px;
+            /* Restore default cursor */
+            * {
+                cursor: default !important;
             }
             
-            .main-title {
-                margin-bottom: 50px;
+            /* Mobile layout fixes */
+            .top-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 30px 20px 0 20px;
             }
-        }
-        
-        /* Very small devices */
-        @media (max-width: 320px) {
-            .main-title {
+            
+            .nav-item {
                 font-size: 14px;
             }
             
+            .main-title {
+                font-size: 16px;
+                padding: 0 20px;
+                margin-bottom: 40px;
+                line-height: 1.4;
+            }
+            
+            .bottom-buttons {
+                flex-direction: column;
+                gap: 20px;
+                bottom: 150px;
+                width: 80%;
+            }
+            
             .glass-btn {
-                padding: 15px 18px;
-                font-size: 12px;
+                padding: 18px 30px;
+                font-size: 14px;
+                text-align: center;
+            }
+            
+            .copyright {
+                bottom: 30px;
+                padding: 0 20px;
+                font-size: 11px;
             }
         }
     </style>
@@ -241,7 +217,7 @@
     <!-- VIDEO BACKGROUND -->
     <div class="video-bg">
         <video autoplay muted loop playsinline id="bgVideo">
-            <source src="https://www.pexels.com/download/video/25744121.mp4" type="video/mp4">
+            <source src="https://cdn.pixabay.com/video/2023/06/19/164252_843551017_tiny.mp4" type="video/mp4">
         </video>
     </div>
 
@@ -267,19 +243,55 @@
     <!-- CENTERED COPYRIGHT -->
     <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
 
-    <!-- CUSTOM CURSOR (Desktop only) -->
+    <!-- CUSTOM CURSOR -->
     <div class="custom-cursor"></div>
 
     <script>
-        // ===== MOBILE DETECTION & TOUCH HANDLING =====
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        // ===== DESKTOP CURSOR CODE (UNCHANGED) =====
         const cursor = document.querySelector('.custom-cursor');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        const friction = 0.2;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * friction;
+            cursorY += (mouseY - cursorY) * friction;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+
+        animateCursor();
+
+        // Hover effects for desktop
+        const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-expand');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-expand');
+            });
+        });
+
+        // ===== MOBILE TOUCH HANDLING =====
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         
         if (isMobile) {
-            // Remove cursor completely on mobile
+            // Remove cursor on mobile
             if (cursor) cursor.remove();
             
-            // Add touch feedback for mobile
+            // Add touch feedback
             const touchElements = document.querySelectorAll('.nav-item, .glass-btn');
             touchElements.forEach(el => {
                 el.addEventListener('touchstart', () => {
@@ -288,49 +300,15 @@
                 });
                 
                 el.addEventListener('touchend', () => {
-                    el.style.opacity = '';
-                    el.style.transform = '';
-                });
-            });
-        } else {
-            // ===== DESKTOP CURSOR CODE =====
-            let mouseX = 0;
-            let mouseY = 0;
-            let cursorX = 0;
-            let cursorY = 0;
-            const friction = 0.2;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-
-            function animateCursor() {
-                cursorX += (mouseX - cursorX) * friction;
-                cursorY += (mouseY - cursorY) * friction;
-                
-                cursor.style.left = cursorX + 'px';
-                cursor.style.top = cursorY + 'px';
-                
-                requestAnimationFrame(animateCursor);
-            }
-
-            animateCursor();
-
-            // Hover effects for desktop
-            const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
-            hoverElements.forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    cursor.classList.add('cursor-expand');
-                });
-                
-                element.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('cursor-expand');
+                    setTimeout(() => {
+                        el.style.opacity = '';
+                        el.style.transform = '';
+                    }, 150);
                 });
             });
         }
 
-        // ===== COMMON FUNCTIONALITY =====
+        // Common functionality
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         
         // Page navigation
@@ -339,15 +317,6 @@
                 console.log('Navigating to:', item.getAttribute('data-page'));
             });
         });
-
-        // Video fallback
-        setTimeout(() => {
-            const video = document.querySelector('video');
-            if (video && video.paused) {
-                document.querySelector('.video-bg').style.background = 
-                    'linear-gradient(45deg, #000000, #1a1a2e)';
-            }
-        }, 2000);
     </script>
 </body>
 </html>
