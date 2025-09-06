@@ -7,6 +7,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: none !important;
         }
         
         body {
@@ -14,10 +15,31 @@
             background: #000;
             color: white;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             position: relative;
             overflow: hidden;
+        }
+        
+        /* VIDEO BACKGROUND */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .video-bg video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
         }
         
         /* TOP NAV */
@@ -27,13 +49,25 @@
             align-items: center;
             padding: 40px 50px 0 50px;
             width: 100%;
+            position: relative;
+            z-index: 10;
         }
         
-        .top-nav div {
+        .nav-item {
             font-size: 16px;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+            cursor: none;
+        }
+        
+        .nav-item:hover {
+            opacity: 0.7;
+        }
+        
+        .nav-home {
+            cursor: none;
         }
         
         /* CENTERED MAIN TEXT */
@@ -44,6 +78,7 @@
             transform: translate(-50%, -50%);
             text-align: center;
             width: 100%;
+            z-index: 10;
         }
         
         .main-title {
@@ -62,6 +97,7 @@
             transform: translateX(-50%);
             display: flex;
             gap: 30px;
+            z-index: 10;
         }
         
         .glass-btn {
@@ -74,6 +110,13 @@
             font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: none;
+        }
+        
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
         }
         
         /* CENTERED COPYRIGHT */
@@ -86,6 +129,33 @@
             opacity: 0.7;
             letter-spacing: 0.5px;
             text-align: center;
+            user-select: none;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* CUSTOM CURSOR */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: 
+                width 0.3s ease,
+                height 0.3s ease,
+                background 0.3s ease;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-expand {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
         
         /* MOBILE */
@@ -116,11 +186,18 @@
     </style>
 </head>
 <body>
+    <!-- VIDEO BACKGROUND -->
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="https://cdn.pixabay.com/video/2023/06/19/164252_843551017_tiny.mp4" type="video/mp4">
+        </video>
+    </div>
+
     <!-- TOP NAV -->
     <div class="top-nav">
-        <div>About</div>
-        <div>Morakinyo Kolade</div>
-        <div>Contact</div>
+        <div class="nav-item" data-page="about">About</div>
+        <div class="nav-item nav-home" onclick="location.reload()">Morakinyo Kolade</div>
+        <div class="nav-item" data-page="contact">Contact</div>
     </div>
 
     <!-- CENTERED CONTENT -->
@@ -130,12 +207,73 @@
 
     <!-- BOTTOM BUTTONS -->
     <div class="bottom-buttons">
-        <div class="glass-btn">Product Animation</div>
-        <div class="glass-btn">Motion Design</div>
-        <div class="glass-btn">Video Editing</div>
+        <div class="glass-btn" data-page="product">Product Animation</div>
+        <div class="glass-btn" data-page="motion">Motion Design</div>
+        <div class="glass-btn" data-page="video">Video Editing</div>
     </div>
 
     <!-- CENTERED COPYRIGHT -->
     <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="custom-cursor"></div>
+
+    <script>
+        // SMOOTH CURSOR WITH DRAG EFFECT
+        const cursor = document.querySelector('.custom-cursor');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        const friction = 0.2; // Heavy drag effect
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            // Heavy drag movement
+            cursorX += (mouseX - cursorX) * friction;
+            cursorY += (mouseY - cursorY) * friction;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+
+        animateCursor();
+
+        // HOVER EFFECTS FOR CLICKABLE ITEMS
+        const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
+
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-expand');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-expand');
+            });
+        });
+
+        // PAGE NAVIGATION PLACEHOLDERS
+        document.querySelectorAll('[data-page]').forEach(item => {
+            item.addEventListener('click', () => {
+                console.log('Navigating to:', item.getAttribute('data-page'));
+                // Add your page navigation logic here
+            });
+        });
+
+        // VIDEO FALLBACK
+        setTimeout(() => {
+            const video = document.querySelector('video');
+            if (video && video.paused) {
+                document.querySelector('.video-bg').style.background = 
+                    'linear-gradient(45deg, #000000, #1a1a2e)';
+            }
+        }, 2000);
+    </script>
 </body>
 </html>
