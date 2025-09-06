@@ -7,27 +7,21 @@
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <!-- Video Background -->
   <div class="video-container">
-    <video autoplay muted loop playsinline id="bgVideo">
-      <source src="https://cdn.pixabay.com/video/2023/02/01/125254_783551857_tiny.mp4" type="video/mp4">
-      Your browser does not support the video tag.
+    <video autoplay muted loop playsinline>
+      <source src="assets/video/background.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- Content Overlay -->
   <div class="overlay">
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <div class="nav-left">About</div>
-      <div class="nav-center" onclick="location.reload()">Morakinyo Kolade</div>
-      <div class="nav-right">Contact</div>
-    </nav>
+    <div class="navbar">
+      <span class="nav-left">About</span>
+      <span class="nav-center" onclick="location.reload()">Morakinyo Kolade</span>
+      <span class="nav-right">Contact</span>
+    </div>
 
-    <!-- Main Tagline -->
     <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
 
-    <!-- Glass Effect Buttons at Bottom -->
     <div class="glass-container">
       <div class="glass-item">Product Animation</div>
       <div class="glass-item">Motion Design</div>
@@ -35,10 +29,8 @@
     </div>
   </div>
 
-  <!-- Custom Cursor -->
   <div class="custom-cursor"></div>
   
-  <!-- JavaScript -->
   <script src="assets/js/main.js"></script>
 </body>
 </html>
