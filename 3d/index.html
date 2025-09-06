@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Morakinyo Kolade | 3D Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -21,7 +20,7 @@
             overflow: hidden;
         }
         
-        /* TOP NAV - MATCHES REFERENCE */
+        /* TOP NAV */
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -37,7 +36,7 @@
             letter-spacing: 1px;
         }
         
-        /* CENTERED MAIN TEXT - LIKE REFERENCE */
+        /* CENTERED MAIN TEXT */
         .center-content {
             position: absolute;
             top: 50%;
@@ -55,7 +54,7 @@
             margin-bottom: 60px;
         }
         
-        /* BOTTOM BUTTONS - MATCHES REFERENCE LAYOUT */
+        /* BOTTOM BUTTONS */
         .bottom-buttons {
             position: absolute;
             bottom: 120px;
@@ -77,37 +76,16 @@
             letter-spacing: 1px;
         }
         
-        /* BOTTOM ROW - MATCHES REFERENCE */
-        .bottom-row {
+        /* CENTERED COPYRIGHT */
+        .copyright {
             position: absolute;
             bottom: 40px;
-            left: 50px;
-            right: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .copyright {
+            left: 50%;
+            transform: translateX(-50%);
             font-size: 12px;
             opacity: 0.7;
             letter-spacing: 0.5px;
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 25px;
-        }
-        
-        .social-icons a {
-            color: white;
-            font-size: 16px;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-        
-        .social-icons a:hover {
-            opacity: 1;
+            text-align: center;
         }
         
         /* MOBILE */
@@ -130,13 +108,9 @@
                 bottom: 180px;
             }
             
-            .bottom-row {
-                flex-direction: column;
-                gap: 15px;
-                left: 20px;
-                right: 20px;
+            .copyright {
                 bottom: 30px;
-                text-align: center;
+                padding: 0 20px;
             }
         }
     </style>
@@ -161,14 +135,7 @@
         <div class="glass-btn">Video Editing</div>
     </div>
 
-    <!-- BOTTOM ROW -->
-    <div class="bottom-row">
-        <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-        </div>
-    </div>
+    <!-- CENTERED COPYRIGHT -->
+    <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
 </body>
 </html>
