@@ -3,52 +3,127 @@
 <head>
     <title>Morakinyo Kolade | 3D Portfolio</title>
     <style>
-        body {
+        /* RESET */
+        * {
             margin: 0;
-            padding: 20px;
-            font-family: Arial;
-            background: black;
-            color: white;
-            text-align: center;
+            padding: 0;
+            box-sizing: border-box;
         }
         
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        /* NAVBAR */
         .navbar {
             display: flex;
             justify-content: space-between;
-            padding: 20px;
+            align-items: center;
+            padding: 20px 40px;
+            font-weight: 500;
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-item:nth-child(1) { text-align: left; }
+        .nav-item:nth-child(2) { 
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .nav-item:nth-child(3) { text-align: right; }
+        
+        /* MAIN CONTENT */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            gap: 60px;
         }
         
         .tagline {
-            margin: 100px 0;
             font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-align: center;
         }
         
-        .buttons {
+        /* BUTTONS CONTAINER */
+        .buttons-container {
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            gap: 30px;
+            margin-top: 40px;
         }
         
-        .btn {
-            padding: 15px 30px;
-            background: #333;
-            border-radius: 25px;
+        .glass-btn {
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .nav-item:nth-child(1),
+            .nav-item:nth-child(3) {
+                text-align: center;
+            }
+            
+            .tagline {
+                font-size: 18px;
+                padding: 0 20px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .glass-btn {
+                padding: 15px 30px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- NAVBAR -->
     <div class="navbar">
-        <div>About</div>
-        <div>Morakinyo Kolade</div>
-        <div>Contact</div>
+        <div class="nav-item">About</div>
+        <div class="nav-item">Morakinyo Kolade</div>
+        <div class="nav-item">Contact</div>
     </div>
 
-    <div class="tagline">3D Animation · Motion Design · Product Visualization</div>
-
-    <div class="buttons">
-        <div class="btn">Product Animation</div>
-        <div class="btn">Motion Design</div>
-        <div class="btn">Video Editing</div>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="tagline">3D Animation · Motion Design · Product Visualization</div>
+        
+        <div class="buttons-container">
+            <div class="glass-btn">Product Animation</div>
+            <div class="glass-btn">Motion Design</div>
+            <div class="glass-btn">Video Editing</div>
+        </div>
     </div>
 </body>
 </html>
