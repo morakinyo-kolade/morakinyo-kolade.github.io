@@ -1,174 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Morakinyo Kolade | 3D Portfolio</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500&display=swap">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 500;
-    }
-    
-    body {
-      color: white;
-      overflow: hidden;
-      min-height: 100vh;
-      background-color: #000;
-    }
-    
-    /* Video background */
-    .video-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
-    }
-    
-    .video-bg video {
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      opacity: 0.7;
-    }
-    
-    /* Overlay */
-    .overlay {
-      position: relative;
-      z-index: 1;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 2rem;
-    }
-    
-    /* Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-    }
-    
-    .navbar span {
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1.5rem;
-      padding: 0.5rem;
-    }
-    
-    .navbar span:hover {
-      transform: scale(1.1);
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    
-    .navbar span:nth-child(2) {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
-    
-    /* Center text */
-    .tagline {
-      text-align: center;
-      font-size: 1.8rem;
-      letter-spacing: 2px;
-      margin-top: -10vh;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      font-family: 'Orbitron', sans-serif;
-    }
-    
-    /* Frosted glass categories with liquid glass effect */
-    .glass-container {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 10vh;
-    }
-    
-    .glass-item {
-      padding: 1.5rem 2.5rem;
-      border-radius: 15px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.4s ease;
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-      
-      /* Liquid glass effect */
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .glass-item::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-      );
-      transition: 0.5s;
-    }
-    
-    .glass-item:hover::before {
-      left: 100%;
-    }
-    
-    .glass-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.5);
-    }
-    
-    /* Custom cursor */
-    .cursor {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: white;
-      mix-blend-mode: difference;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.2s ease;
-    }
-    
-    .cursor-grow {
-      transform: translate(-50%, -50%) scale(1.5);
-    }
-    
-    /* Home button style */
-    .home-btn {
-      cursor: pointer;
-      text-decoration: none;
-      color: white;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
 
-  <!-- Video background with black-themed looping video -->
+  <!-- Video background -->
   <div class="video-bg">
     <video autoplay muted loop playsinline id="bgVideo">
-      <source src="https://cdn.videvo.net/videvo_files/video/free/2013-09-extra_large/preview/black_ink_clouds.mp4" type="video/mp4">
+      <source src="https://cdn.coverr.co/videos/coverr-moonlit-haze-1127/1080p.mp4" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
   </div>
@@ -176,17 +19,17 @@
   <!-- Overlay -->
   <div class="overlay">
 
-    <!-- Navbar with selectable items -->
+    <!-- Navbar -->
     <div class="navbar">
-      <span onclick="alert('Menu clicked')">☰</span>
-      <span class="home-btn" onclick="window.location.reload()">Morakinyo Kolade</span>
-      <span onclick="alert('Contact clicked')">✉</span>
+      <span class="nav-left">About</span>
+      <span class="nav-center" onclick="location.reload()">Morakinyo Kolade</span>
+      <span class="nav-right">Contact</span>
     </div>
 
     <!-- Center text -->
     <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
 
-    <!-- Frosted glass categories with liquid glass effect -->
+    <!-- Frosted glass categories -->
     <div class="glass-container">
       <div class="glass-item">Product Animation</div>
       <div class="glass-item">Motion Design</div>
@@ -197,22 +40,6 @@
   <!-- Custom cursor -->
   <div class="cursor"></div>
 
-  <script>
-    const cursor = document.querySelector('.cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.top = e.pageY + 'px';
-      cursor.style.left = e.pageX + 'px';
-    });
-    document.querySelectorAll('.glass-item').forEach(item => {
-      item.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
-      item.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
-    });
-    
-    // Make name act as home button
-    document.querySelector('.home-btn').addEventListener('click', function() {
-      window.location.href = window.location.href;
-    });
-  </script>
-
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
