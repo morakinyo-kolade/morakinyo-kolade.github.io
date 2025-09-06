@@ -7,38 +7,33 @@
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <!-- Video Background -->
-  <div class="video-container">
-    <video autoplay muted loop playsinline id="bgVideo">
-      <source src="https://cdn.pixabay.com/video/2023/06/19/164252_843551017_tiny.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+  <!-- Simple Background -->
+  <div class="background"></div>
 
-  <!-- Content Overlay -->
-  <div class="overlay">
-    <!-- Navigation Bar -->
+  <!-- Content -->
+  <div class="container">
+    <!-- Navigation -->
     <nav class="navbar">
-      <div class="nav-left">About</div>
-      <div class="nav-center" onclick="location.reload()">Morakinyo Kolade</div>
-      <div class="nav-right">Contact</div>
+      <div class="nav-item">About</div>
+      <div class="nav-item center" onclick="location.reload()">Morakinyo Kolade</div>
+      <div class="nav-item">Contact</div>
     </nav>
 
-    <!-- Main Tagline -->
-    <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
-
-    <!-- Glass Effect Buttons at Bottom -->
-    <div class="glass-container">
-      <div class="glass-item">Product Animation</div>
-      <div class="glass-item">Motion Design</div>
-      <div class="glass-item">Video Editing</div>
-    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+      <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
+      
+      <div class="buttons">
+        <div class="glass-btn">Product Animation</div>
+        <div class="glass-btn">Motion Design</div>
+        <div class="glass-btn">Video Editing</div>
+      </div>
+    </main>
   </div>
 
-  <!-- Custom Cursor -->
-  <div class="custom-cursor"></div>
-  
-  <!-- JavaScript -->
+  <!-- Cursor -->
+  <div class="cursor"></div>
+
   <script src="assets/js/main.js"></script>
 </body>
 </html>
