@@ -2,13 +2,12 @@
 <html>
 <head>
     <title>Morakinyo Kolade | 3D Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* DISABLE TEXT SELECTION */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none !important;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -21,7 +20,14 @@
             color: white;
             min-height: 100vh;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+        }
+        
+        /* Show default cursor on mobile */
+        @media (max-width: 768px) {
+            * {
+                cursor: default !important;
+            }
         }
         
         /* VIDEO BACKGROUND */
@@ -47,35 +53,30 @@
             object-fit: cover;
         }
         
-        /* TOP NAV */
+        /* TOP NAV - MOBILE FRIENDLY */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 50px 0 50px;
+            padding: 30px 20px 0 20px;
             width: 100%;
             position: relative;
             z-index: 10;
         }
         
         .nav-item {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: opacity 0.3s ease;
-            cursor: none;
         }
         
         .nav-item:hover {
             opacity: 0.7;
         }
         
-        .nav-home {
-            cursor: none;
-        }
-        
-        /* CENTERED MAIN TEXT */
+        /* CENTERED MAIN TEXT - MOBILE OPTIMIZED */
         .center-content {
             position: absolute;
             top: 50%;
@@ -84,62 +85,64 @@
             text-align: center;
             width: 100%;
             z-index: 10;
+            padding: 0 20px;
         }
         
         .main-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 300;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
+            line-height: 1.4;
         }
         
-        /* BOTTOM BUTTONS */
+        /* BOTTOM BUTTONS - MOBILE STACKING */
         .bottom-buttons {
             position: absolute;
-            bottom: 120px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 30px;
+            gap: 15px;
             z-index: 10;
+            width: 90%;
+            max-width: 400px;
         }
         
         .glass-btn {
-            padding: 15px 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-weight: 400;
             backdrop-filter: blur(10px);
-            font-size: 16px;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             transition: all 0.3s ease;
-            cursor: none;
-        }
-        
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
+            text-align: center;
+            flex: 1;
         }
         
         /* CENTERED COPYRIGHT */
         .copyright {
             position: absolute;
-            bottom: 40px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 12px;
+            font-size: 11px;
             opacity: 0.7;
             letter-spacing: 0.5px;
             text-align: center;
             user-select: none;
             pointer-events: none;
             z-index: 10;
+            width: 100%;
+            padding: 0 20px;
         }
         
-        /* CUSTOM CURSOR */
+        /* CUSTOM CURSOR - DESKTOP ONLY */
         .custom-cursor {
             width: 20px;
             height: 20px;
@@ -148,10 +151,7 @@
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: 
-                width 0.3s ease,
-                height 0.3s ease,
-                background 0.3s ease;
+            transition: all 0.3s ease;
             z-index: 1000;
             mix-blend-mode: difference;
         }
@@ -163,29 +163,76 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
         
-        /* MOBILE */
+        /* ===== MOBILE SPECIFIC STYLES ===== */
         @media (max-width: 768px) {
             .top-nav {
-                padding: 30px 20px 0 20px;
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
+                padding: 20px 15px 0 15px;
+            }
+            
+            .nav-item {
+                font-size: 13px;
             }
             
             .main-title {
                 font-size: 16px;
-                padding: 0 20px;
-                margin-bottom: 40px;
+                letter-spacing: 1px;
+                margin-bottom: 30px;
             }
             
             .bottom-buttons {
                 flex-direction: column;
-                gap: 20px;
-                bottom: 180px;
+                gap: 12px;
+                bottom: 140px;
+                width: 85%;
+            }
+            
+            .glass-btn {
+                padding: 18px 20px;
+                font-size: 13px;
+                border-radius: 20px;
             }
             
             .copyright {
-                bottom: 30px;
-                padding: 0 20px;
+                font-size: 10px;
+                bottom: 20px;
+            }
+            
+            /* Hide custom cursor on mobile */
+            .custom-cursor {
+                display: none !important;
+            }
+            
+            /* Better touch targets */
+            .nav-item, .glass-btn {
+                min-height: 44px; /* Apple's recommended minimum touch target */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        
+        /* Large mobile devices */
+        @media (max-width: 768px) and (min-height: 700px) {
+            .bottom-buttons {
+                bottom: 160px;
+            }
+            
+            .main-title {
+                margin-bottom: 50px;
+            }
+        }
+        
+        /* Very small devices */
+        @media (max-width: 320px) {
+            .main-title {
+                font-size: 14px;
+            }
+            
+            .glass-btn {
+                padding: 15px 18px;
+                font-size: 12px;
             }
         }
     </style>
@@ -220,63 +267,87 @@
     <!-- CENTERED COPYRIGHT -->
     <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
 
-    <!-- CUSTOM CURSOR -->
+    <!-- CUSTOM CURSOR (Desktop only) -->
     <div class="custom-cursor"></div>
 
     <script>
-        // DISABLE CONTEXT MENU (RIGHT-CLICK)
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        
-        // SMOOTH CURSOR WITH DRAG EFFECT
+        // ===== MOBILE DETECTION & TOUCH HANDLING =====
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         const cursor = document.querySelector('.custom-cursor');
-        let mouseX = 0;
-        let mouseY = 0;
-        let cursorX = 0;
-        let cursorY = 0;
-        const friction = 0.2;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * friction;
-            cursorY += (mouseY - cursorY) * friction;
+        
+        if (isMobile) {
+            // Remove cursor completely on mobile
+            if (cursor) cursor.remove();
             
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            
-            requestAnimationFrame(animateCursor);
+            // Add touch feedback for mobile
+            const touchElements = document.querySelectorAll('.nav-item, .glass-btn');
+            touchElements.forEach(el => {
+                el.addEventListener('touchstart', () => {
+                    el.style.opacity = '0.7';
+                    el.style.transform = 'scale(0.98)';
+                });
+                
+                el.addEventListener('touchend', () => {
+                    el.style.opacity = '';
+                    el.style.transform = '';
+                });
+            });
+        } else {
+            // ===== DESKTOP CURSOR CODE =====
+            let mouseX = 0;
+            let mouseY = 0;
+            let cursorX = 0;
+            let cursorY = 0;
+            const friction = 0.2;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * friction;
+                cursorY += (mouseY - cursorY) * friction;
+                
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                
+                requestAnimationFrame(animateCursor);
+            }
+
+            animateCursor();
+
+            // Hover effects for desktop
+            const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.classList.add('cursor-expand');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-expand');
+                });
+            });
         }
 
-        animateCursor();
-
-        // HOVER EFFECTS
-        const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                cursor.classList.add('cursor-expand');
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                cursor.classList.remove('cursor-expand');
+        // ===== COMMON FUNCTIONALITY =====
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        
+        // Page navigation
+        document.querySelectorAll('[data-page]').forEach(item => {
+            item.addEventListener('click', () => {
+                console.log('Navigating to:', item.getAttribute('data-page'));
             });
         });
 
-        // VIDEO SETUP - HOW TO USE YOUR OWN VIDEO:
-        // Option 1: Upload to GitHub (replace below)
-        // <source src="assets/videos/your-video.mp4" type="video/mp4">
-        
-        // Option 2: Use Vimeo/YouTube direct links
-        // <source src="your-vimeo-or-youtube-direct-link.mp4" type="video/mp4">
-        
-        // Option 3: Use a video hosting service
-        console.log('To use your own video:');
-        console.log('1. Upload to GitHub in assets/videos/ folder');
-        console.log('2. Replace the source above with: assets/videos/your-video-name.mp4');
-        console.log('3. Or use a direct link from any video hosting service');
+        // Video fallback
+        setTimeout(() => {
+            const video = document.querySelector('video');
+            if (video && video.paused) {
+                document.querySelector('.video-bg').style.background = 
+                    'linear-gradient(45deg, #000000, #1a1a2e)';
+            }
+        }, 2000);
     </script>
 </body>
 </html>
-
