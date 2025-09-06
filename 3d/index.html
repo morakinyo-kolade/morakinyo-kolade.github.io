@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Morakinyo Kolade | 3D Portfolio</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
   <style>
-    /* Reset margins */
-    body, html { margin: 0; padding: 0; height: 100%; font-family: 'Helvetica Neue', sans-serif; }
-    
+    body, html {
+      margin: 0; padding: 0; height: 100%; width: 100%;
+      font-family: 'Helvetica Neue', sans-serif;
+      overflow-x: hidden;
+    }
+
     /* Video background */
     .video-bg {
       position: fixed;
@@ -18,8 +20,11 @@
       overflow: hidden;
     }
     .video-bg iframe {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
+      border: none;
+      pointer-events: none;
     }
 
     /* Overlay */
@@ -32,7 +37,7 @@
       align-items: center;
       color: white;
       text-align: center;
-      background: rgba(0,0,0,0.3); /* subtle dark overlay */
+      background: rgba(0,0,0,0.45);
     }
 
     /* Nav bar */
@@ -45,19 +50,16 @@
       padding: 20px 40px;
       font-size: 1.2rem;
       color: white;
+      font-weight: 500;
     }
     .navbar span { cursor: pointer; }
 
-    /* Name + tagline */
-    h1 {
-      font-size: 3rem;
-      margin: 0;
-      letter-spacing: 2px;
-    }
+    /* Tagline */
     p.tagline {
-      font-size: 1.2rem;
-      margin-top: 10px;
+      font-size: 1.5rem;
       font-weight: 300;
+      margin: 0;
+      letter-spacing: 1px;
     }
 
     /* Categories */
@@ -84,6 +86,7 @@
       border-radius: 12px;
       transition: all 0.3s ease;
       cursor: pointer;
+      font-size: 1.1rem;
     }
     .cat-item:hover {
       transform: translateY(-5px);
@@ -95,7 +98,7 @@
 
   <!-- Background Video -->
   <div class="video-bg">
-    <iframe src="https://player.vimeo.com/video/76979871?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
+    <iframe src="https://player.vimeo.com/video/357274789?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
       frameborder="0" allow="autoplay; fullscreen; picture-in-picture"></iframe>
   </div>
 
@@ -106,7 +109,6 @@
       <span>Morakinyo Kolade</span>
       <span>✉</span>
     </div>
-    <h1>Morakinyo Kolade</h1>
     <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
   </div>
 
