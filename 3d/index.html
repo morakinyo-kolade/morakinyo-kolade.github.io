@@ -17,105 +17,92 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 30px;
             position: relative;
             overflow: hidden;
         }
         
-        /* VIDEO CANVAS AREA */
-        .video-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: #000; /* Black background for video area */
-        }
-        
-        /* TOP NAV */
+        /* TOP NAV - MATCHES REFERENCE */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            padding: 40px 50px 0 50px;
             width: 100%;
-            z-index: 2;
         }
         
         .top-nav div {
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        /* CENTERED TEXT OVER VIDEO */
-        .center-text {
+        /* CENTERED MAIN TEXT - LIKE REFERENCE */
+        .center-content {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            z-index: 2;
             width: 100%;
         }
         
-        .tagline {
-            font-size: 24px;
+        .main-title {
+            font-size: 20px;
             font-weight: 300;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
         }
         
-        /* BOTTOM RIGHT BUTTONS */
+        /* BOTTOM BUTTONS - MATCHES REFERENCE LAYOUT */
         .bottom-buttons {
             position: absolute;
-            bottom: 100px;
-            right: 50px;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            gap: 20px;
-            z-index: 2;
+            gap: 30px;
         }
         
         .glass-btn {
-            padding: 15px 35px;
+            padding: 15px 40px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
+            border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            font-weight: 500;
+            font-weight: 400;
             backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        .glass-btn:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        /* BOTTOM ELEMENTS */
+        /* BOTTOM ROW - MATCHES REFERENCE */
         .bottom-row {
             position: absolute;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
+            bottom: 40px;
+            left: 50px;
+            right: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 2;
         }
         
         .copyright {
-            font-size: 14px;
-            opacity: 0.8;
+            font-size: 12px;
+            opacity: 0.7;
+            letter-spacing: 0.5px;
         }
         
         .social-icons {
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
         
         .social-icons a {
             color: white;
-            font-size: 18px;
-            opacity: 0.8;
+            font-size: 16px;
+            opacity: 0.7;
             transition: opacity 0.3s ease;
         }
         
@@ -126,39 +113,35 @@
         /* MOBILE */
         @media (max-width: 768px) {
             .top-nav {
+                padding: 30px 20px 0 20px;
                 flex-direction: column;
                 gap: 15px;
             }
             
-            .tagline {
-                font-size: 18px;
+            .main-title {
+                font-size: 16px;
                 padding: 0 20px;
+                margin-bottom: 40px;
             }
             
             .bottom-buttons {
-                position: relative;
-                bottom: auto;
-                right: auto;
                 flex-direction: column;
-                gap: 15px;
-                margin: 40px auto;
-                width: fit-content;
+                gap: 20px;
+                bottom: 180px;
             }
             
             .bottom-row {
-                position: relative;
                 flex-direction: column;
                 gap: 15px;
+                left: 20px;
+                right: 20px;
+                bottom: 30px;
                 text-align: center;
-                margin-top: auto;
             }
         }
     </style>
 </head>
 <body>
-    <!-- VIDEO BACKGROUND AREA -->
-    <div class="video-canvas"></div>
-
     <!-- TOP NAV -->
     <div class="top-nav">
         <div>About</div>
@@ -166,19 +149,19 @@
         <div>Contact</div>
     </div>
 
-    <!-- CENTERED TEXT OVER VIDEO -->
-    <div class="center-text">
-        <div class="tagline">3D Animation · Motion Design · Product Visualization</div>
+    <!-- CENTERED CONTENT -->
+    <div class="center-content">
+        <div class="main-title">3D Animation · Motion Design · Product Visualization</div>
     </div>
 
-    <!-- BOTTOM RIGHT BUTTONS -->
+    <!-- BOTTOM BUTTONS -->
     <div class="bottom-buttons">
         <div class="glass-btn">Product Animation</div>
         <div class="glass-btn">Motion Design</div>
         <div class="glass-btn">Video Editing</div>
     </div>
 
-    <!-- BOTTOM ELEMENTS -->
+    <!-- BOTTOM ROW -->
     <div class="bottom-row">
         <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
         <div class="social-icons">
