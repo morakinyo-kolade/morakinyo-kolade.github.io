@@ -3,11 +3,16 @@
 <head>
     <title>Morakinyo Kolade | 3D Portfolio</title>
     <style>
+        /* DISABLE TEXT SELECTION */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             cursor: none !important;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         body {
@@ -188,8 +193,8 @@
 <body>
     <!-- VIDEO BACKGROUND -->
     <div class="video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="https://cdn.pixabay.com/video/2023/06/19/164252_843551017_tiny.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="https://www.pexels.com/download/video/25744128.mp4" type="video/mp4">
         </video>
     </div>
 
@@ -219,13 +224,16 @@
     <div class="custom-cursor"></div>
 
     <script>
+        // DISABLE CONTEXT MENU (RIGHT-CLICK)
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        
         // SMOOTH CURSOR WITH DRAG EFFECT
         const cursor = document.querySelector('.custom-cursor');
         let mouseX = 0;
         let mouseY = 0;
         let cursorX = 0;
         let cursorY = 0;
-        const friction = 0.2; // Heavy drag effect
+        const friction = 0.2;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
@@ -233,7 +241,6 @@
         });
 
         function animateCursor() {
-            // Heavy drag movement
             cursorX += (mouseX - cursorX) * friction;
             cursorY += (mouseY - cursorY) * friction;
             
@@ -245,9 +252,8 @@
 
         animateCursor();
 
-        // HOVER EFFECTS FOR CLICKABLE ITEMS
+        // HOVER EFFECTS
         const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
-
         hoverElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
                 cursor.classList.add('cursor-expand');
@@ -258,22 +264,18 @@
             });
         });
 
-        // PAGE NAVIGATION PLACEHOLDERS
-        document.querySelectorAll('[data-page]').forEach(item => {
-            item.addEventListener('click', () => {
-                console.log('Navigating to:', item.getAttribute('data-page'));
-                // Add your page navigation logic here
-            });
-        });
-
-        // VIDEO FALLBACK
-        setTimeout(() => {
-            const video = document.querySelector('video');
-            if (video && video.paused) {
-                document.querySelector('.video-bg').style.background = 
-                    'linear-gradient(45deg, #000000, #1a1a2e)';
-            }
-        }, 2000);
+        // VIDEO SETUP - HOW TO USE YOUR OWN VIDEO:
+        // Option 1: Upload to GitHub (replace below)
+        // <source src="assets/videos/your-video.mp4" type="video/mp4">
+        
+        // Option 2: Use Vimeo/YouTube direct links
+        // <source src="your-vimeo-or-youtube-direct-link.mp4" type="video/mp4">
+        
+        // Option 3: Use a video hosting service
+        console.log('To use your own video:');
+        console.log('1. Upload to GitHub in assets/videos/ folder');
+        console.log('2. Replace the source above with: assets/videos/your-video-name.mp4');
+        console.log('3. Or use a direct link from any video hosting service');
     </script>
 </body>
 </html>
