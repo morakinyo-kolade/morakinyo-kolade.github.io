@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- #BASIC SETUP -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Morakinyo Kolade | 3D Portfolio</title>
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+  <!-- #VIDEO BACKGROUND -->
   <div class="video-container">
     <video autoplay muted loop playsinline>
-      <source src="assets/video/background.mp4" type="video/mp4">
+      <!-- #VIDEO SOURCE - Change path to your video -->
+      <source src="assets/Videos/video1.mp4" type="video/mp4">
     </video>
   </div>
 
+  <!-- #CONTENT OVERLAY -->
   <div class="overlay">
+    <!-- #NAVIGATION BAR -->
     <div class="navbar">
       <span class="nav-left">About</span>
       <span class="nav-center" onclick="location.reload()">Morakinyo Kolade</span>
       <span class="nav-right">Contact</span>
     </div>
 
+    <!-- #MAIN TAGLINE -->
     <p class="tagline">3D Animation · Motion Design · Product Visualization</p>
 
+    <!-- #GLASS EFFECT BUTTONS -->
     <div class="glass-container">
       <div class="glass-item">Product Animation</div>
       <div class="glass-item">Motion Design</div>
@@ -29,8 +36,10 @@
     </div>
   </div>
 
+  <!-- #CUSTOM CURSOR -->
   <div class="custom-cursor"></div>
   
+  <!-- #JAVASCRIPT -->
   <script src="assets/js/main.js"></script>
 </body>
 </html>
