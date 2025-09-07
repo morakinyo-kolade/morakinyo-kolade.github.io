@@ -90,8 +90,8 @@
         }
         
         .nav-center {
-            font-weight: 500; /* Removed bolding */
-            letter-spacing: 1.2px; /* Same as others */
+            font-weight: 500;
+            letter-spacing: 1.2px;
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -157,7 +157,6 @@
             color: #ffffff;
         }
 
-        /* Button hover states for mobile */
         .glass-btn.hover {
             background: rgba(255, 255, 255, 0.18);
             transform: translateY(-4px) scale(1.05);
@@ -220,7 +219,7 @@
             border: 2px solid rgba(255, 255, 255, 0.9);
         }
 
-        /* ===== IMPROVED LOADING ANIMATION ===== */
+        /* ===== LOADING ANIMATION ===== */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -329,7 +328,6 @@
                 padding: 0 1.5rem;
             }
             
-            /* Mobile cursor styles */
             body {
                 cursor: none !important;
             }
@@ -361,7 +359,6 @@
             }
         }
 
-        /* ===== ACCESSIBILITY ===== */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -376,48 +373,39 @@
     </style>
 </head>
 <body>
-    <!-- Improved Loading Animation -->
     <div class="loading-overlay" id="loadingScreen">
         <div class="loader"></div>
     </div>
 
-    <!-- Video Background -->
     <div class="video-bg">
         <video autoplay muted loop playsinline id="bgVideo" oncanplay="hideLoader()" onerror="handleVideoError()">
-            <!-- Multiple fallback sources for better compatibility -->
-            <source src="https://www.pexels.com/video/a-video-illustration-of-a-human-deoxyribonucleic-acid-3191420.mp4" type="video/mp4">
-            <source src="https://www.pexels.com/video/a-video-illustration-of-a-human-deoxyribonucleic-acid-3191420.mp4" type="video/mp4">
+            <!-- YOUR PEXELS VIDEO -->
+            <source src="https://www.pexels.com/download/video/3191420/?fps=24.0&h=720&w=1280" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
 
-    <!-- Top Navigation -->
     <nav class="top-nav">
         <div class="nav-item" data-page="about">About</div>
         <div class="nav-item nav-center" onclick="location.reload()">Morakinyo Kolade</div>
         <div class="nav-item" data-page="contact">Contact</div>
     </nav>
 
-    <!-- Main Content -->
     <main class="center-content">
         <h1 class="main-title">3D Animation · Motion Design · Product Visualization</h1>
     </main>
 
-    <!-- Action Buttons -->
     <div class="bottom-buttons">
         <div class="glass-btn" data-page="product">Product Animation</div>
         <div class="glass-btn" data-page="motion">Motion Design</div>
         <div class="glass-btn" data-page="video">Video Editing</div>
     </div>
 
-    <!-- Copyright -->
     <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
 
-    <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
 
     <script>
-        // ===== LOADING MANAGEMENT =====
         function hideLoader() {
             const loader = document.getElementById('loadingScreen');
             loader.classList.add('hidden');
@@ -425,45 +413,27 @@
         }
 
         function handleVideoError() {
-            console.log('Video failed, using fallback background');
             document.querySelector('.video-bg').style.background = 
                 'linear-gradient(45deg, #000000, #1a1a2e, #16213e)';
             hideLoader();
         }
 
-        setTimeout(hideLoader, 4000); // Fallback
+        setTimeout(hideLoader, 4000);
 
-        // ===== CURSOR SYSTEM =====
         const cursor = document.querySelector('.custom-cursor');
-        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-        const friction = 0.4; // Much lighter drag for better responsiveness
+        let mouseX = 0, mouseY = 0;
         let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let isTouching = false;
-        let lastHoveredElement = null;
 
-        // Desktop cursor - lighter and more responsive
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
                 cursor.classList.add('cursor-visible');
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
             });
 
-            function animateDesktopCursor() {
-                // Much lighter drag for better responsiveness
-                cursorX = mouseX;
-                cursorY = mouseY;
-                
-                cursor.style.left = cursorX + 'px';
-                cursor.style.top = cursorY + 'px';
-                
-                requestAnimationFrame(animateDesktopCursor);
-            }
-            
-            // Start cursor animation
-            animateDesktopCursor();
-
-            // Desktop hover effects
             const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
             hoverElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
@@ -476,102 +446,55 @@
             });
         }
 
-        // Mobile touch cursor - FIXED
         if (isMobile) {
-            let touchStartX = 0, touchStartY = 0;
-            
-            // Touch start - show cursor immediately
             document.addEventListener('touchstart', (e) => {
                 isTouching = true;
                 const touch = e.touches[0];
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
-                
-                // Show cursor immediately at touch point
-                cursor.style.left = touchStartX + 'px';
-                cursor.style.top = touchStartY + 'px';
+                cursor.style.left = touch.clientX + 'px';
+                cursor.style.top = touch.clientY + 'px';
                 cursor.classList.add('cursor-visible', 'cursor-touch');
                 cursor.style.opacity = '1';
-                cursor.style.transition = 'opacity 0.1s ease';
-                
-                // Check if starting on a button
-                checkElementHover(touchStartX, touchStartY);
+                checkElementHover(touch.clientX, touch.clientY);
             });
 
-            // Touch move - cursor follows finger smoothly
             document.addEventListener('touchmove', (e) => {
                 if (!isTouching) return;
-                
                 const touch = e.touches[0];
-                const currentX = touch.clientX;
-                const currentY = touch.clientY;
-                
-                // Update cursor position smoothly
-                cursor.style.left = currentX + 'px';
-                cursor.style.top = currentY + 'px';
-                
-                // Check hover state during movement
-                checkElementHover(currentX, currentY);
+                cursor.style.left = touch.clientX + 'px';
+                cursor.style.top = touch.clientY + 'px';
+                checkElementHover(touch.clientX, touch.clientY);
             });
 
-            // Touch end - hide cursor with smooth animation
             document.addEventListener('touchend', () => {
                 isTouching = false;
-                
-                // Smooth fade out
-                cursor.style.transition = 'opacity 0.3s ease';
                 cursor.style.opacity = '0';
-                
-                // Remove hover states
                 removeAllHoverStates();
-                
-                // Reset after animation
-                setTimeout(() => {
-                    cursor.classList.remove('cursor-visible', 'cursor-touch', 'cursor-expand');
-                    cursor.style.transition = '';
-                }, 300);
             });
         }
 
-        // Hover detection function
         function checkElementHover(x, y) {
             const elements = document.querySelectorAll('.nav-item, .glass-btn');
             let hoveredElement = null;
             
             elements.forEach(el => {
                 const rect = el.getBoundingClientRect();
-                const isHovered = (
-                    x >= rect.left &&
-                    x <= rect.right &&
-                    y >= rect.top &&
-                    y <= rect.bottom
-                );
+                const isHovered = (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
                 
                 if (isHovered) {
                     hoveredElement = el;
-                    if (!el.classList.contains('hover')) {
-                        el.classList.add('hover');
-                        cursor.classList.add('cursor-expand');
-                        
-                        // Haptic feedback (if supported)
-                        if (navigator.vibrate) {
-                            navigator.vibrate(15);
-                        }
-                    }
+                    el.classList.add('hover');
+                    cursor.classList.add('cursor-expand');
+                    if (navigator.vibrate) navigator.vibrate(15);
                 } else {
                     el.classList.remove('hover');
                 }
             });
             
-            // Remove expand if no hover
             if (!hoveredElement) {
                 cursor.classList.remove('cursor-expand');
             }
-            
-            lastHoveredElement = hoveredElement;
         }
 
-        // Remove all hover states
         function removeAllHoverStates() {
             document.querySelectorAll('.nav-item, .glass-btn').forEach(el => {
                 el.classList.remove('hover');
@@ -579,25 +502,17 @@
             cursor.classList.remove('cursor-expand');
         }
 
-        // ===== VIDEO PLAYBACK ENSURED =====
         function ensureVideoPlayback() {
             const video = document.getElementById('bgVideo');
             if (video && video.paused) {
-                video.play().catch(e => {
-                    console.log('Video play prevented, using fallback');
-                    handleVideoError();
-                });
+                video.play().catch(handleVideoError);
             }
         }
 
-        // Try to play video on user interaction
         document.addEventListener('click', ensureVideoPlayback);
         document.addEventListener('touchstart', ensureVideoPlayback);
-
-        // Initial attempt
         setTimeout(ensureVideoPlayback, 1000);
 
-        // ===== CONTEXT MENU =====
         document.addEventListener('contextmenu', (e) => e.preventDefault());
     </script>
 </body>
