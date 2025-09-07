@@ -163,7 +163,7 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
         }
 
-        /* ===== COPYRIGHT ===== */
+        /* ===== COPYRIGHT - FIXED FOR MOBILE ===== */
         .copyright {
             position: absolute;
             bottom: 2.5rem;
@@ -179,8 +179,10 @@
             color: rgba(255, 255, 255, 0.8);
             font-weight: 400;
             width: 100%;
-            padding: 0 1rem;
+            padding: 0 2rem;
             box-sizing: border-box;
+            white-space: nowrap;
+            overflow: visible;
         }
 
         /* ===== LIQUID GLASS CURSOR ===== */
@@ -325,7 +327,9 @@
             .copyright {
                 bottom: 1.8rem;
                 font-size: 0.7rem;
-                padding: 0 1.5rem;
+                padding: 0 2rem;
+                white-space: normal;
+                line-height: 1.4;
             }
             
             body {
@@ -346,6 +350,7 @@
             .main-title {
                 font-size: 1rem;
                 letter-spacing: 1.5px;
+                margin-bottom: 2.5rem;
             }
             
             .glass-btn {
@@ -355,7 +360,12 @@
             
             .copyright {
                 font-size: 0.65rem;
-                padding: 0 1rem;
+                padding: 0 1.5rem;
+                bottom: 1.5rem;
+            }
+            
+            .bottom-buttons {
+                bottom: 8rem;
             }
         }
 
@@ -379,8 +389,8 @@
 
     <div class="video-bg">
         <video autoplay muted loop playsinline id="bgVideo" oncanplay="hideLoader()" onerror="handleVideoError()">
-            <!-- YOUR PEXELS VIDEO -->
-            <source src="https://www.pexels.com/download/video/3191420/?fps=24.0&h=720&w=1280" type="video/mp4">
+            <!-- RELIABLE VIDEO SOURCE THAT WORKS -->
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-background-1665-large.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
@@ -406,6 +416,7 @@
     <div class="custom-cursor"></div>
 
     <script>
+        // ===== LOADING =====
         function hideLoader() {
             const loader = document.getElementById('loadingScreen');
             loader.classList.add('hidden');
@@ -413,6 +424,7 @@
         }
 
         function handleVideoError() {
+            console.log('Video failed, using fallback background');
             document.querySelector('.video-bg').style.background = 
                 'linear-gradient(45deg, #000000, #1a1a2e, #16213e)';
             hideLoader();
@@ -420,18 +432,17 @@
 
         setTimeout(hideLoader, 4000);
 
+        // ===== CURSOR SYSTEM =====
         const cursor = document.querySelector('.custom-cursor');
-        let mouseX = 0, mouseY = 0;
         let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let isTouching = false;
 
+        // Desktop cursor
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
                 cursor.classList.add('cursor-visible');
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
             });
 
             const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
@@ -446,51 +457,66 @@
             });
         }
 
+        // Mobile touch cursor - SIMPLIFIED AND FIXED
         if (isMobile) {
             document.addEventListener('touchstart', (e) => {
                 isTouching = true;
                 const touch = e.touches[0];
+                
+                // Show cursor immediately
                 cursor.style.left = touch.clientX + 'px';
                 cursor.style.top = touch.clientY + 'px';
-                cursor.classList.add('cursor-visible', 'cursor-touch');
                 cursor.style.opacity = '1';
+                cursor.classList.add('cursor-visible', 'cursor-touch');
+                
                 checkElementHover(touch.clientX, touch.clientY);
             });
 
             document.addEventListener('touchmove', (e) => {
                 if (!isTouching) return;
                 const touch = e.touches[0];
+                
+                // Move cursor with finger
                 cursor.style.left = touch.clientX + 'px';
                 cursor.style.top = touch.clientY + 'px';
+                
                 checkElementHover(touch.clientX, touch.clientY);
             });
 
             document.addEventListener('touchend', () => {
                 isTouching = false;
+                // Smooth fade out
                 cursor.style.opacity = '0';
+                setTimeout(() => {
+                    cursor.classList.remove('cursor-visible', 'cursor-touch', 'cursor-expand');
+                }, 300);
                 removeAllHoverStates();
             });
         }
 
         function checkElementHover(x, y) {
             const elements = document.querySelectorAll('.nav-item, .glass-btn');
-            let hoveredElement = null;
+            let anyHovered = false;
             
             elements.forEach(el => {
                 const rect = el.getBoundingClientRect();
-                const isHovered = (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
+                const isHovered = (
+                    x >= rect.left && x <= rect.right &&
+                    y >= rect.top && y <= rect.bottom
+                );
                 
                 if (isHovered) {
-                    hoveredElement = el;
+                    anyHovered = true;
                     el.classList.add('hover');
                     cursor.classList.add('cursor-expand');
-                    if (navigator.vibrate) navigator.vibrate(15);
+                    // Haptic feedback
+                    if (navigator.vibrate) navigator.vibrate(10);
                 } else {
                     el.classList.remove('hover');
                 }
             });
             
-            if (!hoveredElement) {
+            if (!anyHovered) {
                 cursor.classList.remove('cursor-expand');
             }
         }
@@ -502,6 +528,7 @@
             cursor.classList.remove('cursor-expand');
         }
 
+        // ===== VIDEO PLAYBACK =====
         function ensureVideoPlayback() {
             const video = document.getElementById('bgVideo');
             if (video && video.paused) {
@@ -509,10 +536,14 @@
             }
         }
 
+        // Try to play video on interaction
         document.addEventListener('click', ensureVideoPlayback);
         document.addEventListener('touchstart', ensureVideoPlayback);
+        
+        // Initial attempt
         setTimeout(ensureVideoPlayback, 1000);
 
+        // ===== CONTEXT MENU =====
         document.addEventListener('contextmenu', (e) => e.preventDefault());
     </script>
 </body>
