@@ -13,6 +13,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -41,12 +42,13 @@
             object-fit: cover;
         }
         
-        /* Content */
+        /* Top Navigation */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 40px 50px 0 50px;
+            width: 100%;
         }
         
         .nav-item {
@@ -54,8 +56,15 @@
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: transform 0.3s ease;
+            cursor: none;
         }
         
+        .nav-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Main Content */
         .center-content {
             position: absolute;
             top: 50%;
@@ -63,6 +72,7 @@
             transform: translate(-50%, -50%);
             text-align: center;
             width: 100%;
+            padding: 0 20px;
         }
         
         .main-title {
@@ -73,6 +83,7 @@
             margin-bottom: 60px;
         }
         
+        /* Glass Buttons */
         .bottom-buttons {
             position: absolute;
             bottom: 120px;
@@ -80,20 +91,32 @@
             transform: translateX(-50%);
             display: flex;
             gap: 30px;
+            z-index: 10;
         }
         
         .glass-btn {
-            padding: 15px 40px;
+            padding: 18px 40px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
+            border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-weight: 500;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: none;
+            min-width: auto;
+            white-space: nowrap;
         }
         
+        .glass-btn.hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-6px) scale(1.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Copyright */
         .copyright {
             position: absolute;
             bottom: 40px;
@@ -103,33 +126,89 @@
             opacity: 0.7;
             text-align: center;
             width: 100%;
-            padding: 0 20px;
+            padding: 0 25px;
+            box-sizing: border-box;
         }
         
-        /* Fast Desktop Cursor */
+        /* Liquid Glass Cursor */
         .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid white;
+            width: 22px;
+            height: 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease;
-            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 10000;
             mix-blend-mode: difference;
+            backdrop-filter: blur(4px);
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+            opacity: 0;
+        }
+        
+        .cursor-visible {
+            opacity: 1;
         }
         
         .cursor-expand {
-            transform: translate(-50%, -50%) scale(2);
-            background: rgba(255, 255, 255, 0.1);
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 60%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
         }
         
-        /* Mobile */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .top-nav {
+                padding: 30px 25px 0 25px;
+                flex-wrap: nowrap;
+                gap: 10px;
+            }
+            
+            .nav-item {
+                font-size: 14px;
+                text-align: center;
+                flex: 1;
+            }
+            
+            .main-title {
+                font-size: 18px;
+                margin-bottom: 50px;
+                padding: 0 15px;
+            }
+            
+            .bottom-buttons {
+                flex-direction: column;
+                gap: 20px;
+                bottom: 140px;
+                width: 85%;
+                max-width: 300px;
+            }
+            
+            .glass-btn {
+                padding: 16px 35px;
+                font-size: 14px;
+                width: auto;
+                min-width: 0;
+            }
+            
             .copyright {
+                bottom: 30px;
                 font-size: 11px;
-                padding: 0 25px;
+                padding: 0 20px;
+            }
+            
+            /* Mobile cursor */
+            .custom-cursor {
+                width: 26px;
+                height: 26px;
+            }
+            
+            .cursor-expand {
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
@@ -145,7 +224,7 @@
     <!-- Navigation -->
     <div class="top-nav">
         <div class="nav-item">About</div>
-        <div class="nav-item">Morakinyo Kolade</div>
+        <div class="nav-item" onclick="location.reload()">Morakinyo Kolade</div>
         <div class="nav-item">Contact</div>
     </div>
 
@@ -168,28 +247,108 @@
     <div class="custom-cursor"></div>
 
     <script>
-        // Fast responsive cursor
+        // ===== CURSOR SYSTEM =====
         const cursor = document.querySelector('.custom-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        const friction = 0.3; // Smooth follow with slight weight
         
+        // Desktop cursor movement
         document.addEventListener('mousemove', (e) => {
-            // Fast movement - no drag delay
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.classList.add('cursor-visible');
         });
         
-        // Hover effects
+        function animateCursor() {
+            // Smooth follow with slight weight
+            cursorX += (mouseX - cursorX) * friction;
+            cursorY += (mouseY - cursorY) * friction;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Desktop hover effects
         const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.classList.add('cursor-expand');
+                if (el.classList.contains('glass-btn')) {
+                    el.classList.add('hover');
+                }
             });
             
             el.addEventListener('mouseleave', () => {
                 cursor.classList.remove('cursor-expand');
+                if (el.classList.contains('glass-btn')) {
+                    el.classList.remove('hover');
+                }
             });
         });
         
-        // Video fallback
+        // ===== MOBILE TOUCH CURSOR =====
+        let isTouching = false;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            document.addEventListener('touchstart', (e) => {
+                isTouching = true;
+                const touch = e.touches[0];
+                mouseX = touch.clientX;
+                mouseY = touch.clientY;
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+                cursor.classList.add('cursor-visible');
+                checkMobileHover(mouseX, mouseY);
+            });
+            
+            document.addEventListener('touchmove', (e) => {
+                if (!isTouching) return;
+                const touch = e.touches[0];
+                mouseX = touch.clientX;
+                mouseY = touch.clientY;
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+                checkMobileHover(mouseX, mouseY);
+            });
+            
+            document.addEventListener('touchend', () => {
+                isTouching = false;
+                cursor.classList.remove('cursor-visible', 'cursor-expand');
+                document.querySelectorAll('.glass-btn').forEach(btn => {
+                    btn.classList.remove('hover');
+                });
+            });
+        }
+        
+        function checkMobileHover(x, y) {
+            const buttons = document.querySelectorAll('.glass-btn');
+            let hovering = false;
+            
+            buttons.forEach(btn => {
+                const rect = btn.getBoundingClientRect();
+                const isHovering = (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
+                
+                if (isHovering) {
+                    hovering = true;
+                    btn.classList.add('hover');
+                    cursor.classList.add('cursor-expand');
+                    if (navigator.vibrate) navigator.vibrate(10);
+                } else {
+                    btn.classList.remove('hover');
+                }
+            });
+            
+            if (!hovering) {
+                cursor.classList.remove('cursor-expand');
+            }
+        }
+        
+        // ===== VIDEO FALLBACK =====
         setTimeout(() => {
             const video = document.querySelector('video');
             if (video && video.paused) {
