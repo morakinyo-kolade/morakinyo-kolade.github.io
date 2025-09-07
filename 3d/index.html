@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morakinyo Kolade | 3D Portfolio</title>
     <style>
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -14,22 +13,18 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
         
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             background: #000;
-            color: #ffffff;
+            color: white;
             min-height: 100vh;
-            position: relative;
             overflow: hidden;
-            cursor: none !important;
-            font-weight: 400;
-            line-height: 1.6;
+            cursor: none;
         }
-
-        /* ===== VIDEO BACKGROUND ===== */
+        
+        /* Video Background */
         .video-bg {
             position: fixed;
             top: 0;
@@ -37,64 +32,30 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            overflow: hidden;
             background: #000;
         }
         
         .video-bg video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(26,26,46,0.3) 100%);
-            z-index: 1;
+            object-fit: cover;
         }
-
-        /* ===== TOP NAVIGATION ===== */
+        
+        /* Content */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2.5rem 3.5rem 0 3.5rem;
-            width: 100%;
-            position: relative;
-            z-index: 20;
+            padding: 40px 50px 0 50px;
         }
         
         .nav-item {
-            font-size: 0.9rem;
+            font-size: 16px;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            color: rgba(255, 255, 255, 0.95);
-            padding: 0.5rem 1rem;
+            letter-spacing: 1px;
         }
         
-        .nav-item:hover {
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-        
-        .nav-center {
-            font-weight: 500;
-            letter-spacing: 1.2px;
-        }
-
-        /* ===== MAIN CONTENT ===== */
         .center-content {
             position: absolute;
             top: 50%;
@@ -102,449 +63,140 @@
             transform: translate(-50%, -50%);
             text-align: center;
             width: 100%;
-            z-index: 20;
-            padding: 0 2rem;
         }
         
         .main-title {
-            font-size: 1.4rem;
-            font-weight: 350;
-            letter-spacing: 2.5px;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 4rem;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            line-height: 1.3;
+            margin-bottom: 60px;
         }
-
-        /* ===== GLASS BUTTONS ===== */
+        
         .bottom-buttons {
             position: absolute;
-            bottom: 7.5rem;
+            bottom: 120px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 1.5rem;
-            z-index: 20;
+            gap: 30px;
         }
         
         .glass-btn {
-            padding: 1.1rem 2.5rem;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 2.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             font-weight: 500;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+            font-size: 16px;
             text-transform: uppercase;
-            letter-spacing: 1.1px;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            color: rgba(255, 255, 255, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-width: 11rem;
-            cursor: none;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
         }
         
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.18);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-        }
-
-        .glass-btn.hover {
-            background: rgba(255, 255, 255, 0.18);
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ===== COPYRIGHT - FIXED FOR MOBILE ===== */
         .copyright {
             position: absolute;
-            bottom: 2.5rem;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.75rem;
+            font-size: 12px;
             opacity: 0.7;
-            letter-spacing: 0.6px;
             text-align: center;
-            user-select: none;
-            pointer-events: none;
-            z-index: 20;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 400;
             width: 100%;
-            padding: 0 2rem;
-            box-sizing: border-box;
-            white-space: nowrap;
-            overflow: visible;
+            padding: 0 20px;
         }
-
-        /* ===== LIQUID GLASS CURSOR ===== */
+        
+        /* Fast Desktop Cursor */
         .custom-cursor {
-            width: 1.5rem;
-            height: 1.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.95);
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 10000;
+            transition: transform 0.1s ease;
+            z-index: 1000;
             mix-blend-mode: difference;
-            backdrop-filter: blur(4px);
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
-            opacity: 0;
-        }
-        
-        .cursor-visible {
-            opacity: 1;
         }
         
         .cursor-expand {
-            width: 4.5rem;
-            height: 4.5rem;
-            background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 70%);
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .cursor-touch {
-            width: 3rem;
-            height: 3rem;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.2) 70%);
-            border: 2px solid rgba(255, 255, 255, 0.9);
-        }
-
-        /* ===== LOADING ANIMATION ===== */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 0.6s ease;
+            transform: translate(-50%, -50%) scale(2);
+            background: rgba(255, 255, 255, 0.1);
         }
         
-        .loader {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .loader::before,
-        .loader::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            animation: pulse 1.5s ease-in-out infinite;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .loader::before {
-            width: 100%;
-            height: 100%;
-            border-top-color: #ffffff;
-            animation: spin 1.2s linear infinite;
-        }
-        
-        .loader::after {
-            width: 70%;
-            height: 70%;
-            border-right-color: rgba(255, 255, 255, 0.7);
-            animation: spinReverse 1.4s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes spinReverse {
-            to { transform: rotate(-360deg); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-        }
-        
-        .loading-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* ===== MOBILE RESPONSIVE ===== */
+        /* Mobile */
         @media (max-width: 768px) {
-            .top-nav {
-                padding: 2rem 1.5rem 0 1.5rem;
-                gap: 0.5rem;
-            }
-            
-            .nav-item {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
-                letter-spacing: 1px;
-            }
-            
-            .nav-center {
-                font-size: 0.9rem;
-            }
-            
-            .main-title {
-                font-size: 1.1rem;
-                letter-spacing: 1.8px;
-                margin-bottom: 3rem;
-                padding: 0 1rem;
-            }
-            
-            .bottom-buttons {
-                flex-direction: column;
-                gap: 1rem;
-                bottom: 9rem;
-                width: 85%;
-                max-width: 20rem;
-            }
-            
-            .glass-btn {
-                min-width: 100%;
-                padding: 1rem 2rem;
-                font-size: 0.9rem;
-            }
-            
             .copyright {
-                bottom: 1.8rem;
-                font-size: 0.7rem;
-                padding: 0 2rem;
-                white-space: normal;
-                line-height: 1.4;
-            }
-            
-            body {
-                cursor: none !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .top-nav {
-                padding: 1.5rem 1rem 0 1rem;
-            }
-            
-            .nav-item {
-                font-size: 0.75rem;
-                padding: 0.3rem 0.6rem;
-            }
-            
-            .main-title {
-                font-size: 1rem;
-                letter-spacing: 1.5px;
-                margin-bottom: 2.5rem;
-            }
-            
-            .glass-btn {
-                padding: 0.9rem 1.8rem;
-                font-size: 0.85rem;
-            }
-            
-            .copyright {
-                font-size: 0.65rem;
-                padding: 0 1.5rem;
-                bottom: 1.5rem;
-            }
-            
-            .bottom-buttons {
-                bottom: 8rem;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            
-            .custom-cursor {
-                display: none !important;
+                font-size: 11px;
+                padding: 0 25px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="loading-overlay" id="loadingScreen">
-        <div class="loader"></div>
-    </div>
-
+    <!-- Video Background -->
     <div class="video-bg">
-        <video autoplay muted loop playsinline id="bgVideo" oncanplay="hideLoader()" onerror="handleVideoError()">
-            <!-- RELIABLE VIDEO SOURCE THAT WORKS -->
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-background-1665-large.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline>
+            <source src="https://www.pexels.com/download/video/3191420.mp4" type="video/mp4">
         </video>
-        <div class="video-overlay"></div>
     </div>
 
-    <nav class="top-nav">
-        <div class="nav-item" data-page="about">About</div>
-        <div class="nav-item nav-center" onclick="location.reload()">Morakinyo Kolade</div>
-        <div class="nav-item" data-page="contact">Contact</div>
-    </nav>
+    <!-- Navigation -->
+    <div class="top-nav">
+        <div class="nav-item">About</div>
+        <div class="nav-item">Morakinyo Kolade</div>
+        <div class="nav-item">Contact</div>
+    </div>
 
-    <main class="center-content">
-        <h1 class="main-title">3D Animation · Motion Design · Product Visualization</h1>
-    </main>
+    <!-- Main Content -->
+    <div class="center-content">
+        <div class="main-title">3D Animation · Motion Design · Product Visualization</div>
+    </div>
 
+    <!-- Buttons -->
     <div class="bottom-buttons">
-        <div class="glass-btn" data-page="product">Product Animation</div>
-        <div class="glass-btn" data-page="motion">Motion Design</div>
-        <div class="glass-btn" data-page="video">Video Editing</div>
+        <div class="glass-btn">Product Animation</div>
+        <div class="glass-btn">Motion Design</div>
+        <div class="glass-btn">Video Editing</div>
     </div>
 
+    <!-- Copyright -->
     <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
 
+    <!-- Cursor -->
     <div class="custom-cursor"></div>
 
     <script>
-        // ===== LOADING =====
-        function hideLoader() {
-            const loader = document.getElementById('loadingScreen');
-            loader.classList.add('hidden');
-            setTimeout(() => loader.remove(), 600);
-        }
-
-        function handleVideoError() {
-            console.log('Video failed, using fallback background');
-            document.querySelector('.video-bg').style.background = 
-                'linear-gradient(45deg, #000000, #1a1a2e, #16213e)';
-            hideLoader();
-        }
-
-        setTimeout(hideLoader, 4000);
-
-        // ===== CURSOR SYSTEM =====
+        // Fast responsive cursor
         const cursor = document.querySelector('.custom-cursor');
-        let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        let isTouching = false;
-
-        // Desktop cursor
-        if (!isMobile) {
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                cursor.classList.add('cursor-visible');
-            });
-
-            const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.classList.add('cursor-expand');
-                });
-                
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('cursor-expand');
-                });
-            });
-        }
-
-        // Mobile touch cursor - SIMPLIFIED AND FIXED
-        if (isMobile) {
-            document.addEventListener('touchstart', (e) => {
-                isTouching = true;
-                const touch = e.touches[0];
-                
-                // Show cursor immediately
-                cursor.style.left = touch.clientX + 'px';
-                cursor.style.top = touch.clientY + 'px';
-                cursor.style.opacity = '1';
-                cursor.classList.add('cursor-visible', 'cursor-touch');
-                
-                checkElementHover(touch.clientX, touch.clientY);
-            });
-
-            document.addEventListener('touchmove', (e) => {
-                if (!isTouching) return;
-                const touch = e.touches[0];
-                
-                // Move cursor with finger
-                cursor.style.left = touch.clientX + 'px';
-                cursor.style.top = touch.clientY + 'px';
-                
-                checkElementHover(touch.clientX, touch.clientY);
-            });
-
-            document.addEventListener('touchend', () => {
-                isTouching = false;
-                // Smooth fade out
-                cursor.style.opacity = '0';
-                setTimeout(() => {
-                    cursor.classList.remove('cursor-visible', 'cursor-touch', 'cursor-expand');
-                }, 300);
-                removeAllHoverStates();
-            });
-        }
-
-        function checkElementHover(x, y) {
-            const elements = document.querySelectorAll('.nav-item, .glass-btn');
-            let anyHovered = false;
-            
-            elements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                const isHovered = (
-                    x >= rect.left && x <= rect.right &&
-                    y >= rect.top && y <= rect.bottom
-                );
-                
-                if (isHovered) {
-                    anyHovered = true;
-                    el.classList.add('hover');
-                    cursor.classList.add('cursor-expand');
-                    // Haptic feedback
-                    if (navigator.vibrate) navigator.vibrate(10);
-                } else {
-                    el.classList.remove('hover');
-                }
-            });
-            
-            if (!anyHovered) {
-                cursor.classList.remove('cursor-expand');
-            }
-        }
-
-        function removeAllHoverStates() {
-            document.querySelectorAll('.nav-item, .glass-btn').forEach(el => {
-                el.classList.remove('hover');
-            });
-            cursor.classList.remove('cursor-expand');
-        }
-
-        // ===== VIDEO PLAYBACK =====
-        function ensureVideoPlayback() {
-            const video = document.getElementById('bgVideo');
-            if (video && video.paused) {
-                video.play().catch(handleVideoError);
-            }
-        }
-
-        // Try to play video on interaction
-        document.addEventListener('click', ensureVideoPlayback);
-        document.addEventListener('touchstart', ensureVideoPlayback);
         
-        // Initial attempt
-        setTimeout(ensureVideoPlayback, 1000);
-
-        // ===== CONTEXT MENU =====
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('mousemove', (e) => {
+            // Fast movement - no drag delay
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // Hover effects
+        const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-expand');
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-expand');
+            });
+        });
+        
+        // Video fallback
+        setTimeout(() => {
+            const video = document.querySelector('video');
+            if (video && video.paused) {
+                document.querySelector('.video-bg').style.background = 
+                    'linear-gradient(45deg, #000000, #1a1a2e)';
+            }
+        }, 3000);
     </script>
 </body>
 </html>
