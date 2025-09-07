@@ -82,19 +82,16 @@
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             color: rgba(255, 255, 255, 0.95);
             padding: 0.5rem 1rem;
-            border-radius: 4px;
         }
         
         .nav-item:hover {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
             transform: translateY(-1px);
         }
         
         .nav-center {
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
+            font-weight: 500; /* Removed bolding */
+            letter-spacing: 1.2px; /* Same as others */
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -182,6 +179,9 @@
             z-index: 20;
             color: rgba(255, 255, 255, 0.8);
             font-weight: 400;
+            width: 100%;
+            padding: 0 1rem;
+            box-sizing: border-box;
         }
 
         /* ===== LIQUID GLASS CURSOR ===== */
@@ -193,7 +193,7 @@
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 10000;
             mix-blend-mode: difference;
             backdrop-filter: blur(4px);
@@ -220,7 +220,7 @@
             border: 2px solid rgba(255, 255, 255, 0.9);
         }
 
-        /* ===== LOADING STATES ===== */
+        /* ===== IMPROVED LOADING ANIMATION ===== */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -232,20 +232,52 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
         }
         
         .loader {
-            width: 3rem;
-            height: 3rem;
-            border: 3px solid rgba(255,255,255,0.3);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .loader::before,
+        .loader::after {
+            content: '';
+            position: absolute;
             border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .loader::before {
+            width: 100%;
+            height: 100%;
             border-top-color: #ffffff;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1.2s linear infinite;
+        }
+        
+        .loader::after {
+            width: 70%;
+            height: 70%;
+            border-right-color: rgba(255, 255, 255, 0.7);
+            animation: spinReverse 1.4s linear infinite;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+        
+        @keyframes spinReverse {
+            to { transform: rotate(-360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
         }
         
         .loading-overlay.hidden {
@@ -267,7 +299,7 @@
             }
             
             .nav-center {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             
             .main-title {
@@ -294,7 +326,7 @@
             .copyright {
                 bottom: 1.8rem;
                 font-size: 0.7rem;
-                padding: 0 1rem;
+                padding: 0 1.5rem;
             }
             
             /* Mobile cursor styles */
@@ -322,6 +354,11 @@
                 padding: 0.9rem 1.8rem;
                 font-size: 0.85rem;
             }
+            
+            .copyright {
+                font-size: 0.65rem;
+                padding: 0 1rem;
+            }
         }
 
         /* ===== ACCESSIBILITY ===== */
@@ -339,16 +376,17 @@
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
+    <!-- Improved Loading Animation -->
     <div class="loading-overlay" id="loadingScreen">
         <div class="loader"></div>
     </div>
 
     <!-- Video Background -->
     <div class="video-bg">
-        <video autoplay muted loop playsinline id="bgVideo" oncanplay="hideLoader()">
-            <!-- TESTED & WORKING VIDEO -->
+        <video autoplay muted loop playsinline id="bgVideo" oncanplay="hideLoader()" onerror="handleVideoError()">
+            <!-- Multiple fallback sources for better compatibility -->
             <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-background-1665-large.mp4" type="video/mp4">
+            <source src="https://cdn.pixabay.com/video/2023/10/26/185322-875735017_tiny.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
@@ -383,20 +421,27 @@
         function hideLoader() {
             const loader = document.getElementById('loadingScreen');
             loader.classList.add('hidden');
-            setTimeout(() => loader.remove(), 500);
+            setTimeout(() => loader.remove(), 600);
         }
 
-        setTimeout(hideLoader, 3000); // Fallback
+        function handleVideoError() {
+            console.log('Video failed, using fallback background');
+            document.querySelector('.video-bg').style.background = 
+                'linear-gradient(45deg, #000000, #1a1a2e, #16213e)';
+            hideLoader();
+        }
+
+        setTimeout(hideLoader, 4000); // Fallback
 
         // ===== CURSOR SYSTEM =====
         const cursor = document.querySelector('.custom-cursor');
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-        const friction = 0.15;
+        const friction = 0.4; // Much lighter drag for better responsiveness
         let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let isTouching = false;
         let lastHoveredElement = null;
 
-        // Desktop cursor
+        // Desktop cursor - lighter and more responsive
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
@@ -405,58 +450,76 @@
             });
 
             function animateDesktopCursor() {
-                cursorX += (mouseX - cursorX) * friction;
-                cursorY += (mouseY - cursorY) * friction;
+                // Much lighter drag for better responsiveness
+                cursorX = mouseX;
+                cursorY = mouseY;
                 
                 cursor.style.left = cursorX + 'px';
                 cursor.style.top = cursorY + 'px';
                 
                 requestAnimationFrame(animateDesktopCursor);
             }
+            
+            // Start cursor animation
             animateDesktopCursor();
+
+            // Desktop hover effects
+            const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('cursor-expand');
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-expand');
+                });
+            });
         }
 
-        // Mobile touch cursor
+        // Mobile touch cursor - FIXED
         if (isMobile) {
             let touchStartX = 0, touchStartY = 0;
             
-            // Touch start - show cursor
+            // Touch start - show cursor immediately
             document.addEventListener('touchstart', (e) => {
                 isTouching = true;
                 const touch = e.touches[0];
                 touchStartX = touch.clientX;
                 touchStartY = touch.clientY;
                 
+                // Show cursor immediately at touch point
                 cursor.style.left = touchStartX + 'px';
                 cursor.style.top = touchStartY + 'px';
                 cursor.classList.add('cursor-visible', 'cursor-touch');
+                cursor.style.opacity = '1';
+                cursor.style.transition = 'opacity 0.1s ease';
                 
                 // Check if starting on a button
                 checkElementHover(touchStartX, touchStartY);
             });
 
-            // Touch move - move cursor
+            // Touch move - cursor follows finger smoothly
             document.addEventListener('touchmove', (e) => {
                 if (!isTouching) return;
                 
                 const touch = e.touches[0];
-                mouseX = touch.clientX;
-                mouseY = touch.clientY;
+                const currentX = touch.clientX;
+                const currentY = touch.clientY;
                 
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
+                // Update cursor position smoothly
+                cursor.style.left = currentX + 'px';
+                cursor.style.top = currentY + 'px';
                 
                 // Check hover state during movement
-                checkElementHover(mouseX, mouseY);
+                checkElementHover(currentX, currentY);
             });
 
-            // Touch end - hide cursor with animation
+            // Touch end - hide cursor with smooth animation
             document.addEventListener('touchend', () => {
                 isTouching = false;
                 
-                // Shrink and fade out animation
-                cursor.style.transition = 'all 0.3s ease';
-                cursor.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                // Smooth fade out
+                cursor.style.transition = 'opacity 0.3s ease';
                 cursor.style.opacity = '0';
                 
                 // Remove hover states
@@ -466,8 +529,6 @@
                 setTimeout(() => {
                     cursor.classList.remove('cursor-visible', 'cursor-touch', 'cursor-expand');
                     cursor.style.transition = '';
-                    cursor.style.transform = '';
-                    cursor.style.opacity = '0';
                 }, 300);
             });
         }
@@ -494,7 +555,7 @@
                         
                         // Haptic feedback (if supported)
                         if (navigator.vibrate) {
-                            navigator.vibrate(10);
+                            navigator.vibrate(15);
                         }
                     }
                 } else {
@@ -507,10 +568,7 @@
                 cursor.classList.remove('cursor-expand');
             }
             
-            // Handle element change
-            if (hoveredElement !== lastHoveredElement) {
-                lastHoveredElement = hoveredElement;
-            }
+            lastHoveredElement = hoveredElement;
         }
 
         // Remove all hover states
@@ -521,26 +579,23 @@
             cursor.classList.remove('cursor-expand');
         }
 
-        // Desktop hover effects
-        if (!isMobile) {
-            const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.classList.add('cursor-expand');
+        // ===== VIDEO PLAYBACK ENSURED =====
+        function ensureVideoPlayback() {
+            const video = document.getElementById('bgVideo');
+            if (video && video.paused) {
+                video.play().catch(e => {
+                    console.log('Video play prevented, using fallback');
+                    handleVideoError();
                 });
-                
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('cursor-expand');
-                });
-            });
+            }
         }
 
-        // ===== ERROR HANDLING =====
-        document.getElementById('bgVideo').addEventListener('error', () => {
-            document.querySelector('.video-bg').style.background = 
-                'linear-gradient(45deg, #000000, #1a1a2e, #16213e)';
-            hideLoader();
-        });
+        // Try to play video on user interaction
+        document.addEventListener('click', ensureVideoPlayback);
+        document.addEventListener('touchstart', ensureVideoPlayback);
+
+        // Initial attempt
+        setTimeout(ensureVideoPlayback, 1000);
 
         // ===== CONTEXT MENU =====
         document.addEventListener('contextmenu', (e) => e.preventDefault());
