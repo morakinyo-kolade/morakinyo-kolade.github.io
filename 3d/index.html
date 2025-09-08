@@ -72,12 +72,13 @@
         .nav-center {
             text-align: center;
             font-family: 'Cedarville Cursive', cursive;
-            font-size: 32px !important;
+            font-size: 28px !important;
             font-weight: 400;
             letter-spacing: 1.5px;
             transform: translateY(1px);
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: none;
         }
         
         .nav-right {
@@ -204,7 +205,7 @@
             backdrop-filter: blur(6px);
         }
         
-        /* Enhanced Loading Animation */
+        /* Enhanced Loading Animation - REVERTED */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -228,7 +229,8 @@
         }
         
         .loader-signature {
-            font-family: 'Cedarville Cursive', cursive;
+            font-family: 'Playfair Display', cursive;
+            font-style: italic;
             font-size: 32px;
             color: white;
             opacity: 0;
@@ -256,7 +258,7 @@
             }
             
             .nav-center {
-                font-size: 26px !important;
+                font-size: 22px !important;
             }
             
             .main-title {
@@ -305,17 +307,17 @@
     </style>
 </head>
 <body>
-    <!-- Enhanced Loading Animation -->
+    <!-- Enhanced Loading Animation - REVERTED -->
     <div class="loading-overlay" id="loadingScreen">
         <div class="loader">
-            <div class="loader-signature">Morakinyo Kolade</div>
+            <div class="loader-signature">MK</div>
         </div>
     </div>
 
     <!-- Video Background -->
     <div class="video-bg">
         <video autoplay muted loop playsinline oncanplay="hideLoader()">
-            <source src="https://www.pexels.com/download/video/29848604.mp4" type="video/mp4">
+            <source src="https://www.pexels.com/download/video/29848604.mpload%20video/29848604.mp4" type="video/mp4">
         </video>
     </div>
 
