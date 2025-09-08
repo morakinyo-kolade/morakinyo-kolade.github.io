@@ -10,16 +10,12 @@
       --bg: #000;
       --text: #fff;
       --muted: rgba(255, 255, 255, 0.7);
-      --primary: #00d4ff;
-      --radius: 16px;
-      --max-width: 1180px;
     }
     
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      cursor: none !important;
     }
     
     html, body {
@@ -28,6 +24,14 @@
       color: var(--text);
       font-family: Inter, Arial, sans-serif;
       overflow-x: hidden;
+      /* Hide scrollbar for IE, Edge and Firefox */
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    body::-webkit-scrollbar {
+      display: none;
     }
     
     a {
@@ -53,13 +57,10 @@
     
     .bg-video {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translateX(-50%) translateY(-50%);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
     
@@ -89,6 +90,7 @@
     .brand {
       font-family: 'Great Vibes', cursive;
       font-size: 24px;
+      cursor: pointer;
     }
     
     nav {
@@ -103,7 +105,7 @@
     
     /* Main content */
     .wrap {
-      max-width: var(--max-width);
+      max-width: 1180px;
       margin: 80px auto 0;
       padding: 30px;
     }
@@ -155,8 +157,8 @@
     }
     
     .btn.primary {
-      background: rgba(0, 212, 255, 0.15);
-      border: 1px solid rgba(0, 212, 255, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
     
     .btn:hover {
@@ -165,10 +167,9 @@
     
     #cubeBox {
       height: 480px;
-      border-radius: var(--radius);
+      border-radius: 16px;
       overflow: hidden;
       background: transparent;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
     
     @media (max-width: 900px) {
@@ -255,7 +256,6 @@
     .card h4 {
       margin: 16px 0 8px;
       font-size: 18px;
-      color: var(--primary);
     }
     
     .meta {
@@ -298,28 +298,36 @@
       filter: brightness(1);
     }
     
+    .copyright {
+      position: absolute;
+      bottom: 24px;
+      left: 30px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
     /* Bottom blur effect */
     .bottom-blur {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 100px;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+      height: 80px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
       backdrop-filter: blur(5px);
       pointer-events: none;
       z-index: 50;
-      opacity: 0;
-      transition: opacity 0.3s ease;
     }
     
-    /* Custom cursor */
+    /* Frosted glass cursor */
     .cursor {
       position: fixed;
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: rgba(0, 212, 255, 0.7);
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       pointer-events: none;
       transform: translate(-50%, -50%);
       transition: transform 0.2s ease, width 0.2s ease, height 0.2s ease;
@@ -328,10 +336,8 @@
     }
     
     .cursor.hover {
-      width: 60px;
-      height: 60px;
-      background: rgba(0, 212, 255, 0.3);
-      border: 2px solid rgba(0, 212, 255, 0.7);
+      width: 50px;
+      height: 50px;
     }
   </style>
 </head>
@@ -346,14 +352,14 @@
   <div class="bg-overlay"></div>
   
   <!-- Bottom blur effect -->
-  <div class="bottom-blur" id="bottomBlur"></div>
+  <div class="bottom-blur"></div>
 
-  <!-- Custom cursor -->
+  <!-- Frosted glass cursor -->
   <div class="cursor" id="cursor"></div>
 
   <!-- Frosted glass header -->
   <header>
-    <div class="brand">Morakinyo Kolade</div>
+    <div class="brand" id="homeButton">Morakinyo Kolade</div>
     <nav>
       <a class="nav-link" href="#about">About</a>
       <a class="nav-link" href="#contact">Contact</a>
@@ -366,7 +372,7 @@
         <h2 class="title">Motion. Form. Story.</h2>
         <p class="tag">3D generalist bringing products, ideas, and visuals to life.</p>
         <div class="cta-row">
-          <a href="#showreel" class="btn primary" id="showReelBtn">▶ Showreel</a>
+          <a href="#showreel" class="btn primary">▶ Showreel</a>
           <a href="https://example.com" class="btn">Download CV</a>
         </div>
       </div>
@@ -417,11 +423,11 @@
         <a href="https://linkedin.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
       </div>
     </footer>
+    <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.min.js"></script>
   <script>
-    // Custom cursor
+    // Frosted glass cursor
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', (e) => {
       cursor.style.left = e.clientX + 'px';
@@ -439,64 +445,15 @@
       });
     });
     
-    // Bottom blur effect
-    const bottomBlur = document.getElementById('bottomBlur');
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      
-      // Show blur when near bottom of page
-      if (documentHeight - (scrollPosition + windowHeight) < 200) {
-        bottomBlur.style.opacity = '1';
-      } else {
-        bottomBlur.style.opacity = '0';
-      }
+    // Home button functionality
+    document.getElementById('homeButton').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     
-    // 3D cube
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, 520 / 480, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(520, 480);
-    document.getElementById('cubeBox').appendChild(renderer.domElement);
-    
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshStandardMaterial({ 
-      color: 0x00d4ff, 
-      metalness: 0.7, 
-      roughness: 0.2 
+    // Ensure video plays
+    document.querySelector('.bg-video').addEventListener('canplay', function() {
+      this.play();
     });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-    
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 5, 5);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-    
-    camera.position.z = 5;
-    
-    let mouseX = 0;
-    let mouseY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-    
-    function animateCube() {
-      requestAnimationFrame(animateCube);
-      
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      cube.rotation.x += mouseY * 0.05;
-      cube.rotation.y += mouseX * 0.05;
-      
-      renderer.render(scene, camera);
-    }
-    
-    animateCube();
   </script>
 </body>
 </html>
