@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morakinyo Kolade | 3D Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital@1&family=Cedarville+Cursive&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -15,6 +16,7 @@
             -ms-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            cursor: none !important;
         }
         
         body {
@@ -23,7 +25,6 @@
             color: white;
             min-height: 100vh;
             overflow: hidden;
-            cursor: none;
             font-weight: 300;
         }
         
@@ -44,7 +45,7 @@
             object-fit: cover;
         }
         
-        /* Top Navigation - Fixed Alignment */
+        /* Top Navigation */
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -55,12 +56,8 @@
         }
         
         .nav-item {
-            font-size: 16px;
             font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             transition: transform 0.3s ease;
-            cursor: none;
             flex: 1;
             white-space: nowrap;
         }
@@ -76,7 +73,6 @@
             font-weight: 400;
             letter-spacing: 1.5px;
             transform: translateY(1px);
-            cursor: pointer;
             transition: all 0.3s ease;
             text-transform: none;
         }
@@ -89,12 +85,17 @@
             transform: translateY(-2px);
         }
         
-        .nav-center:hover {
-            transform: translateY(-2px) scale(1.05);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        .nav-icon {
+            font-size: 20px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
         }
         
-        /* Main Content - Perfect Centering */
+        .nav-icon:hover {
+            opacity: 1;
+        }
+        
+        /* Main Content */
         .center-content {
             position: absolute;
             top: 50%;
@@ -114,7 +115,7 @@
             line-height: 1.4;
         }
         
-        /* Single Main Button - Fixed Mobile Alignment */
+        /* Main Button */
         .main-button-container {
             position: absolute;
             bottom: 160px;
@@ -134,7 +135,6 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: none;
             position: relative;
             overflow: hidden;
             white-space: nowrap;
@@ -176,7 +176,7 @@
             font-weight: 300;
         }
         
-        /* Liquid Glass Cursor - Refined Speed */
+        /* Custom Cursor */
         .custom-cursor {
             width: 20px;
             height: 20px;
@@ -205,7 +205,7 @@
             backdrop-filter: blur(6px);
         }
         
-        /* Enhanced Loading Animation - REVERTED */
+        /* Loading Animation */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -253,12 +253,12 @@
                 padding: 30px 25px 0 25px;
             }
             
-            .nav-item {
-                font-size: 14px;
-            }
-            
             .nav-center {
                 font-size: 22px !important;
+            }
+            
+            .nav-icon {
+                font-size: 18px;
             }
             
             .main-title {
@@ -274,7 +274,6 @@
             .main-glass-btn {
                 padding: 20px 40px;
                 font-size: 16px;
-                text-align: center;
             }
             
             .copyright {
@@ -282,7 +281,6 @@
                 font-size: 11px;
             }
             
-            /* Mobile cursor */
             .custom-cursor {
                 width: 22px;
                 height: 22px;
@@ -293,21 +291,10 @@
                 height: 40px;
             }
         }
-
-        /* iPhone Specific Fixes */
-        @supports (-webkit-touch-callout: none) {
-            .loading-overlay {
-                -webkit-backdrop-filter: blur(10px);
-            }
-            
-            .main-glass-btn {
-                -webkit-backdrop-filter: blur(16px);
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Enhanced Loading Animation - REVERTED -->
+    <!-- Loading Animation -->
     <div class="loading-overlay" id="loadingScreen">
         <div class="loader">
             <div class="loader-signature">MK</div>
@@ -317,15 +304,24 @@
     <!-- Video Background -->
     <div class="video-bg">
         <video autoplay muted loop playsinline oncanplay="hideLoader()">
-            <source src="https://www.pexels.com/download/video/29848604.mpload%20video/29848604.mp4" type="video/mp4">
+            <source src="https://player.vimeo.com/external/370331493.sd.mp4?s=e90dcaba73c19e0e36f03406b47b5e33e8ca7a94&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
     </div>
 
-    <!-- Navigation - Properly Aligned -->
+    <!-- Navigation with Icons -->
     <div class="top-nav">
-        <div class="nav-item nav-left">About</div>
+        <div class="nav-item nav-left">
+            <div class="nav-icon" title="About">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
         <div class="nav-item nav-center" id="homeButton">Morakinyo Kolade</div>
-        <div class="nav-item nav-right">Contact</div>
+        <div class="nav-item nav-right">
+            <div class="nav-icon" title="Contact">
+                <i class="fas fa-envelope"></i>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -333,7 +329,7 @@
         <div class="main-title">3D Animation · Motion Design · Product Visualization</div>
     </div>
 
-    <!-- Single Main Button -->
+    <!-- Main Button -->
     <div class="main-button-container">
         <div class="main-glass-btn">Explore My Work</div>
     </div>
@@ -345,7 +341,7 @@
     <div class="custom-cursor"></div>
 
     <script>
-        // ===== ENHANCED LOADING =====
+        // Enhanced Loading
         function hideLoader() {
             const loader = document.getElementById('loadingScreen');
             loader.classList.add('hidden');
@@ -354,11 +350,11 @@
         
         setTimeout(hideLoader, 3000); // Fallback
 
-        // ===== CURSOR SYSTEM =====
+        // Cursor System
         const cursor = document.querySelector('.custom-cursor');
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
-        const desktopFriction = 0.5; // Faster response
+        const desktopFriction = 0.5;
         let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let isTouching = false;
         let lastHapticTime = 0;
@@ -368,7 +364,7 @@
             location.reload();
         });
 
-        // Desktop cursor - faster response
+        // Desktop cursor
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
@@ -388,7 +384,7 @@
             animateDesktopCursor();
         }
 
-        // ===== OPTIMIZED MOBILE TOUCH =====
+        // Mobile Touch
         if (isMobile) {
             document.addEventListener('touchstart', (e) => {
                 isTouching = true;
@@ -430,7 +426,7 @@
             });
         }
 
-        // ===== OPTIMIZED HOVER DETECTION =====
+        // Hover Detection
         function checkHover(x, y) {
             const now = Date.now();
             const button = document.querySelector('.main-glass-btn');
@@ -441,7 +437,6 @@
                 button.classList.add('hover');
                 cursor.classList.add('cursor-expand');
                 
-                // Reduced haptic feedback
                 if (navigator.vibrate && now - lastHapticTime > 1000) {
                     navigator.vibrate(3);
                     lastHapticTime = now;
@@ -470,12 +465,11 @@
             });
         });
 
-        // ===== VIDEO FALLBACK =====
+        // Video fallback
         setTimeout(() => {
             const video = document.querySelector('video');
             if (video && video.paused) {
-                document.querySelector('.video-bg').style.background = 
-                    'linear-gradient(45deg, #000000, #1a1a2e)';
+                document.querySelector('.video-bg').style.background = '#000';
             }
         }, 4000);
     </script>
