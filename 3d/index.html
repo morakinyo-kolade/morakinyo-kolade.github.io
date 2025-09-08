@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -21,6 +21,15 @@
     a{text-decoration:none;color:inherit}
     img{display:block;max-width:100%}
 
+    /* Frosted glass container */
+    .glass-container {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
     /* background video */
     .bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;opacity:0.55}
     .bg-overlay{position:fixed;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.6),rgba(0,0,0,0.3));z-index:-1}
@@ -28,7 +37,8 @@
     .wrap{max-width:var(--max-width);margin:0 auto;padding:30px;position:relative;z-index:2}
 
     header.top{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
-    .brand{cursor:pointer;font-weight:700;font-size:20px;color:var(--text)}
+    .brand{cursor:pointer;font-weight:400;font-size:16px;color:var(--muted);padding:6px 10px;border-radius:6px}
+    .brand:hover{color:var(--text);background:rgba(255,255,255,0.06)}
 
     nav.right{display:flex;gap:16px}
     .nav-link{font-size:14px;color:var(--muted);padding:6px 10px;border-radius:6px}
@@ -60,11 +70,11 @@
     .card h4{margin:10px 0 6px}
     .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
     .tools{display:flex;gap:8px;align-items:center}
-    .tools img{width:26px;height:26px;filter:invert(1)}
+    .tools img{width:26px;height:26px;}
 
     footer{border-top:1px solid rgba(255,255,255,0.1);padding:22px 0;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
     footer .social{display:flex;gap:12px}
-    footer .social a img{width:18px;height:18px;filter:invert(1);opacity:0.95}
+    footer .social a img{width:18px;height:18px;opacity:0.95}
 
     /* custom cursor */
     .cursor{position:fixed;left:0;top:0;width:var(--cursor-size);height:var(--cursor-size);border-radius:50%;background:rgba(255,255,255,0.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.25);pointer-events:none;transform:translate(-50%,-50%);transition:transform .15s ease-out,width .15s,height .15s;z-index:10000}
@@ -75,78 +85,82 @@
 </head>
 <body>
   <!-- background video -->
-  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="https://www.pexels.com/download/video/28298935.mp4" type="video/mp4">
+  <video class="bg-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+    <source src="https://player.vimeo.com/external/370331493.sd.mp4?s=e90dcaba73c19e0e36f03406b47b5e33e8ca7a94&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+    <source src="https://player.vimeo.com/external/370331493.hd.mp4?s=6f0a1323104ffa395e208ebc07938ff408a3e0e0&profile_id=175&oauth2_token_id=57447761" type="video/mp4">
   </video>
   <div class="bg-overlay"></div>
 
-  <!-- custom cursor -->
-  <div class="cursor" id="cursor"></div>
+  <!-- Frosted glass container -->
+  <div class="glass-container">
+    <div class="wrap">
+      <!-- custom cursor -->
+      <div class="cursor" id="cursor"></div>
 
-  <div class="wrap">
-    <header class="top">
-      <div class="brand" onclick="location.reload()">Morakinyo Kolade</div>
-      <nav class="right">
-        <a class="nav-link" href="#about">About</a>
-        <a class="nav-link" href="#contact">Contact</a>
-      </nav>
-    </header>
+      <header class="top">
+        <div class="brand" onclick="location.reload()">Morakinyo Kolade</div>
+        <nav class="right">
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </nav>
+      </header>
 
-    <section class="hero" id="about">
-      <div>
-        <h2 class="title">Motion. Form. Story.</h2>
-        <p class="tag">3D generalist bringing products, ideas, and visuals to life.</p>
-        <div class="cta-row">
-          <a href="#showreel" class="btn primary" id="showReelBtn">▶ Showreel</a>
-          <a href="cv.pdf" class="btn">Download CV</a>
+      <section class="hero" id="about">
+        <div>
+          <h2 class="title">Motion. Form. Story.</h2>
+          <p class="tag">3D generalist bringing products, ideas, and visuals to life.</p>
+          <div class="cta-row">
+            <a href="#showreel" class="btn primary" id="showReelBtn">▶ Showreel</a>
+            <a href="https://example.com" class="btn">Download CV</a>
+          </div>
         </div>
-      </div>
-      <div id="cubeBox"></div>
-    </section>
+        <div id="cubeBox"></div>
+      </section>
 
-    <section class="projects">
-      <h2 class="section-title">Explore My Work</h2>
-      <p class="section-sub">A selection of projects across 3D animation, motion design, and video editing.</p>
-      <div class="projects-grid">
-        <div class="card"><div class="inner">
-          <img class="thumb" src="https://picsum.photos/400/240?random=11" alt="Product animation preview">
-          <h4>Product Animation</h4>
-          <div class="meta">Category: 3D Animation</div>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
-          </div>
-        </div></div>
-        <div class="card"><div class="inner">
-          <img class="thumb" src="https://picsum.photos/400/240?random=12" alt="Motion design preview">
-          <h4>Motion Design</h4>
-          <div class="meta">Category: Motion Design</div>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
-          </div>
-        </div></div>
-        <div class="card"><div class="inner">
-          <img class="thumb" src="https://picsum.photos/400/240?random=13" alt="Video editing preview">
-          <h4>Video Editing</h4>
-          <div class="meta">Category: Video Editing</div>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" alt="Premiere Pro">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/davinciresolve.svg" alt="DaVinci Resolve">
-          </div>
-        </div></div>
-      </div>
-    </section>
+      <section class="projects">
+        <h2 class="section-title">Explore My Work</h2>
+        <p class="section-sub">A selection of projects across 3D animation, motion design, and video editing.</p>
+        <div class="projects-grid">
+          <div class="card"><div class="inner">
+            <img class="thumb" src="https://picsum.photos/400/240?random=11" alt="Product animation preview">
+            <h4>Product Animation</h4>
+            <div class="meta">Category: 3D Animation</div>
+            <div class="tools">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender" style="filter: invert(53%) sepia(89%) saturate(1492%) hue-rotate(353deg) brightness(101%) contrast(101%)">
+            </div>
+          </div></div>
+          <div class="card"><div class="inner">
+            <img class="thumb" src="https://picsum.photos/400/240?random=12" alt="Motion design preview">
+            <h4>Motion Design</h4>
+            <div class="meta">Category: Motion Design</div>
+            <div class="tools">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects" style="filter: invert(25%) sepia(89%) saturate(2158%) hue-rotate(245deg) brightness(90%) contrast(93%)">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender" style="filter: invert(53%) sepia(89%) saturate(1492%) hue-rotate(353deg) brightness(101%) contrast(101%)">
+            </div>
+          </div></div>
+          <div class="card"><div class="inner">
+            <img class="thumb" src="https://picsum.photos/400/240?random=13" alt="Video editing preview">
+            <h4>Video Editing</h4>
+            <div class="meta">Category: Video Editing</div>
+            <div class="tools">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects" style="filter: invert(25%) sepia(89%) saturate(2158%) hue-rotate(245deg) brightness(90%) contrast(93%)">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" alt="Premiere Pro" style="filter: invert(32%) sepia(98%) saturate(1208%) hue-rotate(187deg) brightness(93%) contrast(101%)">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/davinciresolve.svg" alt="DaVinci Resolve" style="filter: invert(19%) sepia(100%) saturate(4612%) hue-rotate(275deg) brightness(85%) contrast(108%)">
+            </div>
+          </div></div>
+        </div>
+      </section>
 
-    <footer id="contact">
-      <a href="mailto:hello@example.com">hello@example.com</a>
-      <div>© 2025 Morakinyo Kolade. All rights reserved.</div>
-      <div class="social">
-        <a href="https://instagram.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
-        <a href="https://behance.net" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/behance.svg" alt="Behance"></a>
-        <a href="https://linkedin.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
-      </div>
-    </footer>
+      <footer id="contact">
+        <a href="mailto:hello@example.com">hello@example.com</a>
+        <div>© 2025 Morakinyo Kolade. All rights reserved.</div>
+        <div class="social">
+          <a href="https://instagram.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+          <a href="https://behance.net" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/behance.svg" alt="Behance"></a>
+          <a href="https://linkedin.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+        </div>
+      </footer>
+    </div>
   </div>
 
   <!-- Modal for Showreel -->
@@ -184,14 +198,49 @@
     scene.add(cube);
     camera.position.z=3;
     let targetX=0,targetY=0;
+    let isSpinning = false;
+    let spinSpeed = 0;
+    
     document.addEventListener('mousemove',e=>{
-      const x=(e.clientX/window.innerWidth-0.5)*2;
-      const y=(e.clientY/window.innerHeight-0.5)*2;
-      targetX=y*2;targetY=x*2;
+      if (!isSpinning) {
+        const x=(e.clientX/window.innerWidth-0.5)*2;
+        const y=(e.clientY/window.innerHeight-0.5)*2;
+        targetX=y*2;targetY=x*2;
+      }
     });
-    function animate(){requestAnimationFrame(animate);cube.rotation.x+=(targetX-cube.rotation.x)*0.05;cube.rotation.y+=(targetY-cube.rotation.y)*0.05;renderer.render(scene,camera);}
+    
+    // Add click interaction
+    cubeBox.addEventListener('click', () => {
+      isSpinning = !isSpinning;
+      if (isSpinning) {
+        spinSpeed = 0.1;
+      } else {
+        spinSpeed = 0;
+      }
+    });
+    
+    function animate(){
+      requestAnimationFrame(animate);
+      
+      if (isSpinning) {
+        cube.rotation.x += spinSpeed;
+        cube.rotation.y += spinSpeed;
+        // Gradually increase spin speed
+        if (spinSpeed < 0.3) spinSpeed += 0.002;
+      } else {
+        cube.rotation.x+=(targetX-cube.rotation.x)*0.05;
+        cube.rotation.y+=(targetY-cube.rotation.y)*0.05;
+      }
+      
+      renderer.render(scene,camera);
+    }
     animate();
-    window.addEventListener('resize',()=>{renderer.setSize(cubeBox.clientWidth,cubeBox.clientHeight);camera.aspect=cubeBox.clientWidth/cubeBox.clientHeight;camera.updateProjectionMatrix()});
+    
+    window.addEventListener('resize',()=>{
+      renderer.setSize(cubeBox.clientWidth,cubeBox.clientHeight);
+      camera.aspect=cubeBox.clientWidth/cubeBox.clientHeight;
+      camera.updateProjectionMatrix();
+    });
 
     // card tilt
     document.querySelectorAll('.card').forEach(card=>{
