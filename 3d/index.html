@@ -1,302 +1,196 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Morakinyo Kolade — 3D Generalist</title>
-  <meta name="description" content="Motion. Form. Story. Morakinyo Kolade — 3D generalist portfolio." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#000;
       --text:#fff;
       --muted:rgba(255,255,255,0.65);
-      --gold1:#FFD700;
-      --gold2:#E6B800;
-      --accent-gradient:linear-gradient(90deg,var(--gold1),var(--gold2));
+      --orange:#ff7a1a;
       --radius:14px;
       --max-width:1180px;
-      --cursor-size:18px;
+      --cursor-size:20px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:var(--text);line-height:1.4;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      cursor:none; /* hide native cursor to use custom one */
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body,html{height:100%;background:#000;color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.4;cursor:none;overflow-x:hidden}
     a{color:inherit;text-decoration:none}
-    img{max-width:100%;height:auto;display:block}
+    img{display:block;max-width:100%}
 
-    /* custom cursor */
-    .cursor{
-      position:fixed;left:0;top:0;width:var(--cursor-size);height:var(--cursor-size);
-      border-radius:50%;pointer-events:none;transform:translate(-50%,-50%) scale(1);
-      background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);
-      box-shadow:0 6px 18px rgba(0,0,0,0.6);transition:transform .18s ease, width .18s ease, height .18s ease, background .18s;
-      z-index:9999;
+    /* background video */
+    .bg-video{
+      position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;object-fit:cover;opacity:0.4;
     }
-    .cursor.grow{transform:translate(-50%,-50%) scale(1.8);background:linear-gradient(90deg,var(--gold1),var(--gold2));width:44px;height:44px;border-radius:50%}
 
-    .wrap{max-width:var(--max-width);margin:0 auto;padding:30px;position:relative}
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:30px;position:relative;z-index:1}
 
     header.top{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{
-      display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;background:linear-gradient(135deg,#fff4, #fff2);
-      color:#000;font-weight:700;font-family:'Playfair Display',serif;font-size:16px;height:46px;
-    }
-    .logomark{width:36px;height:36px;display:grid;place-items:center;background:linear-gradient(90deg,var(--gold1),var(--gold2));border-radius:8px;font-weight:800;color:#000}
+    .brand{display:flex;align-items:center;gap:8px;cursor:pointer}
+    .logomark{color:var(--orange);font-weight:800;font-size:22px;font-family:'Playfair Display',serif}
+    .brand span{font-size:15px}
 
-    nav.right{display:flex;gap:16px;align-items:center}
-    .nav-link{font-size:14px;color:var(--muted);cursor:pointer;padding:6px 10px;border-radius:6px}
-    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+    nav.right{display:flex;gap:16px}
+    .nav-link{font-size:14px;color:var(--muted);padding:6px 10px;border-radius:6px}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.06)}
 
-    .hero{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center;padding:40px 0;min-height:58vh}
-    @media (max-width:1000px){.hero{grid-template-columns:1fr;min-height:48vh;padding-bottom:20px} .showreel{min-height:260px} .hero .title{font-size:32px}}
-    .title{font-family:'Playfair Display',serif;font-size:42px;margin:0 0 12px}
-    .tag{color:var(--muted);font-size:15px;margin-bottom:18px}
+    .hero{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center;min-height:60vh}
+    @media(max-width:900px){.hero{grid-template-columns:1fr;gap:20px}}
+    .title{font-family:'Playfair Display',serif;font-size:40px;margin-bottom:12px}
+    .tag{color:var(--muted);margin-bottom:18px}
     .cta-row{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{
-      padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--gold1);
-      font-weight:600;cursor:pointer;transition:.22s;display:inline-flex;align-items:center;gap:10px;
-    }
-    .btn.primary{background:var(--accent-gradient);color:#000;border:0}
-    .btn:hover{opacity:0.92}
+    .btn{padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:var(--orange);font-weight:600;cursor:pointer;transition:.3s}
+    .btn.primary{background:var(--orange);color:#000}
+    .btn:hover{opacity:.9}
 
-    .showreel{border-radius:var(--radius);overflow:hidden;background:#0b0b0b;border:1px solid rgba(255,255,255,0.06);
-      min-height:360px;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 18px 40px rgba(0,0,0,.6)}
-    .reel-video{width:100%;height:100%;object-fit:cover;display:block}
+    /* 3D cube container */
+    #cubeBox{height:320px;background:rgba(0,0,0,0.4);border-radius:var(--radius);overflow:hidden}
 
-    .section-title{text-align:center;font-family:'Playfair Display',serif;font-size:28px;margin:0;color:var(--text)}
-    .projects{padding:50px 0}
+    .section-title{text-align:center;font-family:'Playfair Display',serif;font-size:28px}
+    .projects{padding:60px 0}
     .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
-    @media(max-width:1000px){.projects-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:640px){.projects-grid{grid-template-columns:1fr}}
+    @media(max-width:900px){.projects-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.projects-grid{grid-template-columns:1fr}}
 
-    /* card base */
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.04);
-      border-radius:14px;overflow:hidden;padding:12px;cursor:pointer;transition:box-shadow .28s,transform .28s;
-      transform-style:preserve-3d; perspective:1200px;
-    }
-    .thumb{height:220px;border-radius:10px;background:#070707;display:grid;place-items:center;overflow:hidden;position:relative}
+    .card{background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);
+      border-radius:14px;padding:16px;transition:transform .2s,box-shadow .2s;will-change:transform;cursor:pointer}
+    .card:hover{box-shadow:0 20px 40px rgba(0,0,0,0.6)}
     .card h4{margin:10px 0 6px}
     .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
     .tools{display:flex;gap:8px;align-items:center}
-    .tools img{width:26px;height:26px;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.6))}
+    .tools img{width:26px;height:26px}
 
-    /* tilt inner layers */
-    .card .inner{transform-style:preserve-3d;transition:transform .25s ease;will-change:transform}
-    .card .shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,0.02),transparent);mix-blend-mode:overlay;opacity:0.6;transition:opacity .25s}
+    footer{border-top:1px solid rgba(255,255,255,0.1);padding:22px 0;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+    footer .social{display:flex;gap:14px}
+    footer .social a img{width:20px;height:20px;filter:invert(1)}
 
-    /* badge bottom tools row */
-    .tools-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-
-    footer{border-top:1px solid rgba(255,255,255,0.06);padding:22px 0;margin-top:60px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;gap:12px;flex-wrap:wrap}
-    .social{display:flex;gap:14px}
-    .social img{width:20px;height:20px;filter:invert(1)}
-
-    /* small responsive */
-    @media(max-width:420px){.logo .word{display:none}}
+    /* custom cursor */
+    .cursor{position:fixed;left:0;top:0;width:var(--cursor-size);height:var(--cursor-size);border-radius:50%;
+      background:rgba(255,255,255,0.1);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.2);
+      pointer-events:none;transform:translate(-50%,-50%);transition:transform .15s ease-out,width .15s,height .15s;background-blend-mode:overlay;z-index:10000}
+    .cursor.grow{width:36px;height:36px}
   </style>
 </head>
 <body>
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
-
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="https://cdn.coverr.co/videos/coverr-3d-animation-of-rotating-cube-1648?token=eyJhbGciOiJIUzI1NiJ9" type="video/mp4">
+  </video>
+  <div class="cursor" id="cursor"></div>
   <div class="wrap">
     <header class="top">
-      <div class="brand">
-        <div class="logo" aria-hidden="false">
-          <div class="logomark" aria-hidden="true">MK</div>
-          <div class="word" style="font-size:14px;margin-left:6px">Morakinyo Kolade</div>
-        </div>
-        <div style="display:none"></div>
+      <div class="brand" onclick="location.reload()">
+        <div class="logomark">MK</div>
+        <span>Morakinyo Kolade</span>
       </div>
-      <nav class="right" role="navigation" aria-label="Main nav">
+      <nav class="right">
         <a class="nav-link" href="#about">About</a>
-        <a class="nav-link" href="#projects">Work</a>
         <a class="nav-link" href="#contact">Contact</a>
       </nav>
     </header>
 
-    <main>
-      <section class="hero" id="about">
-        <div>
-          <h2 class="title">Motion. Form. Story.</h2>
-          <p class="tag">3D generalist bringing products, ideas, and visuals to life.</p>
-          <div class="cta-row">
-            <button class="btn primary" id="openReel">▶ Showreel</button>
-            <button class="btn" id="downloadCV">Download CV</button>
+    <section class="hero" id="about">
+      <div>
+        <h2 class="title">Motion. Form. Story.</h2>
+        <p class="tag">3D generalist bringing products, ideas, and visuals to life.</p>
+        <div class="cta-row">
+          <button class="btn primary" id="showReelBtn">▶ Showreel</button>
+          <button class="btn">Download CV</button>
+        </div>
+      </div>
+      <div id="cubeBox"></div>
+    </section>
+
+    <section class="projects">
+      <h2 class="section-title">Explore My Work</h2>
+      <div class="projects-grid">
+        <div class="card">
+          <h4>Product Animation</h4>
+          <div class="meta">Category: 3D Animation</div>
+          <div class="tools">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
           </div>
         </div>
-
-        <aside class="showreel" id="reelBox" aria-label="Showreel">
-          <video class="reel-video" id="heroVideo" autoplay muted loop playsinline poster="">
-            <source src="https://cdn.coverr.co/videos/coverr-3d-sphere-1651?token=eyJhbGciOiJIUzI1NiJ9" type="video/mp4">
-            Your browser does not support video.
-          </video>
-        </aside>
-      </section>
-
-      <section class="projects" id="projects">
-        <h2 class="section-title">Explore My Work</h2>
-        <p style="text-align:center;color:var(--muted);margin-top:8px;font-size:13px">Hover any card. Click to open category page.</p>
-        <div class="projects-grid" id="grid">
-          <!-- card 1 -->
-          <article class="card" tabindex="0" data-href="#product-animation">
-            <div class="inner">
-              <div class="thumb">
-                <!-- placeholder art -->
-                <svg width="100%" height="100%" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="100%" height="100%" fill="#081216"/>
-                  <text x="50%" y="50%" fill="#f3e7a9" font-size="28" font-family="Inter, Arial" text-anchor="middle" dominant-baseline="middle">Product Animation</text>
-                </svg>
-                <div class="shine"></div>
-              </div>
-              <h4>Product Animation</h4>
-              <div class="meta">Category: 3D Animation</div>
-              <div class="tools-row">
-                <div class="tools">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender logo">
-                </div>
-                <div style="color:var(--muted);font-size:13px">Tools</div>
-              </div>
-            </div>
-          </article>
-
-          <!-- card 2 -->
-          <article class="card" tabindex="0" data-href="#motion-design">
-            <div class="inner">
-              <div class="thumb">
-                <svg width="100%" height="100%" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="100%" height="100%" fill="#0b0710"/>
-                  <text x="50%" y="50%" fill="#f1caa0" font-size="28" font-family="Inter, Arial" text-anchor="middle" dominant-baseline="middle">Motion Design</text>
-                </svg>
-                <div class="shine"></div>
-              </div>
-              <h4>Concept Spot</h4>
-              <div class="meta">Category: Motion Design</div>
-              <div class="tools-row">
-                <div class="tools">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects logo">
-                </div>
-                <div style="color:var(--muted);font-size:13px">Tools</div>
-              </div>
-            </div>
-          </article>
-
-          <!-- card 3 -->
-          <article class="card" tabindex="0" data-href="#visualization">
-            <div class="inner">
-              <div class="thumb">
-                <svg width="100%" height="100%" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="100%" height="100%" fill="#06060a"/>
-                  <text x="50%" y="50%" fill="#c9f3dd" font-size="28" font-family="Inter, Arial" text-anchor="middle" dominant-baseline="middle">Product Visualization</text>
-                </svg>
-                <div class="shine"></div>
-              </div>
-              <h4>Visualization Work</h4>
-              <div class="meta">Category: Product Visualization</div>
-              <div class="tools-row">
-                <div class="tools">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender logo">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma logo" style="width:22px;height:22px;margin-left:8px;filter:none">
-                </div>
-                <div style="color:var(--muted);font-size:13px">Tools</div>
-              </div>
-            </div>
-          </article>
+        <div class="card">
+          <h4>Motion Design</h4>
+          <div class="meta">Category: Motion Design</div>
+          <div class="tools">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
+          </div>
         </div>
-      </section>
-    </main>
+        <div class="card">
+          <h4>Video Editing</h4>
+          <div class="meta">Category: Video Editing</div>
+          <div class="tools">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" alt="Premiere Pro">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/davinci/davinci-original.svg" alt="DaVinci Resolve">
+          </div>
+        </div>
+      </div>
+    </section>
 
     <footer id="contact">
-      <div>
-        <strong>Morakinyo Kolade</strong> · <a href="mailto:hello@example.com">hello@example.com</a>
+      <div style="flex:1;text-align:center">© 2025 Morakinyo Kolade. All rights reserved.</div>
+      <div class="social">
+        <a href="mailto:hello@example.com"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg" alt="Email"></a>
+        <a href="https://instagram.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+        <a href="https://behance.net" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/behance.svg" alt="Behance"></a>
+        <a href="https://linkedin.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
       </div>
-      <div class="social" aria-hidden="false">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/behance.svg" alt="Behance">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
-      </div>
-      <div>© 2025 Morakinyo Kolade. All rights reserved.</div>
     </footer>
   </div>
 
+  <!-- Modal for Showreel -->
+  <div id="modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.8);display:none;align-items:center;justify-content:center;z-index:2000">
+    <video id="modalVideo" controls autoplay style="max-width:90%;max-height:80%">
+      <source src="https://cdn.coverr.co/videos/coverr-showreel-1650?token=eyJhbGciOiJIUzI1NiJ9" type="video/mp4">
+    </video>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.min.js"></script>
   <script>
     // custom cursor
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', (e)=>{
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
+    const cursor=document.getElementById('cursor');
+    document.addEventListener('mousemove',e=>{
+      cursor.style.left=e.clientX+'px';
+      cursor.style.top=e.clientY+'px';
+    });
+    document.querySelectorAll('a,button,.card').forEach(el=>{
+      el.addEventListener('mouseenter',()=>cursor.classList.add('grow'));
+      el.addEventListener('mouseleave',()=>cursor.classList.remove('grow'));
     });
 
-    // grow cursor on interactive
-    const interactives = document.querySelectorAll('button, .card, a, .nav-link');
-    interactives.forEach(el=>{
-      el.addEventListener('mouseenter', ()=> cursor.classList.add('grow'));
-      el.addEventListener('mouseleave', ()=> cursor.classList.remove('grow'));
-    });
+    // modal showreel
+    const modal=document.getElementById('modal');
+    document.getElementById('showReelBtn').onclick=()=>modal.style.display='flex';
+    modal.onclick=()=>{modal.style.display='none';document.getElementById('modalVideo').pause()};
 
-    // tilt effect for cards
-    function bindTilt(card){
-      const inner = card.querySelector('.inner');
-      const rect = card.getBoundingClientRect();
-      const height = rect.height, width = rect.width;
-      card.addEventListener('mousemove', (e)=>{
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const rotateX = ((y - height/2) / height) * 10; // tilt intensity
-        const rotateY = ((x - width/2) / width) * -12;
-        inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px)`;
-        // subtle parallax for shine
-        const shine = card.querySelector('.shine');
-        if(shine){
-          const px = (x/width)*100;
-          const py = (y/height)*100;
-          shine.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(255,255,255,0.06), transparent 18%)`;
-        }
-      });
-      card.addEventListener('mouseleave', ()=>{
-        inner.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
-        const shine = card.querySelector('.shine');
-        if(shine) shine.style.background = '';
-      });
-      // keyboard support: on focus add small lift
-      card.addEventListener('focus', ()=> inner.style.transform = 'translateZ(10px)');
-      card.addEventListener('blur', ()=> inner.style.transform = 'translateZ(0px)');
+    // 3D cube in hero side using three.js
+    const scene=new THREE.Scene();
+    const camera=new THREE.PerspectiveCamera(75,1,0.1,1000);
+    const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+    const cubeBox=document.getElementById('cubeBox');
+    renderer.setSize(cubeBox.clientWidth,cubeBox.clientHeight);
+    cubeBox.appendChild(renderer.domElement);
+    const geometry=new THREE.BoxGeometry();
+    const material=new THREE.MeshNormalMaterial({wireframe:false});
+    const cube=new THREE.Mesh(geometry,material);
+    scene.add(cube);
+    camera.position.z=3;
+    function animate(){
+      requestAnimationFrame(animate);
+      cube.rotation.x+=0.01;
+      cube.rotation.y+=0.01;
+      renderer.render(scene,camera);
     }
-
-    document.querySelectorAll('.card').forEach(bindTilt);
-
-    // click opens category link placeholder
-    document.querySelectorAll('.card').forEach(card=>{
-      card.addEventListener('click', ()=>{
-        const href = card.getAttribute('data-href');
-        if(href && href.startsWith('#')){
-          location.hash = href;
-          alert('Would open ' + href + ' page. Replace this with real link to your category page.');
-        }
-      });
-    });
-
-    // showreel button plays bigger modal like before, minimal implementation
-    const openReel = document.getElementById('openReel');
-    openReel.addEventListener('click', ()=>{
-      const src = document.getElementById('heroVideo').currentSrc || document.getElementById('heroVideo').querySelector('source').src;
-      window.open(src, '_blank');
-    });
-
-    // download CV action
-    document.getElementById('downloadCV').addEventListener('click', ()=>{
-      const link = document.createElement('a');
-      link.href = 'https://example.com/your-cv.pdf';
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+    animate();
+    window.addEventListener('resize',()=>{
+      renderer.setSize(cubeBox.clientWidth,cubeBox.clientHeight);
+      camera.aspect=cubeBox.clientWidth/cubeBox.clientHeight;
+      camera.updateProjectionMatrix();
     });
   </script>
 </body>
