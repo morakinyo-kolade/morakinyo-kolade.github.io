@@ -139,7 +139,7 @@
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: opacity 0.1s ease, transform 0.2s ease;
             z-index: 10000;
             mix-blend-mode: difference;
             backdrop-filter: blur(4px);
@@ -157,6 +157,7 @@
             background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 60%);
             border: 1px solid rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(8px);
+            transform: translate(-50%, -50%) scale(2.5);
         }
         
         /* Mobile Responsive */
@@ -211,20 +212,57 @@
                 height: 60px;
             }
         }
+
+        /* iPhone Specific Fixes */
+        @supports (-webkit-touch-callout: none) {
+            .top-nav {
+                padding: 30px 20px 0 20px !important;
+            }
+            
+            .main-title {
+                font-size: 16px !important;
+                padding: 0 15px !important;
+            }
+            
+            .bottom-buttons {
+                bottom: 120px !important;
+            }
+        }
+
+        /* Mobile Centering Fixes */
+        @media (max-width: 768px) {
+            .center-content {
+                text-align: center !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+            
+            .bottom-buttons {
+                justify-content: center !important;
+                align-items: center !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+            
+            .glass-btn {
+                text-align: center;
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Video Background -->
     <div class="video-bg">
         <video autoplay muted loop playsinline>
-            <source src="https://www.pexels.com/download/video/26576233.mp4" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-background-1665-large.mp4" type="video/mp4">
         </video>
     </div>
 
     <!-- Navigation -->
     <div class="top-nav">
         <div class="nav-item">About</div>
-        <div class="nav-item" onclick="location.reload()">Morakinyo Kolade</div>
+        <div class="nav-item" id="homeButton">Morakinyo Kolade</div>
         <div class="nav-item">Contact</div>
     </div>
 
@@ -251,27 +289,127 @@
         const cursor = document.querySelector('.custom-cursor');
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
-        const friction = 0.3; // Smooth follow with slight weight
-        
-        // Desktop cursor movement
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.classList.add('cursor-visible');
+        const desktopFriction = 0.6; // Faster follow for desktop
+        const mobileFriction = 0.8; // Almost instant for mobile
+        let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        let isTouching = false;
+
+        // Homepage refresh button
+        document.getElementById('homeButton').addEventListener('click', function() {
+            location.reload();
         });
-        
-        function animateCursor() {
-            // Smooth follow with slight weight
-            cursorX += (mouseX - cursorX) * friction;
-            cursorY += (mouseY - cursorY) * friction;
-            
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            
-            requestAnimationFrame(animateCursor);
+
+        // Faster desktop cursor movement
+        if (!isMobile) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursor.classList.add('cursor-visible');
+            });
+
+            function animateDesktopCursor() {
+                // Much faster follow for desktop
+                cursorX += (mouseX - cursorX) * desktopFriction;
+                cursorY += (mouseY - cursorY) * desktopFriction;
+                
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                
+                requestAnimationFrame(animateDesktopCursor);
+            }
+            animateDesktopCursor();
         }
-        animateCursor();
-        
+
+        // ===== IMPROVED MOBILE TOUCH =====
+        if (isMobile) {
+            // Fix iPhone viewport issues
+            const metaViewport = document.querySelector('meta[name="viewport"]');
+            if (metaViewport) {
+                metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            }
+            
+            // Enhanced touch handling
+            document.addEventListener('touchstart', (e) => {
+                isTouching = true;
+                const touch = e.touches[0];
+                mouseX = touch.clientX;
+                mouseY = touch.clientY;
+                
+                // Show cursor instantly at touch point
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+                cursor.classList.add('cursor-visible');
+                cursor.style.opacity = '1';
+                
+                checkMobileHover(mouseX, mouseY);
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isTouching) return;
+                const touch = e.touches[0];
+                mouseX = touch.clientX;
+                mouseY = touch.clientY;
+                
+                // Smooth but fast follow
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+                
+                checkMobileHover(mouseX, mouseY);
+            });
+
+            document.addEventListener('touchend', (e) => {
+                isTouching = false;
+                
+                // Immediate disappearance when finger lifts
+                cursor.style.opacity = '0';
+                cursor.classList.remove('cursor-expand');
+                
+                // Remove all hover states
+                document.querySelectorAll('.glass-btn').forEach(btn => {
+                    btn.classList.remove('hover');
+                });
+                
+                // Clean reset
+                setTimeout(() => {
+                    cursor.classList.remove('cursor-visible');
+                }, 50);
+            });
+
+            document.addEventListener('touchcancel', () => {
+                isTouching = false;
+                cursor.style.opacity = '0';
+                cursor.classList.remove('cursor-visible', 'cursor-expand');
+                document.querySelectorAll('.glass-btn').forEach(btn => {
+                    btn.classList.remove('hover');
+                });
+            });
+        }
+
+        // ===== IMPROVED HOVER DETECTION =====
+        function checkMobileHover(x, y) {
+            const buttons = document.querySelectorAll('.glass-btn');
+            let isHoveringAny = false;
+            
+            buttons.forEach(btn => {
+                const rect = btn.getBoundingClientRect();
+                const isHovering = (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
+                
+                if (isHovering) {
+                    isHoveringAny = true;
+                    btn.classList.add('hover');
+                    cursor.classList.add('cursor-expand');
+                    // Softer haptic feedback
+                    if (navigator.vibrate) navigator.vibrate(5);
+                } else {
+                    btn.classList.remove('hover');
+                }
+            });
+            
+            if (!isHoveringAny) {
+                cursor.classList.remove('cursor-expand');
+            }
+        }
+
         // Desktop hover effects
         const hoverElements = document.querySelectorAll('.nav-item, .glass-btn');
         hoverElements.forEach(el => {
@@ -289,65 +427,7 @@
                 }
             });
         });
-        
-        // ===== MOBILE TOUCH CURSOR =====
-        let isTouching = false;
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        
-        if (isMobile) {
-            document.addEventListener('touchstart', (e) => {
-                isTouching = true;
-                const touch = e.touches[0];
-                mouseX = touch.clientX;
-                mouseY = touch.clientY;
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
-                cursor.classList.add('cursor-visible');
-                checkMobileHover(mouseX, mouseY);
-            });
-            
-            document.addEventListener('touchmove', (e) => {
-                if (!isTouching) return;
-                const touch = e.touches[0];
-                mouseX = touch.clientX;
-                mouseY = touch.clientY;
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
-                checkMobileHover(mouseX, mouseY);
-            });
-            
-            document.addEventListener('touchend', () => {
-                isTouching = false;
-                cursor.classList.remove('cursor-visible', 'cursor-expand');
-                document.querySelectorAll('.glass-btn').forEach(btn => {
-                    btn.classList.remove('hover');
-                });
-            });
-        }
-        
-        function checkMobileHover(x, y) {
-            const buttons = document.querySelectorAll('.glass-btn');
-            let hovering = false;
-            
-            buttons.forEach(btn => {
-                const rect = btn.getBoundingClientRect();
-                const isHovering = (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
-                
-                if (isHovering) {
-                    hovering = true;
-                    btn.classList.add('hover');
-                    cursor.classList.add('cursor-expand');
-                    if (navigator.vibrate) navigator.vibrate(10);
-                } else {
-                    btn.classList.remove('hover');
-                }
-            });
-            
-            if (!hovering) {
-                cursor.classList.remove('cursor-expand');
-            }
-        }
-        
+
         // ===== VIDEO FALLBACK =====
         setTimeout(() => {
             const video = document.querySelector('video');
@@ -356,6 +436,26 @@
                     'linear-gradient(45deg, #000000, #1a1a2e)';
             }
         }, 3000);
+
+        // ===== ENSURE MOBILE CENTERING =====
+        function fixMobileCentering() {
+            if (!isMobile) return;
+            
+            // Force center alignment for mobile
+            const centerContent = document.querySelector('.center-content');
+            const bottomButtons = document.querySelector('.bottom-buttons');
+            
+            if (centerContent) {
+                centerContent.style.textAlign = 'center';
+            }
+            if (bottomButtons) {
+                bottomButtons.style.justifyContent = 'center';
+                bottomButtons.style.alignItems = 'center';
+            }
+        }
+
+        // Run centering fix
+        setTimeout(fixMobileCentering, 100);
     </script>
 </body>
 </html>
