@@ -1,477 +1,362 @@
-<!DOCTYPE html>
+# write an improved single-file HTML portfolio inspired by Awwwards, Muzli, Behance. 
+html = r"""<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morakinyo Kolade | 3D Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital@1&family=Cedarville+Cursive&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            cursor: none !important;
-        }
-        
-        body {
-            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-            background: #000;
-            color: white;
-            min-height: 100vh;
-            overflow: hidden;
-            font-weight: 300;
-        }
-        
-        /* Video Background */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: #000;
-        }
-        
-        .video-bg video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* Top Navigation */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 50px 0 50px;
-            width: 100%;
-            position: relative;
-        }
-        
-        .nav-item {
-            font-weight: 400;
-            transition: transform 0.3s ease;
-            flex: 1;
-            white-space: nowrap;
-        }
-        
-        .nav-left {
-            text-align: left;
-        }
-        
-        .nav-center {
-            text-align: center;
-            font-family: 'Cedarville Cursive', cursive;
-            font-size: 28px !important;
-            font-weight: 400;
-            letter-spacing: 1.5px;
-            transform: translateY(1px);
-            transition: all 0.3s ease;
-            text-transform: none;
-        }
-        
-        .nav-right {
-            text-align: right;
-        }
-        
-        .nav-item:hover {
-            transform: translateY(-2px);
-        }
-        
-        .nav-icon {
-            font-size: 20px;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-        
-        .nav-icon:hover {
-            opacity: 1;
-        }
-        
-        /* Main Content */
-        .center-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            width: 100%;
-            padding: 0 20px;
-        }
-        
-        .main-title {
-            font-size: 24px;
-            font-weight: 300;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            margin-bottom: 80px;
-            line-height: 1.4;
-        }
-        
-        /* Main Button */
-        .main-button-container {
-            position: absolute;
-            bottom: 160px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-        
-        .main-glass-btn {
-            padding: 22px 60px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 50px;
-            border: 1.5px solid rgba(255, 255, 255, 0.25);
-            font-weight: 500;
-            backdrop-filter: blur(16px);
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        
-        .main-glass-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .main-glass-btn:hover::before {
-            left: 100%;
-        }
-        
-        .main-glass-btn.hover {
-            background: rgba(255, 255, 255, 0.18);
-            transform: translateY(-6px) scale(1.05);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
-        }
-        
-        /* Copyright */
-        .copyright {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            opacity: 0.7;
-            text-align: center;
-            width: 100%;
-            padding: 0 25px;
-            box-sizing: border-box;
-            font-weight: 300;
-        }
-        
-        /* Custom Cursor */
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 1.5px solid rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 10000;
-            mix-blend-mode: difference;
-            backdrop-filter: blur(4px);
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
-            opacity: 0;
-        }
-        
-        .cursor-visible {
-            opacity: 1;
-        }
-        
-        .cursor-expand {
-            width: 45px;
-            height: 45px;
-            background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.1) 60%);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(6px);
-        }
-        
-        /* Loading Animation */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 0.6s ease;
-        }
-        
-        .loader {
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .loader-signature {
-            font-family: 'Playfair Display', cursive;
-            font-style: italic;
-            font-size: 32px;
-            color: white;
-            opacity: 0;
-            animation: fadePulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes fadePulse {
-            0%, 100% { opacity: 0.3; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-        
-        .loading-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .top-nav {
-                padding: 30px 25px 0 25px;
-            }
-            
-            .nav-center {
-                font-size: 22px !important;
-            }
-            
-            .nav-icon {
-                font-size: 18px;
-            }
-            
-            .main-title {
-                font-size: 18px;
-                margin-bottom: 60px;
-                padding: 0 15px;
-            }
-            
-            .main-button-container {
-                bottom: 140px;
-            }
-            
-            .main-glass-btn {
-                padding: 20px 40px;
-                font-size: 16px;
-            }
-            
-            .copyright {
-                bottom: 30px;
-                font-size: 11px;
-            }
-            
-            .custom-cursor {
-                width: 22px;
-                height: 22px;
-            }
-            
-            .cursor-expand {
-                width: 40px;
-                height: 40px;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Morakinyo Kolade — 3D Portfolio</title>
+  <meta name="description" content="Morakinyo Kolade — 3D animation, motion design and product visualization. Showreel and curated case studies." />
+  <meta name="robots" content="index,follow" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#060606;
+      --muted:rgba(255,255,255,0.65);
+      --glass:rgba(255,255,255,0.06);
+      --accent: #9be7ff;
+      --max-width:1200px;
+      --gap:18px;
+      --radius:14px;
+      --mono: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    /* reset */
+    html,body,div,span,h1,h2,h3,p,a,img,button,section,header,footer{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--mono);
+      background:var(--bg);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
+
+    /* layout */
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:28px;position:relative}
+    header.top{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;padding:10px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;
+    }
+    .logo{
+      width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,#ffffff08, #ffffff04);
+      display:grid;place-items:center;font-weight:600;font-family:'Playfair Display', serif;
+      color:#fff;font-size:16px;
+    }
+    .brand h1{font-size:16px;font-weight:600;letter-spacing:0.6px;margin:0}
+    .brand p{margin:0;font-size:13px;color:var(--muted)}
+
+    nav.right{display:flex;gap:14px;align-items:center}
+    .nav-link{padding:10px 14px;border-radius:9px;background:transparent;font-size:13px;color:var(--muted)}
+    .nav-link:hover{background:var(--glass);color:#fff;cursor:pointer}
+
+    /* hero */
+    .hero{
+      display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;padding:40px 0;
+      min-height:64vh;
+    }
+    @media (max-width:900px){.hero{grid-template-columns:1fr;min-height:62vh;padding-bottom:28px}}
+    .hero-left{padding-right:12px}
+    .eyebrow{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+    .title{font-family:'Playfair Display', serif;font-size:44px;margin:12px 0 10px;line-height:1.02}
+    @media (max-width:700px){.title{font-size:30px}}
+    .tag{color:var(--muted);font-size:15px;margin-bottom:22px}
+
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;
+      border:1px solid rgba(255,255,255,0.08);background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      cursor:pointer;font-weight:600;font-size:14px;backdrop-filter:blur(6px);
+    }
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#7ad2ff);color:#001}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.06)}
+
+    /* showreel card */
+    .showreel{
+      border-radius:var(--radius);overflow:hidden;background:#000;border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 10px 30px rgba(0,0,0,0.6);
+      min-height:320px;display:flex;align-items:center;justify-content:center;position:relative;
+    }
+    .reel-video{width:100%;height:100%;display:block;object-fit:cover}
+    .reel-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15),rgba(0,0,0,0.35));pointer-events:none}
+
+    /* projects section */
+    section.projects{padding:20px 0 80px}
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:18px}
+    @media (max-width:1000px){.projects-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.projects-grid{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:12px;cursor:pointer;border:1px solid rgba(255,255,255,0.03);overflow:hidden;display:flex;flex-direction:column;gap:12px}
+    .thumb{height:180px;border-radius:8px;background:#111;display:grid;place-items:center;color:var(--muted);font-size:13px;overflow:hidden}
+    .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+
+    /* modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:28px;z-index:9999}
+    .modal.show{display:flex}
+    .modal-card{max-width:980px;width:100%;border-radius:12px;background:#070707;padding:18px;border:1px solid rgba(255,255,255,0.04)}
+    .modal-media{height:60vh;background:#000;border-radius:8px;overflow:hidden;display:grid;place-items:center}
+    .modal-close{position:absolute;top:22px;right:22px;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
+
+    /* footer */
+    footer{border-top:1px solid rgba(255,255,255,0.03);padding:22px 0;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .social{display:flex;gap:12px}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    /* accessibility focus */
+    a:focus,button:focus{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+    /* small animation */
+    .fade-in{animation:fadeIn .6s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  </style>
 </head>
 <body>
-    <!-- Loading Animation -->
-    <div class="loading-overlay" id="loadingScreen">
-        <div class="loader">
-            <div class="loader-signature">MK</div>
+  <!--
+    NOTE for you
+    1. Replace the showreel src with your high quality mp4 or webm.
+    2. Replace project thumbnails with your exported thumbnails.
+    3. Replace project video links inside data attributes
+    4. This file is single page and ready to drop on GitHub Pages.
+  -->
+  <div class="wrap">
+
+    <header class="top" role="banner">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true">MK</div>
+        <div>
+          <h1>Morakinyo Kolade</h1>
+          <p class="muted">3D animation  motion design  product visualization</p>
         </div>
-    </div>
+      </div>
 
-    <!-- Video Background -->
-    <div class="video-bg">
-        <video autoplay muted loop playsinline oncanplay="hideLoader()">
-            <source src="https://www.pexels.com/download/video/29848604.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
+      <nav class="right" role="navigation" aria-label="Main navigation">
+        <button class="nav-link" id="jumpWork">View work</button>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
 
-    <!-- Navigation with Icons -->
-    <div class="top-nav">
-        <div class="nav-item nav-left">
-            <div class="nav-icon" title="About">
-                <i class="fas fa-user"></i>
+    <main>
+      <section class="hero" aria-label="Intro">
+        <div class="hero-left">
+          <div class="eyebrow">Showreel</div>
+          <h2 class="title">I bring products and ideas to life with motion</h2>
+          <p class="tag">Selected work in product animation  motion and visualization. Quick case studies show process and result.</p>
+
+          <div class="cta-row">
+            <button class="btn primary" id="openReel">
+              ▶ Showreel
+            </button>
+            <button class="btn ghost" id="downloadPDF">
+              Download CV
+            </button>
+          </div>
+        </div>
+
+        <aside class="showreel" aria-hidden="false" aria-label="Showreel preview">
+          <!-- REPLACE this src with your uploaded showreel. webm preferred for size -->
+          <video class="reel-video" id="heroVideo" playsinline muted loop preload="metadata">
+            <source src="https://cdn.coverr.co/videos/coverr-a-studio-shot-1650?token=eyJhbGciOiJIUzI1NiJ9" type="video/mp4">
+            Your browser does not support video.
+          </video>
+          <div class="reel-overlay"></div>
+        </aside>
+      </section>
+
+      <section class="projects" id="projects" aria-label="Projects">
+        <div class="eyebrow">Selected projects</div>
+        <div class="projects-grid fade-in" id="grid">
+          <!-- Project card 1 -->
+          <article class="card" tabindex="0" data-title="Product Motion Study" data-role="Lead 3D Artist" data-tools="Blender  Cycles  After Effects" data-media="https://cdn.coverr.co/videos/coverr-a-studio-shot-1650?token=eyJhbGciOiJIUzI1NiJ9">
+            <div class="thumb" aria-hidden="false">
+              <!-- simple svg thumbnail placeholder - replace with exported png -->
+              <svg width="100%" height="100%" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#082129"/><stop offset="1" stop-color="#021018"/></linearGradient></defs>
+                <rect width="100%" height="100%" fill="url(#g1)"/>
+                <text x="50%" y="50%" fill="#8ec9da" font-size="28" font-family="Inter, Arial" text-anchor="middle" dominant-baseline="middle">Product Motion Study</text>
+              </svg>
             </div>
-        </div>
-        <div class="nav-item nav-center" id="homeButton">Morakinyo Kolade</div>
-        <div class="nav-item nav-right">
-            <div class="nav-icon" title="Contact">
-                <i class="fas fa-envelope"></i>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>Product Motion Study</strong>
+                <span class="muted">2025</span>
+              </div>
+              <div class="meta">
+                <span class="muted">Role: Lead 3D Artist</span>
+                <span class="muted">Tools: Blender</span>
+              </div>
             </div>
+          </article>
+
+          <!-- Project card 2 -->
+          <article class="card" tabindex="0" data-title="Concept Spot" data-role="3D Generalist" data-tools="Cinema4D  Octane  AE" data-media="https://cdn.coverr.co/videos/coverr-a-studio-shot-1650?token=eyJhbGciOiJIUzI1NiJ9">
+            <div class="thumb">
+              <svg width="100%" height="100%" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#111214"/>
+                <text x="50%" y="50%" fill="#f6c07b" font-size="28" font-family="Inter, Arial" text-anchor="middle" dominant-baseline="middle">Concept Spot</text>
+              </svg>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>Concept Spot</strong>
+                <span class="muted">2024</span>
+              </div>
+              <div class="meta">
+                <span class="muted">Role: 3D Generalist</span>
+                <span class="muted">Tools: Cinema4D</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project card 3 -->
+          <article class="card" tabindex="0" data-title="Product Visualization" data-role="Artist" data-tools="Blender  Eevee" data-media="https://cdn.coverr.co/videos/coverr-a-studio-shot-1650?token=eyJhbGciOiJIUzI1NiJ9">
+            <div class="thumb">
+              <svg width="100%" height="100%" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#0b0b0f"/>
+                <text x="50%" y="50%" fill="#b7f7d5" font-size="28" font-family="Inter, Arial" text-anchor="middle" dominant-baseline="middle">Product Visualization</text>
+              </svg>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>Product Visualization</strong>
+                <span class="muted">2023</span>
+              </div>
+              <div class="meta">
+                <span class="muted">Role: Artist</span>
+                <span class="muted">Tools: Blender</span>
+              </div>
+            </div>
+          </article>
         </div>
-    </div>
+      </section>
 
-    <!-- Main Content -->
-    <div class="center-content">
-        <div class="main-title">3D Animation · Motion Design · Product Visualization</div>
-    </div>
+      <!-- modal -->
+      <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Project detail">
+        <div class="modal-card" role="document">
+          <button class="modal-close" id="modalClose" aria-label="Close dialog">✕</button>
+          <div class="modal-media" id="modalMedia">
+            <!-- media injected here -->
+            <video id="modalVideo" controls style="width:100%;height:100%;object-fit:cover;display:none" playsinline></video>
+            <img id="modalImg" alt="" style="max-width:100%;max-height:100%;display:none" />
+          </div>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+            <div>
+              <h3 id="modalTitle" style="margin:0">Title</h3>
+              <p id="modalRole" class="muted" style="margin:6px 0 0;font-size:13px">Role and tools</p>
+            </div>
+            <div style="text-align:right">
+              <a id="openExternal" class="muted" href="#" target="_blank" rel="noopener">Open source</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <!-- Main Button -->
-    <div class="main-button-container">
-        <div class="main-glass-btn">Explore My Work</div>
-    </div>
+    </main>
 
-    <!-- Copyright -->
-    <div class="copyright">© 2025 Morakinyo Kolade. All rights reserved.</div>
+    <footer id="contact">
+      <div>
+        <strong>Morakinyo Kolade</strong>
+        <div class="muted">Email: <a href="mailto:hello@example.com">hello@example.com</a></div>
+      </div>
+      <div class="social">
+        <a class="muted" href="#" aria-label="Instagram">IG</a>
+        <a class="muted" href="#" aria-label="Behance">Behance</a>
+        <a class="muted" href="#" aria-label="LinkedIn">LI</a>
+      </div>
+    </footer>
 
-    <!-- Cursor -->
-    <div class="custom-cursor"></div>
+  </div>
 
-    <script>
-        // Enhanced Loading
-        function hideLoader() {
-            const loader = document.getElementById('loadingScreen');
-            loader.classList.add('hidden');
-            setTimeout(() => loader.remove(), 600);
-        }
-        
-        setTimeout(hideLoader, 3000); // Fallback
+  <script>
+    // Minimal interactions: open showreel modal and project detail modal
+    const openReel = document.getElementById('openReel');
+    const heroVideo = document.getElementById('heroVideo');
+    const modal = document.getElementById('modal');
+    const modalClose = document.getElementById('modalClose');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalRole = document.getElementById('modalRole');
+    const openExternal = document.getElementById('openExternal');
 
-        // Cursor System
-        const cursor = document.querySelector('.custom-cursor');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-        const desktopFriction = 0.5;
-        let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        let isTouching = false;
-        let lastHapticTime = 0;
+    // showreel plays on load if supported
+    heroVideo.addEventListener('canplay', ()=>{ try{ heroVideo.play() }catch(e){} });
 
-        // Homepage refresh button
-        document.getElementById('homeButton').addEventListener('click', function() {
-            location.reload();
-        });
+    // open showreel in modal like player
+    openReel.addEventListener('click', ()=> {
+      showModalWith({media: heroVideo.currentSrc || heroVideo.querySelector('source').src, type: 'video', title: 'Showreel', role: 'Full showreel' });
+    });
 
-        // Desktop cursor
-        if (!isMobile) {
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                cursor.classList.add('cursor-visible');
-            });
+    // grid cards open modal
+    document.querySelectorAll('.card').forEach(card=>{
+      card.addEventListener('click', ()=> openCard(card));
+      card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') openCard(card) });
+    });
 
-            function animateDesktopCursor() {
-                cursorX += (mouseX - cursorX) * desktopFriction;
-                cursorY += (mouseY - cursorY) * desktopFriction;
-                
-                cursor.style.left = cursorX + 'px';
-                cursor.style.top = cursorY + 'px';
-                
-                requestAnimationFrame(animateDesktopCursor);
-            }
-            animateDesktopCursor();
-        }
+    function openCard(card){
+      const media = card.getAttribute('data-media');
+      const title = card.getAttribute('data-title');
+      const role = card.getAttribute('data-role') + ' · ' + card.getAttribute('data-tools');
+      showModalWith({media, type: 'video', title, role});
+    }
 
-        // Mobile Touch
-        if (isMobile) {
-            document.addEventListener('touchstart', (e) => {
-                isTouching = true;
-                const touch = e.touches[0];
-                mouseX = touch.clientX;
-                mouseY = touch.clientY;
-                
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
-                cursor.classList.add('cursor-visible');
-                cursor.style.opacity = '1';
-                
-                checkHover(mouseX, mouseY);
-            });
+    function showModalWith({media,type='video',title='',role=''}){
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      modalTitle.textContent = title;
+      modalRole.textContent = role;
+      openExternal.href = media;
 
-            document.addEventListener('touchmove', (e) => {
-                if (!isTouching) return;
-                const touch = e.touches[0];
-                mouseX = touch.clientX;
-                mouseY = touch.clientY;
-                
-                cursor.style.left = mouseX + 'px';
-                cursor.style.top = mouseY + 'px';
-                
-                checkHover(mouseX, mouseY);
-            });
+      if(type==='video'){
+        modalImg.style.display='none';
+        modalVideo.src = media;
+        modalVideo.style.display='block';
+        modalVideo.play().catch(()=>{});
+      }else{
+        modalVideo.pause();modalVideo.style.display='none';modalVideo.src='';
+        modalImg.src = media;modalImg.style.display='block';
+      }
+      document.body.style.overflow='hidden';
+    }
 
-            document.addEventListener('touchend', () => {
-                isTouching = false;
-                cursor.style.opacity = '0';
-                cursor.classList.remove('cursor-expand');
-                document.querySelectorAll('.main-glass-btn').forEach(btn => {
-                    btn.classList.remove('hover');
-                });
-                
-                setTimeout(() => {
-                    cursor.classList.remove('cursor-visible');
-                }, 50);
-            });
-        }
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal() });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
 
-        // Hover Detection
-        function checkHover(x, y) {
-            const now = Date.now();
-            const button = document.querySelector('.main-glass-btn');
-            const rect = button.getBoundingClientRect();
-            const isHovering = (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
-            
-            if (isHovering) {
-                button.classList.add('hover');
-                cursor.classList.add('cursor-expand');
-                
-                if (navigator.vibrate && now - lastHapticTime > 1000) {
-                    navigator.vibrate(3);
-                    lastHapticTime = now;
-                }
-            } else {
-                button.classList.remove('hover');
-                cursor.classList.remove('cursor-expand');
-            }
-        }
+    function closeModal(){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      modalVideo.pause();modalVideo.src='';
+      modalImg.src='';document.body.style.overflow='';
+    }
 
-        // Desktop hover effects
-        const hoverElements = document.querySelectorAll('.nav-item, .main-glass-btn');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('cursor-expand');
-                if (el.classList.contains('main-glass-btn')) {
-                    el.classList.add('hover');
-                }
-            });
-            
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('cursor-expand');
-                if (el.classList.contains('main-glass-btn')) {
-                    el.classList.remove('hover');
-                }
-            });
-        });
+    // smooth scroll to projects
+    document.getElementById('jumpWork').addEventListener('click', ()=> {
+      document.getElementById('projects').scrollIntoView({behavior:'smooth',block:'start'});
+    });
 
-        // Video fallback
-        setTimeout(() => {
-            const video = document.querySelector('video');
-            if (video && video.paused) {
-                document.querySelector('.video-bg').style.background = '#000';
-            }
-        }, 4000);
-    </script>
+    // download CV placeholder
+    document.getElementById('downloadPDF').addEventListener('click', ()=> {
+      // change the href to your CV link
+      const link = document.createElement('a');
+      link.href = 'https://example.com/your-cv.pdf';
+      link.download = '';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+  </script>
 </body>
 </html>
+"""
+
+path = "/mnt/data/mk-portfolio.html"
+with open(path, "w", encoding="utf-8") as f:
+    f.write(html)
