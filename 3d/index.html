@@ -1,246 +1,492 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Morakinyo Kolade — 3D Generalist</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#000;
-      --text:#fff;
-      --muted:rgba(255,255,255,0.7);
-      --orange:#ff7a1a;
-      --radius:16px;
-      --max-width:1180px;
-      --cursor-size:20px;
+      --bg: #000;
+      --text: #fff;
+      --muted: rgba(255,255,255,0.68);
+      --orange: #ff7a1a;
+      --frost: rgba(255,255,255,0.06);
+      --card-frost: rgba(255,255,255,0.08);
+      --radius: 16px;
+      --max-width: 1180px;
+      --cursor-size: 18px;
     }
+
+    /* basic reset */
     *{box-sizing:border-box;margin:0;padding:0}
-    body,html{height:100%;background:#000;color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.4;cursor:none;overflow-x:hidden}
+    html,body{height:100%}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family: Inter, Arial, sans-serif;
+      line-height:1.4;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+      cursor:none !important; /* hide system cursor entirely */
+    }
     a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%}
+    img{max-width:100%;display:block;border:0}
 
     /* background video */
     .bg-video{
-      position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;object-fit:cover;opacity:0.45;
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-2;
+      opacity:0.55;
+      background:#000;
+    }
+    /* a dark layer so foreground stays readable */
+    .bg-overlay{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(0deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
+      z-index:-1;
+      pointer-events:none;
     }
 
-    .wrap{max-width:var(--max-width);margin:0 auto;padding:30px;position:relative;z-index:1}
-
-    header.top{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
-    .brand{cursor:pointer;font-weight:700;font-size:20px;color:var(--orange)}
-
-    nav.right{display:flex;gap:16px}
-    .nav-link{font-size:14px;color:var(--muted);padding:6px 10px;border-radius:6px}
-    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.06)}
-
-    .hero{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center;min-height:60vh}
-    @media(max-width:900px){.hero{grid-template-columns:1fr;gap:20px}}
-    .title{font-family:'Playfair Display',serif;font-size:40px;margin-bottom:12px}
-    .tag{color:var(--muted);margin-bottom:18px}
-    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:var(--orange);font-weight:600;cursor:pointer;transition:.3s}
-    .btn.primary{background:var(--orange);color:#000}
-    .btn:hover{opacity:.9}
-
-    /* 3D cube container */
-    #cubeBox{height:320px;background:rgba(0,0,0,0.4);border-radius:var(--radius);overflow:hidden}
-
-    .section-title{text-align:center;font-family:'Playfair Display',serif;font-size:28px}
-    .section-sub{text-align:center;color:var(--muted);margin-top:8px}
-    .projects{padding:60px 0}
-    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px}
-    @media(max-width:900px){.projects-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:600px){.projects-grid{grid-template-columns:1fr}}
-
-    .card{
-      background:rgba(255,255,255,0.08);
-      backdrop-filter:blur(10px);
-      border:1px solid rgba(255,255,255,0.15);
-      border-radius:16px;
-      padding:18px;
-      transition:transform .25s ease,box-shadow .25s ease;
-      will-change:transform;
-      cursor:pointer;
-      perspective:1000px;
+    .wrap{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:30px;
+      position:relative;
+      z-index:2;
     }
-    .card:hover{box-shadow:0 20px 40px rgba(0,0,0,0.6)}
-    .card img.thumb{border-radius:12px;margin-bottom:12px}
-    .card h4{margin:10px 0 6px}
-    .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
-    .tools{display:flex;gap:8px;align-items:center}
-    .tools img{width:28px;height:28px}
 
-    footer{
-      border-top:1px solid rgba(255,255,255,0.1);
-      padding:22px 0;
-      margin-top:60px;
+    header.top{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      flex-wrap:wrap;
-      font-size:13px;
-      color:var(--muted)
+      gap:12px;
+      padding:6px 0;
     }
-    footer .social{display:flex;gap:14px}
-    footer .social a img{width:20px;height:20px;filter:invert(1)}
+    .brand{
+      font-weight:700;
+      font-size:20px;
+      color:var(--orange);
+      font-family:'Playfair Display', serif;
+      cursor:pointer;
+    }
+
+    nav.right{display:flex;gap:14px;align-items:center}
+    .nav-link{
+      font-size:14px;color:var(--muted);padding:8px 10px;border-radius:8px;border:0;cursor:pointer;
+      background:transparent;
+    }
+    .nav-link:focus,.nav-link:hover{background:rgba(255,255,255,0.03);color:var(--text);outline:none}
+
+    /* hero */
+    .hero{
+      display:grid;
+      grid-template-columns:1fr 520px;
+      gap:32px;
+      align-items:center;
+      min-height:60vh;
+      margin-top:6px;
+    }
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;gap:20px}
+    }
+
+    .title{
+      font-family:'Playfair Display', serif;
+      font-size:44px;
+      margin-bottom:12px;
+      line-height:1.02;
+    }
+    @media (max-width:680px){.title{font-size:30px}}
+
+    .tag{color:var(--muted);margin-bottom:18px;font-size:15px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+
+    .btn{
+      padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);
+      background:transparent;color:var(--orange);font-weight:700;cursor:pointer;
+      transition:transform .14s ease,opacity .14s;
+    }
+    .btn:active{transform:scale(.98)}
+    .btn.primary{
+      background:linear-gradient(90deg,var(--orange),#ff8f3b);
+      color:#000;border:0;
+    }
+
+    /* cube / 3d demo container */
+    #cubeBox{
+      height:460px;
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 20px 50px rgba(0,0,0,0.6);
+    }
+    @media (max-width:980px){#cubeBox{height:320px}}
+
+    /* projects */
+    .projects{padding:56px 0}
+    .section-title{font-family:'Playfair Display',serif;font-size:30px;text-align:center}
+    .section-sub{color:var(--muted);text-align:center;margin-top:8px;font-size:14px}
+
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:28px;
+      margin-top:26px;
+      align-items:start;
+    }
+    @media (max-width:980px){.projects-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.projects-grid{grid-template-columns:1fr}}
+
+    .card{
+      background:var(--card-frost);
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.12);
+      padding:16px;
+      transition:box-shadow .2s ease,transform .25s ease;
+      will-change:transform;
+      cursor:none !important; /* ensure native pointer is hidden on card */
+      position:relative;
+      overflow:visible;
+    }
+    .card:focus{outline:2px solid rgba(255,255,255,0.06);outline-offset:6px}
+    .card .inner{
+      transform-style:preserve-3d;
+      transition:transform .12s ease;
+      will-change:transform;
+      background:transparent;
+      border-radius:10px;
+    }
+
+    .thumb{
+      height:260px;border-radius:12px;overflow:hidden;background:#071018;margin-bottom:12px;
+      display:block;object-fit:cover;width:100%;
+    }
+    @media (max-width:980px){.thumb{height:200px}}
+
+    .card h4{margin:6px 0 6px;font-size:18px}
+    .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
+    .tools{display:flex;gap:10px;align-items:center}
+    .tools img{width:30px;height:30px;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.5))}
+
+    /* footer layout: left mail, center copy, right icons */
+    footer{
+      padding:24px 0;margin-top:60px;border-top:1px solid rgba(255,255,255,0.08);
+      display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      color:var(--muted);font-size:13px;
+    }
+    .footer-left{flex:1;text-align:left}
+    .footer-center{flex:1;text-align:center}
+    .footer-right{flex:1;text-align:right}
+    .footer-right a{margin-left:12px}
+
+    /* modal full screen */
+    #modal{
+      position:fixed;inset:0;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;z-index:9999;
+    }
+    #modal video{width:92%;max-height:92%;box-shadow:0 30px 80px rgba(0,0,0,0.7)}
 
     /* custom cursor */
     .cursor{
-      position:fixed;
-      left:0;top:0;
-      width:var(--cursor-size);height:var(--cursor-size);
-      border-radius:50%;
-      background:rgba(255,255,255,0.1);
-      backdrop-filter:blur(6px);
-      border:1px solid rgba(255,255,255,0.2);
-      pointer-events:none;
-      transform:translate(-50%,-50%);
-      transition:transform .15s ease-out,width .15s,height .15s;
-      background-blend-mode:overlay;
-      z-index:10000
+      position:fixed;left:0;top:0;width:var(--cursor-size);height:var(--cursor-size);
+      border-radius:50%;pointer-events:none;
+      background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,0.12);
+      transform:translate(-50%,-50%) scale(1);
+      transition:width .16s ease,height .16s ease,transform .12s ease,background .12s ease;
+      z-index:10001;
+      box-shadow:0 12px 30px rgba(0,0,0,0.6);
+      mix-blend-mode:normal;
+      will-change:transform,width,height,background;
     }
-    .cursor.grow{width:36px;height:36px}
+    .cursor.grow{
+      width:48px;height:48px;background:linear-gradient(90deg,var(--orange),#ff8f3b);
+      border:0;transform:translate(-50%,-50%) scale(1);
+    }
+
+    /* accessibility focus hint for keyboard users */
+    :focus{outline:2px solid var(--orange);outline-offset:4px}
   </style>
 </head>
 <body>
-  <!-- background video -->
-  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="https://player.vimeo.com/external/310582111.sd.mp4?s=9a5bda792bd6b9a42100437b04d3aa3e5a1f3a83&profile_id=164" type="video/mp4">
+  <!-- background video: mp4 first then fallback webm; also poster fallback handled by CSS overlay if video fails -->
+  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline plays-in-line>
+    <source src="https://cdn.coverr.co/videos/coverr-3d-sphere-1651/1080p.mp4" type="video/mp4">
+    <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+    <!-- if video fails, background stays black but we provide poster via CSS overlay -->
   </video>
+  <div class="bg-overlay" aria-hidden="true"></div>
 
-  <!-- custom cursor -->
-  <div class="cursor" id="cursor"></div>
+  <!-- custom cursor element -->
+  <div id="cursor" class="cursor" aria-hidden="true"></div>
 
   <div class="wrap">
     <header class="top">
-      <div class="brand" onclick="location.reload()">Morakinyo Kolade</div>
-      <nav class="right">
-        <a class="nav-link" href="#about">About</a>
-        <a class="nav-link" href="#contact">Contact</a>
+      <!-- name as orange clickable home button -->
+      <div class="brand" role="link" tabindex="0" aria-label="Home" onclick="location.reload()" onkeypress="if(event.key==='Enter')location.reload()">
+        Morakinyo Kolade
+      </div>
+
+      <nav class="right" role="navigation" aria-label="Primary">
+        <button class="nav-link" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</button>
+        <button class="nav-link" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
       </nav>
     </header>
 
-    <section class="hero" id="about">
-      <div>
-        <h2 class="title">Motion. Form. Story.</h2>
-        <p class="tag">3D generalist bringing products, ideas, and visuals to life.</p>
-        <div class="cta-row">
-          <a href="#showreel" class="btn primary" id="showReelBtn">▶ Showreel</a>
-          <a href="https://example.com/cv.pdf" class="btn">Download CV</a>
+    <main>
+      <section class="hero" id="about" aria-label="Introduction">
+        <div>
+          <h1 class="title">Motion. Form. Story.</h1>
+          <p class="tag">3D generalist crafting product animation, motion design and polished edits.</p>
+          <div class="cta-row">
+            <button class="btn primary" id="openShowreel">▶ Showreel</button>
+            <a class="btn" href="https://example.com/cv.pdf" target="_blank" rel="noopener">Download CV</a>
+          </div>
         </div>
-      </div>
-      <div id="cubeBox"></div>
-    </section>
 
-    <section class="projects">
-      <h2 class="section-title">Explore My Work</h2>
-      <p class="section-sub">A selection of projects across 3D animation, motion design, and video editing.</p>
-      <div class="projects-grid">
-        <div class="card">
-          <img class="thumb" src="https://picsum.photos/400/240?random=1" alt="Product animation preview">
-          <h4>Product Animation</h4>
-          <div class="meta">Category: 3D Animation</div>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
-          </div>
-        </div>
-        <div class="card">
-          <img class="thumb" src="https://picsum.photos/400/240?random=2" alt="Motion design preview">
-          <h4>Motion Design</h4>
-          <div class="meta">Category: Motion Design</div>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
-          </div>
-        </div>
-        <div class="card">
-          <img class="thumb" src="https://picsum.photos/400/240?random=3" alt="Video editing preview">
-          <h4>Video Editing</h4>
-          <div class="meta">Category: Video Editing</div>
-          <div class="tools">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" alt="Premiere Pro">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/davinci/davinci-original.svg" alt="DaVinci Resolve">
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- demo 3d cube container -->
+        <div id="cubeBox" aria-hidden="true"></div>
+      </section>
 
-    <footer id="contact">
-      <a href="mailto:hello@example.com">hello@example.com</a>
-      <div>© 2025 Morakinyo Kolade. All rights reserved.</div>
-      <div class="social">
-        <a href="https://instagram.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
-        <a href="https://behance.net" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/behance.svg" alt="Behance"></a>
-        <a href="https://linkedin.com" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+      <section class="projects" aria-label="Work">
+        <h2 class="section-title">Explore My Work</h2>
+        <p class="section-sub">A selection of projects across 3D animation, motion design and video editing.</p>
+
+        <div class="projects-grid" id="projectsGrid">
+          <article class="card" tabindex="0" data-href="product-animation/index.html" aria-label="Product animation">
+            <div class="inner">
+              <img class="thumb" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=6c1f7ef3bce4f7b5b2a6a7f0b7c1b4e2" alt="Product animation preview">
+              <h4>Product Animation</h4>
+              <div class="meta">Category: 3D Animation</div>
+              <div class="tools" aria-hidden="true">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
+              </div>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0" data-href="motion-design/index.html" aria-label="Motion design">
+            <div class="inner">
+              <img class="thumb" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=3f6b8d6b9a7c2a4e2b2b8d416b2f7f7b" alt="Motion design preview">
+              <h4>Motion Design</h4>
+              <div class="meta">Category: Motion Design</div>
+              <div class="tools" aria-hidden="true">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
+              </div>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0" data-href="video-editing/index.html" aria-label="Video editing">
+            <div class="inner">
+              <img class="thumb" src="https://images.unsplash.com/photo-1582719478179-37e0e56a3abd?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=8a3f21b3f2d2a7f0d9b9c6a7e3a5b6d1" alt="Video editing preview">
+              <h4>Video Editing</h4>
+              <div class="meta">Category: Video Editing</div>
+              <div class="tools" aria-hidden="true">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" alt="After Effects">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" alt="Premiere Pro">
+                <!-- DaVinci logo via simple icons -->
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/davinciresolve.svg" alt="DaVinci Resolve" style="width:30px;height:30px;filter:invert(1)">
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact" aria-label="Footer contact">
+      <div class="footer-left">
+        <a href="mailto:hello@example.com" id="footerMail">hello@example.com</a>
+      </div>
+      <div class="footer-center">© 2025 Morakinyo Kolade. All rights reserved.</div>
+      <div class="footer-right">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+        <a href="https://behance.net" target="_blank" rel="noopener" aria-label="Behance"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/behance.svg" alt="Behance"></a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
       </div>
     </footer>
   </div>
 
-  <!-- Modal for Showreel -->
-  <div id="modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:2000">
-    <video id="modalVideo" controls autoplay style="width:90%;height:auto;max-height:90%">
-      <source src="https://player.vimeo.com/external/370536000.sd.mp4?s=6e8f2354a80c5081f90f0c70f94a5a7eddb4f6e5&profile_id=164" type="video/mp4">
+  <!-- full screen modal showreel -->
+  <div id="modal" aria-hidden="true">
+    <video id="modalVideo" controls autoplay playsinline preload="auto">
+      <source src="https://cdn.coverr.co/videos/coverr-showreel-1650/1080p.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- Three.js spinning cube -->
+  <!-- three js for cube -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.min.js"></script>
   <script>
-    // custom cursor
-    const cursor=document.getElementById('cursor');
-    document.addEventListener('mousemove',e=>{
-      cursor.style.left=e.clientX+'px';
-      cursor.style.top=e.clientY+'px';
-    });
-    document.querySelectorAll('a,button,.card').forEach(el=>{
-      el.addEventListener('mouseenter',()=>cursor.classList.add('grow'));
-      el.addEventListener('mouseleave',()=>cursor.classList.remove('grow'));
-    });
+    /* Helper safe play for background video */
+    (function tryPlayBackground(){
+      const bg = document.getElementById('bgVideo');
+      function attempt(){
+        const p = bg.play();
+        if(p && typeof p.catch === 'function') p.catch(()=>{/* autoplay blocked, OK */});
+      }
+      if(document.readyState === 'complete') attempt();
+      else window.addEventListener('load', attempt);
+    })();
 
-    // modal showreel
-    const modal=document.getElementById('modal');
-    document.getElementById('showReelBtn').onclick=()=>modal.style.display='flex';
-    modal.onclick=()=>{modal.style.display='none';document.getElementById('modalVideo').pause()};
+    /* custom cursor logic */
+    (function cursorLogic(){
+      const cursor = document.getElementById('cursor');
+      let lastX = 0, lastY = 0;
+      document.addEventListener('mousemove', e=>{
+        lastX = e.clientX; lastY = e.clientY;
+        cursor.style.left = lastX + 'px';
+        cursor.style.top = lastY + 'px';
+      }, {passive:true});
 
-    // 3D cube in hero side using three.js
-    const scene=new THREE.Scene();
-    const camera=new THREE.PerspectiveCamera(75,1,0.1,1000);
-    const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-    const cubeBox=document.getElementById('cubeBox');
-    renderer.setSize(cubeBox.clientWidth,cubeBox.clientHeight);
-    cubeBox.appendChild(renderer.domElement);
-    const geometry=new THREE.BoxGeometry();
-    const material=new THREE.MeshNormalMaterial();
-    const cube=new THREE.Mesh(geometry,material);
-    scene.add(cube);
-    camera.position.z=3;
-    function animate(){
-      requestAnimationFrame(animate);
-      cube.rotation.x+=0.01;
-      cube.rotation.y+=0.01;
-      renderer.render(scene,camera);
-    }
-    animate();
-    window.addEventListener('resize',()=>{
-      renderer.setSize(cubeBox.clientWidth,cubeBox.clientHeight);
-      camera.aspect=cubeBox.clientWidth/cubeBox.clientHeight;
-      camera.updateProjectionMatrix();
-    });
+      // interactive elements that should trigger grow
+      const interactiveSelector = 'button, a, .card';
+      function addHoverListeners(){
+        document.querySelectorAll(interactiveSelector).forEach(el=>{
+          el.addEventListener('mouseenter', ()=> cursor.classList.add('grow'));
+          el.addEventListener('mouseleave', ()=> cursor.classList.remove('grow'));
+          // on focus for keyboard users
+          el.addEventListener('focus', ()=> cursor.classList.add('grow'));
+          el.addEventListener('blur', ()=> cursor.classList.remove('grow'));
+        });
+      }
+      addHoverListeners();
 
-    // card tilt
-    document.querySelectorAll('.card').forEach(card=>{
-      card.addEventListener('mousemove',e=>{
-        const rect=card.getBoundingClientRect();
-        const x=(e.clientX-rect.left)/rect.width;
-        const y=(e.clientY-rect.top)/rect.height;
-        const tiltX=(y-0.5)*10;
-        const tiltY=(x-0.5)*-10;
-        card.style.transform=`rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.03)`;
+      // accessibility fallback: if JS disabled or user needs system cursor
+      // not adding toggle button here, but you can add later
+    })();
+
+    /* modal showreel */
+    (function modalLogic(){
+      const modal = document.getElementById('modal');
+      const modalVideo = document.getElementById('modalVideo');
+      const openBtn = document.getElementById('openShowreel');
+
+      function open(){
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden','false');
+        try{ modalVideo.currentTime=0; modalVideo.play().catch(()=>{}); }catch(e){}
+      }
+      function close(){
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden','true');
+        try{ modalVideo.pause(); }catch(e){}
+      }
+
+      openBtn.addEventListener('click', open);
+      modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+    })();
+
+    /* three.js cube demo in hero */
+    (function cubeDemo(){
+      const container = document.getElementById('cubeBox');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
+
+      const geo = new THREE.BoxGeometry(1.2,1.2,1.2);
+      // metallic look: standard material with envMap-like fake by normal material
+      const mat = new THREE.MeshStandardMaterial({color:0xff7a1a, metalness:0.6, roughness:0.35});
+      const cube = new THREE.Mesh(geo, mat);
+      scene.add(cube);
+
+      // subtle rim light
+      const hemi = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
+      scene.add(hemi);
+      const dir = new THREE.DirectionalLight(0xffffff, 0.9);
+      dir.position.set(5,10,7);
+      scene.add(dir);
+
+      camera.position.z = 3.2;
+
+      let last = 0;
+      function animate(ts){
+        requestAnimationFrame(animate);
+        const t = ts * 0.001;
+        // smooth spin
+        cube.rotation.x = 0.35 + Math.sin(t * 0.6) * 0.2;
+        cube.rotation.y += 0.006;
+        cube.rotation.z = Math.cos(t * 0.4) * 0.04;
+        renderer.render(scene, camera);
+        last = t;
+      }
+      animate(0);
+
+      window.addEventListener('resize', ()=> {
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
       });
-      card.addEventListener('mouseleave',()=>card.style.transform='rotateX(0) rotateY(0) scale(1)');
-    });
+    })();
+
+    /* card tilt parallax for entire card with smoothing */
+    (function cardTilt(){
+      const cards = Array.from(document.querySelectorAll('.card'));
+      cards.forEach(card => {
+        const inner = card.querySelector('.inner');
+        // rAF smoothing
+        let targetX = 0, targetY = 0, currentX = 0, currentY = 0, rafId = null;
+
+        function onMove(e){
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          // tilt range
+          targetX = (y - 0.5) * 12; // rotateX degrees
+          targetY = (x - 0.5) * -14; // rotateY degrees
+          if(!rafId) rafLoop();
+        }
+
+        function rafLoop(){
+          currentX += (targetX - currentX) * 0.18;
+          currentY += (targetY - currentY) * 0.18;
+          inner.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg) translateZ(6px)`;
+          // gentle parallax for image inside
+          const img = inner.querySelector('.thumb');
+          if(img){
+            const px = (currentY / 30) * -8;
+            const py = (currentX / 30) * -8;
+            img.style.transform = `translate3d(${px}px, ${py}px, 0) scale(1.02)`;
+            img.style.transition = 'transform .12s ease';
+          }
+          rafId = (Math.abs(currentX - targetX) < 0.01 && Math.abs(currentY - targetY) < 0.01) ? (cancelAnimationFrame(rafId), rafId = null) : requestAnimationFrame(rafLoop);
+        }
+
+        function onLeave(){
+          targetX = 0; targetY = 0;
+          if(!rafId) rafLoop();
+          // reset image transform
+          const img = inner.querySelector('.thumb');
+          if(img) img.style.transform = 'translate3d(0,0,0) scale(1)';
+        }
+
+        card.addEventListener('mousemove', onMove);
+        card.addEventListener('mouseleave', onLeave);
+        // keyboard focus for accessibility
+        card.addEventListener('focus', ()=> { inner.style.transform = 'translateZ(6px)'; });
+        card.addEventListener('blur', ()=> { inner.style.transform = 'none'; });
+        // make card clickable and navigate to placeholder link
+        card.addEventListener('click', ()=> {
+          const h = card.getAttribute('data-href');
+          if(h){ window.location.href = h; } else {
+            // placeholder behavior
+            alert('Open category page or replace data-href with your page link');
+          }
+        });
+      });
+    })();
+
+    /* ensure DaVinci icon loads even if CDN slow: nothing else needed */
   </script>
 </body>
 </html>
