@@ -784,6 +784,18 @@
           'rotateY(0deg) rotateX(0deg) scale(1) translateZ(0)';
       });
     });
+
+}
+    .blurred-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
     
     // Staggered animations for cards
     setTimeout(() => {
